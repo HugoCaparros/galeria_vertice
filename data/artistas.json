@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "nombre": "Elena Miró",
+    "ciudad": "Madrid, España",
+    "disciplina": "Pintura Abstracta",
+    "bio": "Exploradora de la emoción a través del color. Elena utiliza técnicas mixtas para crear paisajes oníricos que invitan a la introspección. Sus obras han sido expuestas en Berlín y Nueva York.",
+    "cita": "El arte no reproduce lo visible, hace visible lo invisible.",
+    "imagen": "https://images.unsplash.com/photo-1508186225823-0963cf9ab0de?q=80&w=1000&auto=format&fit=crop"
+  },
+  {
+    "id": 2,
+    "nombre": "Marcus Thorne",
+    "ciudad": "Londres, UK",
+    "disciplina": "Fotografía Arquitectónica",
+    "bio": "Marcus captura la geometría oculta en las grandes urbes. Su trabajo en blanco y negro busca la soledad dentro del caos urbano, jugando con luces y sombras dramáticas.",
+    "cita": "La arquitectura es música congelada.",
+    "imagen": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1000&auto=format&fit=crop"
+  },
+  {
+    "id": 3,
+    "nombre": "Yuki Tanaka",
+    "ciudad": "Kyoto, Japón",
+    "disciplina": "Arte Digital",
+    "bio": "Fusionando la tradición japonesa con el futurismo digital. Yuki crea composiciones generativas que exploran la relación entre la naturaleza y la tecnología.",
+    "cita": "El código es mi pincel.",
+    "imagen": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop"
+  },
+  {
+    "id": 4,
+    "nombre": "Sofia Rossi",
+    "ciudad": "Florencia, Italia",
+    "disciplina": "Escultura Contemporánea",
+    "bio": "Sofia trabaja el mármol y el metal recuperado. Sus formas orgánicas desafían la gravedad y buscan la suavidad en materiales inherentemente duros.",
+    "cita": "La materia tiene memoria.",
+    "imagen": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop"
+  }
+]

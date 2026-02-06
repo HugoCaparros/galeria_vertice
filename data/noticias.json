@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "titulo": "El Renacimiento Digital",
+    "subtitulo": "TENDENCIAS 2024",
+    "fecha": "12 OCT 2023",
+    "autor": "Redacción Vértice",
+    "extracto": "¿Cómo está transformando la inteligencia artificial la creación artística? Analizamos las nuevas herramientas que están empoderando a los creadores.",
+    "imagen": "https://images.unsplash.com/photo-1617791160505-6f00504e3519?q=80&w=1000&auto=format&fit=crop"
+  },
+  {
+    "id": 2,
+    "titulo": "Entrevista a Elena Miró",
+    "subtitulo": "ARTISTA DEL MES",
+    "fecha": "05 NOV 2023",
+    "autor": "Carlos Vives",
+    "extracto": "Visitamos el estudio en Madrid de la artista revelación del año. Entre lienzos y olor a trementina, nos cuenta sus secretos.",
+    "imagen": "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=1000&auto=format&fit=crop"
+  },
+  {
+    "id": 3,
+    "titulo": "Inauguración: 'Sombras'",
+    "subtitulo": "EVENTOS",
+    "fecha": "20 DIC 2023",
+    "autor": "Equipo Vértice",
+    "extracto": "La nueva exposición colectiva sobre el blanco y negro abre sus puertas este viernes. Copa de bienvenida para socios.",
+    "imagen": "https://images.unsplash.com/photo-1518998053901-5348d3969105?q=80&w=1000&auto=format&fit=crop"
+  }
+]

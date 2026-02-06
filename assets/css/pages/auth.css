@@ -1,0 +1,376 @@
+/* ==========================================================================
+   1. LAYOUT PRINCIPAL (Pantalla Dividida)
+   ========================================================================== */
+.auth-split-layout {
+    display: flex;
+    width: 100%;
+    height: 100vh; /* Fuerza altura completa de ventana */
+    overflow: hidden; /* Evita scrollbars innecesarios */
+    background-color: #FFFFFF;
+    font-family: 'Inter', sans-serif; /* Asegura la fuente global */
+}
+
+/* ==========================================================================
+   2. PANELES (Blanco vs Imagen)
+   ========================================================================== */
+
+/* --- Panel del Formulario (Blanco) --- */
+.auth-panel-white {
+    flex: 1; /* Ocupa el 50% del ancho */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente */
+    align-items: center;     /* Centra horizontalmente */
+    position: relative;
+    padding: 60px;
+    background-color: #FFFFFF;
+    z-index: 10;
+}
+
+/* --- Panel de la Imagen (Promocional) --- */
+.auth-panel-image {
+    flex: 1; /* Ocupa el otro 50% */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* IMAGEN DE FONDO */
+    background-color: #333; /* Color de respaldo si falla la imagen */
+    background-image: url('../../assets/img/login-bg.jpg'); 
+    background-size: cover;
+    background-position: center;
+}
+
+/* Capa oscura sobre la imagen para que se lea el texto blanco */
+.auth-panel-image::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.4); /* Oscuridad al 40% */
+    z-index: 1;
+}
+
+/* Contenido sobre la imagen (Texto y Botón) */
+.overlay-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #FFFFFF;
+    padding: 0 40px;
+    max-width: 480px;
+}
+
+/* ==========================================================================
+   3. ELEMENTOS DE NAVEGACIÓN Y LOGO
+   ========================================================================== */
+
+/* Botón "Volver al inicio" */
+.back-link {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    font-family: var(--font-sans, sans-serif);
+    font-size: 13px;
+    color: #888;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s;
+}
+
+.back-link:hover {
+    color: #000;
+}
+
+/* Logo Vértice (Columnas) */
+.auth-icon {
+    margin-bottom: 20px;
+}
+
+.auth-icon img {
+    height: 40px; /* Tamaño fijo para que no se deforme */
+    width: auto;
+    display: block;
+    margin: 0 auto;
+    opacity: 0.8;
+}
+
+/* ==========================================================================
+   4. TIPOGRAFÍA
+   ========================================================================== */
+.auth-title {
+    font-family: var(--font-sans, sans-serif);
+    font-size: 24px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.auth-subtitle {
+    font-family: var(--font-sans, sans-serif);
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* Textos del lado de la Imagen */
+.promo-heading {
+    font-family: var(--font-sans, sans-serif);
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #FFFFFF;
+}
+
+.promo-text {
+    font-family: var(--font-sans, sans-serif);
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 30px;
+    color: #F0F0F0;
+    font-weight: 400;
+}
+
+/* ==========================================================================
+   5. FORMULARIOS (Inputs estilo línea)
+   ========================================================================== */
+.form-wrapper {
+    width: 100%;
+    max-width: 360px; /* Ancho máximo del formulario */
+}
+
+.input-group-line {
+    position: relative;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+/* Estilo Base de Inputs y Selects */
+.input-group-line input,
+.input-group-line select {
+    width: 100%;
+    padding: 12px 0;
+    font-family: var(--font-sans, sans-serif);
+    font-size: 14px;
+    color: #000;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #E0E0E0; /* Línea gris clara */
+    border-radius: 0;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.input-group-line input:focus,
+.input-group-line select:focus {
+    border-bottom-color: #000; /* Línea negra al escribir */
+}
+
+.input-group-line input::placeholder {
+    color: #999;
+}
+
+/* Correcciones para Select */
+.input-group-line select {
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    color: #555;
+}
+
+/* Iconos dentro de inputs (Ojo, Flecha) */
+.show-pass-icon,
+.select-arrow {
+    position: absolute;
+    right: 0;
+    top: 12px;
+    color: #999;
+    font-size: 14px;
+    pointer-events: none;
+}
+
+.show-pass-icon {
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+/* Link "¿Olvidaste tu contraseña?" */
+.form-options {
+    text-align: right;
+    margin-top: -10px;
+    margin-bottom: 30px;
+}
+
+.forgot-link {
+    font-size: 12px;
+    color: #888;
+    text-decoration: none;
+}
+
+.forgot-link:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   6. BOTONES
+   ========================================================================== */
+
+/* Botón Negro Sólido (Para el Formulario) */
+.btn-black-full {
+    width: 100%;
+    display: block;
+    background-color: #111;
+    color: #FFF;
+    border: none;
+    padding: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.btn-black-full:hover {
+    background-color: #333;
+}
+
+/* Botón Negro Sólido (Para el lado de la Imagen - Login) */
+.btn-black-solid-overlay {
+    display: inline-block;
+    background-color: #000;
+    color: #FFF;
+    border: 1px solid #000;
+    padding: 15px 60px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    border-radius: 4px;
+    min-width: 200px;
+}
+
+.btn-black-solid-overlay:hover {
+    background-color: #222;
+    border-color: #222;
+    transform: translateY(-2px);
+}
+
+/* Botón Borde/Transparente (Opcional, si lo usas en Registro) */
+.btn-black-overlay {
+    display: inline-block;
+    background-color: #111;
+    color: #FFF;
+    border: 1px solid #111;
+    padding: 15px 50px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    border-radius: 4px;
+}
+
+.btn-black-overlay:hover {
+    background-color: #333;
+    border-color: #333;
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   7. RESPONSIVE (Móviles)
+   ========================================================================== */
+@media (max-width: 900px) {
+    .auth-split-layout {
+        flex-direction: column; /* Apila los paneles verticalmente */
+        height: auto; /* Permite scroll */
+        min-height: 100vh;
+    }
+
+    .auth-panel-white, 
+    .auth-panel-image {
+        flex: none;
+        width: 100%;
+        padding: 50px 20px;
+        min-height: auto;
+    }
+
+    .auth-panel-white {
+        order: 1; /* El formulario siempre visible primero en móvil */
+    }
+
+    .auth-panel-image {
+        order: 2;
+        min-height: 350px; /* Altura mínima para que se vea la imagen */
+    }
+}
+
+/* ==========================================================================
+   8. ANIMACIONES Y TRANSICIONES (NUEVO)
+   ========================================================================== */
+
+/* --- Animación de Entrada (Fade In Up) --- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Clase base para elementos animados */
+.animate-up {
+    opacity: 0; /* Invisible al inicio */
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Retardos en cascada (Stagger) */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; } /* Logo */
+.delay-3 { animation-delay: 0.3s; } /* Título */
+.delay-4 { animation-delay: 0.4s; } /* Subtítulo */
+.delay-5 { animation-delay: 0.5s; } /* Inputs */
+.delay-6 { animation-delay: 0.6s; } /* Botones */
+
+/* --- Animación de Transición de Salida (Page Exit) --- */
+body {
+    transition: opacity 0.4s ease;
+    opacity: 1; /* Estado normal visible */
+}
+
+body.fade-out {
+    opacity: 0; /* Estado al salir */
+    pointer-events: none; /* Evita clics múltiples */
+}
+
+/* Efecto de Hover en Inputs (Feedback visual) */
+.input-group-line input {
+    transition: border-color 0.3s, transform 0.3s;
+}
+
+.input-group-line:focus-within {
+    transform: translateX(5px); /* Pequeño desplazamiento al escribir */
+}
+
+/* Efecto suave en el panel de imagen al cargar */
+.auth-panel-image {
+    animation: fadeInImage 1.2s ease-out forwards;
+}
+
+@keyframes fadeInImage {
+    from { opacity: 0; transform: scale(1.05); }
+    to { opacity: 1; transform: scale(1); }
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VÉRTICE | Galería de Arte</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Marcellus&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="assets/css/base/reset.css">
+    <link rel="stylesheet" href="assets/css/base/variables.css">
+    <link rel="stylesheet" href="assets/css/base/typography.css">
+    
+    <link rel="stylesheet" href="assets/css/components/navbar.css">
+    <link rel="stylesheet" href="assets/css/components/footer.css">
+    <link rel="stylesheet" href="assets/css/components/cards.css">
+    <link rel="stylesheet" href="assets/css/components/buttons.css">
+    <link rel="stylesheet" href="assets/css/components/modal.css"> 
+    
+    <link rel="stylesheet" href="assets/css/pages/home.css">
+</head>
+<body>
+
+    <div id="navbar-placeholder"></div>
+
+    <main class="home-container">
+        <section class="category-header">
+            <h2 class="main-title">SELECCIONA CATEGORÍA</h2>
+            
+            <div class="category-links" id="category-menu">
+                <a href="pages/catalogo/moderno.html" class="cat-link" data-cat="moderno">MODERNO</a>
+                <a href="pages/catalogo/clasico.html" class="cat-link" data-cat="clasico">CLÁSICO</a>
+                <a href="pages/catalogo/abstracto.html" class="cat-link" data-cat="abstracto">ABSTRACTO</a>
+            </div>
+        </section>
+
+        <section class="home-grid" id="home-grid-container">
+            </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <div id="auth-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeAuthModal()">&times;</button>
+            <div class="modal-header">
+                <span class="modal-subtitle">ACCESO EXCLUSIVO</span>
+                <h2 class="modal-title">ÚNETE A VÉRTICE</h2>
+            </div>
+            <div class="modal-body">
+                <p>El catálogo completo está reservado para miembros.</p>
+            </div>
+            <div class="modal-actions">
+                <a href="pages/auth/login.html" class="btn btn-full">INICIAR SESIÓN</a>
+                <a href="pages/auth/register.html" class="btn btn-outline-dark">CREAR CUENTA</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

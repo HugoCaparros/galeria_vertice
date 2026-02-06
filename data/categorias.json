@@ -1,0 +1,20 @@
+[
+  {
+    "id": "moderno",
+    "nombre": "Moderno",
+    "descripcion": "Arte que rompe moldes. Digital, neón y nuevas narrativas.",
+    "imagen_cover": "assets/img/cat-moderno.jpg"
+  },
+  {
+    "id": "clasico",
+    "nombre": "Clásico",
+    "descripcion": "La belleza atemporal. Fotografía tradicional y escultura.",
+    "imagen_cover": "assets/img/cat-clasico.jpg"
+  },
+  {
+    "id": "abstracto",
+    "nombre": "Abstracto",
+    "descripcion": "Formas y colores puros. La interpretación es tuya.",
+    "imagen_cover": "assets/img/cat-abstracto.jpg"
+  }
+]

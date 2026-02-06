@@ -1,0 +1,19 @@
+.footer {
+  background-color: var(--bg-inverse);
+  color: var(--text-inverse);
+  padding: var(--space-12) var(--container-padding);
+  margin-top: var(--space-16);
+}
+
+.footer h3 {
+  color: var(--text-inverse); /* Forzamos blanco en footer */
+  font-family: var(--font-serif);
+}
+
+.footer a {
+  color: var(--color-gris-claro);
+}
+
+.footer a:hover {
+  color: var(--color-blanco);
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arte Abstracto | VÉRTICE</title>
+    
+    <link rel="stylesheet" href="../../assets/css/base/reset.css">
+    <link rel="stylesheet" href="../../assets/css/base/variables.css">
+    <link rel="stylesheet" href="../../assets/css/base/typography.css">
+    <link rel="stylesheet" href="../../assets/css/components/navbar.css">
+    <link rel="stylesheet" href="../../assets/css/components/footer.css">
+    <link rel="stylesheet" href="../../assets/css/components/cards.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .cat-header { padding: 160px 5% 4rem; text-align: center; background: #fff; }
+        .cat-header h1 { font-family: 'Marcellus', serif; font-size: 3rem; margin-bottom: 1rem; }
+        .cat-desc { max-width: 600px; margin: 0 auto; color: #666; }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            padding: 0 5% 6rem;
+        }
+        .art-card { cursor: pointer; }
+        .art-card img { aspect-ratio: 3/4; width: 100%; object-fit: cover; filter: grayscale(20%); transition: filter 0.3s, transform 0.3s; }
+        .art-card:hover img { filter: grayscale(0%); transform: scale(1.02); }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left"><a href="../../index.html">← Inicio</a></div>
+        
+        <div class="nav-center"><a href="../../index.html" class="logo">VÉRTICE</a></div>
+        
+        <div class="nav-right" id="auth-actions">
+            </div>
+    </nav>
+
+    <header class="cat-header">
+        <h1>ABSTRACTO</h1>
+        <p class="cat-desc">Formas puras, texturas y emociones sin filtro. Una invitación a interpretar la realidad desde el subconsciente.</p>
+    </header>
+
+    <section class="gallery-grid">
+        <div class="art-card" onclick="window.location.href='obra-detalle.html'">
+            <img src="../../assets/img/abstracto-1.jpg" alt="Caos Cromático">
+            <h3 style="margin-top:1rem; font-size:0.9rem;">CAOS CROMÁTICO</h3>
+            <span style="color:#666; font-size:0.8rem;">Elena Miró</span>
+        </div>
+        <div class="art-card" onclick="window.location.href='obra-detalle.html'">
+            <img src="../../assets/img/abstracto-2.jpg" alt="Estructura Azul">
+            <h3 style="margin-top:1rem; font-size:0.9rem;">ESTRUCTURA AZUL</h3>
+            <span style="color:#666; font-size:0.8rem;">Elena Miró</span>
+        </div>
+        <div class="art-card" onclick="window.location.href='obra-detalle.html'">
+            <img src="../../assets/img/abstracto-3.jpg" alt="Nebula Interior">
+            <h3 style="margin-top:1rem; font-size:0.9rem;">NEBULA INTERIOR</h3>
+            <span style="color:#666; font-size:0.8rem;">Elena Miró</span>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+    
+    <script src="../../assets/js/main.js"></script>
+    <script>fetch('../partials/footer.html').then(r => r.text()).then(h => document.getElementById('footer-placeholder').innerHTML = h);</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artistas | VÉRTICE</title>
+    <link rel="stylesheet" href="../../assets/css/base/reset.css">
+    <link rel="stylesheet" href="../../assets/css/base/variables.css">
+    <link rel="stylesheet" href="../../assets/css/base/typography.css">
+    <link rel="stylesheet" href="../../assets/css/components/navbar.css">
+    <link rel="stylesheet" href="../../assets/css/components/footer.css">
+    <link rel="stylesheet" href="../../assets/css/components/cards.css">
+    <link rel="stylesheet" href="../../assets/css/components/buttons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Estilo rápido específico para esta página */
+        .page-header { padding: 140px 5% 3rem; text-align: center; }
+        .artists-grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 2rem; 
+            padding: 0 5% 5rem;
+            max-width: 1600px; 
+            margin: 0 auto; 
+        }
+        @media(max-width:900px){ .artists-grid { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="artistas.html" style="font-weight: 600;">Artistas</a>
+            <a href="obras.html">Obras</a>
+            <a href="categorias.html">Categorías</a>
+        </div>
+        <div class="nav-center"><a href="../../index.html" class="logo">VÉRTICE</a></div>
+        <div class="nav-right" id="auth-actions">
+            <a href="../auth/login.html" class="user-icon"><i class="fa-regular fa-user-circle"></i></a>
+        </div>
+    </nav>
+
+    <main>
+        <header class="page-header">
+            <h2>NUESTROS CREADORES</h2>
+            <p>Visionarios que redefinen el arte contemporáneo</p>
+        </header>
+
+        <section class="artists-grid" id="artists-grid-container">
+            <article class="artist-card" onclick="window.location.href='artista-detalle.html'">
+                <div class="artist-image">
+                    <img src="https://images.unsplash.com/photo-1508186225823-0963cf9ab0de?auto=format&fit=crop&w=600" alt="Elena">
+                </div>
+                <div class="artist-info">
+                    <h3>Elena Miró</h3>
+                    <p class="user-role-mini">Abstracto</p>
+                </div>
+            </article>
+
+            <article class="artist-card" onclick="window.location.href='artista-detalle.html'">
+                <div class="artist-image">
+                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600" alt="Marcus">
+                </div>
+                <div class="artist-info">
+                    <h3>Marcus Thorne</h3>
+                    <p class="user-role-mini">Fotografía</p>
+                </div>
+            </article>
+
+             <article class="artist-card" onclick="window.location.href='artista-detalle.html'">
+                <div class="artist-image">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600" alt="Yuki">
+                </div>
+                <div class="artist-info">
+                    <h3>Yuki Tanaka</h3>
+                    <p class="user-role-mini">Digital</p>
+                </div>
+            </article>
+
+            <article class="artist-card" onclick="window.location.href='artista-detalle.html'">
+                <div class="artist-image">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600" alt="Sofia">
+                </div>
+                <div class="artist-info">
+                    <h3>Sofia Rossi</h3>
+                    <p class="user-role-mini">Escultura</p>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script>
+        fetch('../partials/footer.html').then(r => r.text()).then(h => document.getElementById('footer-placeholder').innerHTML = h);
+    </script>
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

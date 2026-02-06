@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Moderno | VÉRTICE</title>
+    
+    <link rel="stylesheet" href="../../assets/css/base/reset.css">
+    <link rel="stylesheet" href="../../assets/css/base/variables.css">
+    <link rel="stylesheet" href="../../assets/css/base/typography.css">
+    
+    <link rel="stylesheet" href="../../assets/css/components/navbar.css">
+    <link rel="stylesheet" href="../../assets/css/components/footer.css">
+    <link rel="stylesheet" href="../../assets/css/components/cards.css">
+    <link rel="stylesheet" href="../../assets/css/components/modal.css">
+    
+    <link rel="stylesheet" href="../../assets/css/pages/catalogo.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Estilos rápidos por si catalogo.css está vacío aún */
+        .cat-header { padding: 160px 5% 4rem; text-align: center; background: #fff; }
+        .cat-header h1 { font-family: 'Marcellus', serif; font-size: 3rem; margin-bottom: 1rem; }
+        .cat-desc { max-width: 600px; margin: 0 auto; color: #666; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; padding: 0 5% 6rem; }
+        .art-card img { width: 100%; aspect-ratio: 3/4; object-fit: cover; filter: grayscale(20%); transition: 0.3s; }
+        .art-card:hover img { filter: grayscale(0%); }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <header class="cat-header">
+        <h1>MODERNO</h1>
+        <p class="cat-desc">Nuevas narrativas digitales, arte generativo y neón.</p>
+    </header>
+
+    <section class="gallery-grid">
+        <div class="art-card" onclick="window.location.href='obra-detalle.html'">
+            <img src="../../assets/img/moderno-1.jpg" alt="Obra">
+        </div>
+        <div class="art-card" onclick="window.location.href='obra-detalle.html'">
+            <img src="../../assets/img/moderno-2.jpg" alt="Obra">
+        </div>
+        <div class="art-card" onclick="window.location.href='obra-detalle.html'">
+            <img src="../../assets/img/moderno-3.jpg" alt="Obra">
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../../assets/js/main.js"></script>
+</body>
+</html>

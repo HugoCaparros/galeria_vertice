@@ -1,0 +1,20 @@
+.hero {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 var(--container-padding);
+  background-color: var(--bg-secondary);
+}
+
+.hero h1 {
+  font-size: clamp(3rem, 5vw, 5rem); /* Responsive typography manual */
+  line-height: 1.1;
+  max-width: 15ch;
+}
+
+.section {
+  padding: var(--space-16) var(--container-padding);
+}

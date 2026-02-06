@@ -1,0 +1,120 @@
+/* ==========================================================================
+   NAVBAR GLOBAL
+   ========================================================================== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px; /* Altura generosa para dar aire */
+  background-color: rgba(255, 255, 255, 0.98); /* Casi opaco */
+  backdrop-filter: blur(10px);
+  /* Borde inferior transparente para mantener la altura sin pintar línea */
+  border-bottom: 1px solid transparent; 
+  z-index: var(--z-navbar);
+  
+  /* Flexbox para alineación vertical */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%; /* Padding lateral responsive */
+}
+
+/* ==========================================================================
+   ESTRUCTURA DE 3 COLUMNAS (Grid Invisible)
+   ========================================================================== */
+
+/* 1. IZQUIERDA: Menú Principal */
+.nav-left {
+  flex: 1; /* Ocupa 1/3 exacto */
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 40px; /* Espacio amplio entre items */
+}
+
+/* 2. CENTRO: Logo */
+.nav-brand {
+  flex: 0 auto;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-link {
+  display: block;
+  line-height: 0; /* CRUCIAL: Elimina espacio extra bajo la imagen */
+  transition: opacity 0.3s ease;
+}
+
+.brand-link:hover {
+  opacity: 0.7;
+}
+
+/* Estilos de la imagen SVG cargada */
+.brand-logo-img {
+  /* ANTES: 38px -> AHORA: 28px */
+  height: 28px; 
+  width: auto;  /* Esto asegura que el ancho se ajuste solo sin deformarse */
+  display: block;
+}
+
+/* 3. DERECHA: Autenticación */
+.nav-right {
+  flex: 1; /* Ocupa 1/3 exacto para equilibrar */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Contenedor específico para los links de auth + separador */
+.nav-auth {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Espacio entre textos y la barra */
+}
+
+/* ==========================================================================
+   TIPOGRAFÍA Y ENLACES (Look & Feel)
+   ========================================================================== */
+
+/* Estilo compartido para enlaces Izquierda (.nav-link) y Derecha (.auth-link) */
+.nav-link, 
+.auth-link {
+  font-family: var(--font-sans); /* Inter */
+  
+  /* TUS PREFERENCIAS: */
+  font-size: 12px;       /* Tamaño fino */
+  font-weight: 400;      /* Regular (No negrita) */
+  text-transform: uppercase;
+  letter-spacing: 0.15em; /* Espaciado elegante */
+  
+  color: var(--color-negro);
+  text-decoration: none;
+  transition: opacity 0.3s ease, color 0.3s ease;
+  
+  /* Asegura centrado perfecto respecto a iconos o líneas */
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Hover effects */
+.nav-link:hover,
+.auth-link:hover {
+  opacity: 0.6;
+  /* Opcional: si quieres que cambie de color también */
+  /* color: var(--color-rojo); */
+}
+
+/* ==========================================================================
+   SEPARADOR VERTICAL (Línea Estilizada)
+   ========================================================================== */
+.auth-separator {
+  display: block;
+  width: 1px;            /* Grosor muy fino */
+  height: 14px;          /* Altura controlada (ligeramente mayor al texto) */
+  background-color: var(--color-negro); /* O un gris: #CCCCCC */
+  opacity: 0.3;          /* Hacemos que la línea sea sutil */
+  margin: 0 5px;         /* Ajuste fino de posición */
+}
