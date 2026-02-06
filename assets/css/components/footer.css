@@ -1,19 +1,190 @@
-.footer {
-  background-color: var(--bg-inverse);
-  color: var(--text-inverse);
-  padding: var(--space-12) var(--container-padding);
-  margin-top: var(--space-16);
+/* ==========================================================================
+   FOOTER GLOBAL (Componente)
+   ========================================================================== */
+
+.site-footer {
+    /* Fondo negro de marca */
+    background-color: var(--color-negro); 
+    color: var(--text-inverse); /* Texto blanco */
+    
+    padding-top: var(--space-16);    /* 64px */
+    padding-bottom: var(--space-8);  /* 32px */
+    
+    font-family: var(--font-sans);
+    width: 100%;
+    margin-top: auto; /* Empuja el footer al fondo */
+    
+    /* Borde superior sutil */
+    border-top: 1px solid var(--color-gris-oscuro);
 }
 
-.footer h3 {
-  color: var(--text-inverse); /* Forzamos blanco en footer */
-  font-family: var(--font-serif);
+.footer-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
 }
 
-.footer a {
-  color: var(--color-gris-claro);
+/* --- SECCIÓN SUPERIOR --- */
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: var(--space-12);
+    margin-bottom: var(--space-12);
 }
 
-.footer a:hover {
-  color: var(--color-blanco);
+/* Marca y Logo (Izquierda) */
+.footer-brand {
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+}
+
+.footer-slogan {
+    font-family: var(--font-sans);
+    font-size: 32px;
+    font-weight: var(--weight-semibold);
+    line-height: 1.2;
+    text-transform: uppercase;
+    color: var(--text-inverse);
+    letter-spacing: 0.02em;
+}
+
+.footer-logo img.logo-white-filter {
+    height: 55px;
+    width: auto;
+    /* FILTRO: Invierte tu logo negro a blanco puro */
+    filter: invert(1) brightness(100%);
+    opacity: 0.9;
+}
+
+/* Navegación (Derecha) */
+.footer-nav {
+    display: flex;
+    gap: var(--space-12);
+    flex-wrap: wrap;
+}
+
+.footer-col {
+    min-width: 140px;
+}
+
+.footer-col h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-inverse);
+    margin-bottom: var(--space-6);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-col ul li {
+    margin-bottom: var(--space-3);
+}
+
+.footer-col ul li a {
+    color: var(--text-muted); /* Gris medio (#8C8C8C) */
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: var(--weight-medium);
+    text-transform: uppercase;
+    transition: color var(--transition-fast);
+}
+
+.footer-col ul li a:hover {
+    color: var(--text-inverse); /* Blanco al hover */
+}
+
+/* --- DIVISOR --- */
+.footer-divider {
+    border: 0;
+    border-top: 1px solid var(--color-gris-oscuro); 
+    margin-bottom: var(--space-8);
+}
+
+/* --- SECCIÓN INFERIOR --- */
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+}
+
+/* Links Legales */
+.footer-legal {
+    display: flex;
+    gap: var(--space-8);
+}
+
+.footer-legal a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: var(--weight-medium);
+    transition: color var(--transition-fast);
+}
+
+.footer-legal a:hover {
+    color: var(--text-inverse);
+}
+
+/* Redes Sociales */
+.footer-social {
+    display: flex;
+    gap: var(--space-6);
+}
+
+.footer-social a {
+    color: var(--text-inverse);
+    font-size: 18px;
+    transition: transform var(--transition-fast), color var(--transition-fast);
+}
+
+.footer-social a:hover {
+    color: var(--text-muted);
+    transform: translateY(-2px);
+}
+
+/* --- RESPONSIVE (Móvil) --- */
+@media (max-width: 900px) {
+    .footer-top {
+        flex-direction: column;
+        gap: var(--space-8);
+    }
+    
+    .footer-brand {
+        max-width: 100%;
+        margin-bottom: var(--space-4);
+    }
+    
+    .footer-slogan {
+        font-size: 24px;
+    }
+
+    .footer-nav {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-8) var(--space-4);
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-legal {
+        flex-direction: column;
+        gap: var(--space-3);
+    }
 }

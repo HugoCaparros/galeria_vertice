@@ -5,18 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VÉRTICE | Galería de Arte</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Marcellus&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Marcellus&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <link rel="stylesheet" href="assets/css/base/variables.css"> 
     <link rel="stylesheet" href="assets/css/base/reset.css">
-    <link rel="stylesheet" href="assets/css/base/variables.css">
     <link rel="stylesheet" href="assets/css/base/typography.css">
     
     <link rel="stylesheet" href="assets/css/components/navbar.css">
-    <link rel="stylesheet" href="assets/css/components/footer.css">
     <link rel="stylesheet" href="assets/css/components/cards.css">
     <link rel="stylesheet" href="assets/css/components/buttons.css">
-    <link rel="stylesheet" href="assets/css/components/modal.css"> 
+    <link rel="stylesheet" href="assets/css/components/modal.css">
+    
+    <link rel="stylesheet" href="assets/css/components/footer.css">
     
     <link rel="stylesheet" href="assets/css/pages/home.css">
 </head>
@@ -36,7 +37,7 @@
         </section>
 
         <section class="home-grid" id="home-grid-container">
-            </section>
+        </section>
     </main>
 
     <div id="footer-placeholder"></div>
@@ -59,5 +60,36 @@
     </div>
 
     <script src="assets/js/main.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            
+            // 1. Cargar el Footer
+            // Asegúrate de que 'footer.html' esté en la misma carpeta o ajusta la ruta (ej: 'includes/footer.html')
+            fetch('pages/partials/footer.html')
+                .then(response => {
+                    if (!response.ok) throw new Error("No se encontró footer.html");
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('footer-placeholder').innerHTML = data;
+                })
+                .catch(error => console.error('Error cargando el footer:', error));
+
+            // 2. Cargar el Navbar (Si tienes un archivo navbar.html)
+            /*
+            fetch('navbar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navbar-placeholder').innerHTML = data;
+                });
+            */
+        });
+
+        // Función simple para cerrar modal (si no está en main.js)
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.add('hidden');
+        }
+    </script>
 </body>
 </html>
