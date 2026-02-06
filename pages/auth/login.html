@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VÉRTICE | Iniciar Sesión</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Marcellus&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Marcellus&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link rel="stylesheet" href="../../assets/css/main.css?v=1.0">
+    <link rel="stylesheet" href="../../assets/css/base/variables.css">
+    <link rel="stylesheet" href="../../assets/css/base/reset.css">
+    <link rel="stylesheet" href="../../assets/css/base/typography.css">
+
+    <link rel="stylesheet" href="../../assets/css/pages/auth.css">
 </head>
 
 <body>
 
     <main class="auth-split-layout">
 
-        <div class="auth-panel-white enter-from-right">
+        <div class="auth-panel-white">
 
             <a href="../../index.html" class="back-link">
                 <i class="fa-solid fa-arrow-left"></i>
@@ -52,12 +54,11 @@
             </div>
         </div>
 
-        <div class="auth-panel-image enter-from-left"
-            style="background-image: url('../../assets/img/LoginBackgroundPage2.png');">
+        <div class="auth-panel-image" style="background-image: url('../../assets/img/LoginBackgroundPage2.png');">
             <div class="overlay-content">
                 <h2 class="promo-heading">Hola, Amante del Arte</h2>
                 <p class="promo-text">Introduce tus datos personales y comienza tu viaje con nosotros</p>
-                <a href="register.html" class="btn-black-overlay">REGISTRARSE</a>
+                <a href="register.html" class="btn-outline-white">REGISTRARSE</a>
             </div>
         </div>
 
@@ -68,7 +69,7 @@
             <button class="modal-close" id="closeModal">&times;</button>
 
             <div class="auth-icon" style="margin-bottom: 1rem;">
-                <img src="../../assets/icons/logo_negro.svg" alt="Vértice" style="height: 45px;">
+                <img src="../../assets/icons/Logo_negro.svg" alt="Vértice" style="height: 45px;">
             </div>
 
             <h2 class="auth-title" style="font-size: 20px;">Restablecer Contraseña</h2>
@@ -94,8 +95,7 @@
                 <button type="submit" class="btn-black-full">ACTUALIZAR CONTRASEÑA</button>
             </form>
 
-            <div id="recoverySuccess"
-                style="display: none; text-align: center; color: var(--color-verde); margin-top: 15px;">
+            <div id="recoverySuccess" style="display: none; text-align: center; color: var(--color-verde, #4CAF50); margin-top: 15px;">
                 <i class="fa-solid fa-check-circle"></i> ¡Contraseña actualizada correctamente!
             </div>
         </div>
@@ -103,5 +103,4 @@
 
     <script src="../../assets/js/services/auth.js"></script>
 </body>
-
 </html>

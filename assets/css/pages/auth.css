@@ -1,11 +1,17 @@
 /* ==========================================================================
+   AUTH.CSS - Estilos para Login y Registro
+   ========================================================================== */
+
+/* ==========================================================================
    1. LAYOUT PRINCIPAL (Pantalla Dividida)
    ========================================================================== */
 .auth-split-layout {
     display: flex;
+    flex-direction: row; /* FORZAMOS fila para que salgan lado a lado */
     width: 100%;
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;   /* Ocupa toda la altura de la ventana */
+    overflow: hidden;    /* Evita scroll en desktop */
+    
     background-color: var(--bg-page);
     font-family: var(--font-sans);
     color: var(--text-primary);
@@ -13,49 +19,52 @@
 }
 
 /* ==========================================================================
-   2. PANELES
+   2. PANELES (Izquierda y Derecha)
    ========================================================================== */
 
 /* --- Panel del Formulario (Blanco) --- */
 .auth-panel-white {
-    flex: 1;
+    flex: 1; /* Ocupa el 50% */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
-    padding: var(--space-16); /* 64px */
+    padding: var(--space-16); /* ~64px */
     background-color: var(--bg-surface);
-    z-index: var(--z-normal);
+    z-index: 2; /* Por encima de la imagen si se cruzan */
+    
+    /* Permite scroll interno si la pantalla es muy bajita */
+    overflow-y: auto; 
 }
 
 /* --- Panel de la Imagen (Promocional) --- */
 .auth-panel-image {
-    flex: 1;
+    flex: 1; /* Ocupa el otro 50% */
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
     
-    /* Fondo de respaldo + Imagen */
     background-color: var(--color-gris-oscuro);
+    /* Asegúrate de que esta ruta sea correcta o cámbiala por tu imagen */
     background-image: url('../../assets/img/login-bg.jpg'); 
     background-size: cover;
     background-position: center;
 }
 
-/* Capa oscura (Overlay) */
+/* Capa oscura (Overlay) para que el texto blanco se lea bien */
 .auth-panel-image::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    /* Usamos el negro de la marca con opacidad */
-    background-color: var(--color-negro);
-    opacity: 0.4;
+    background-color: var(--color-negro); /* Negro */
+    opacity: 0.4; /* Oscuridad al 40% */
     z-index: 1;
 }
 
-/* Contenido sobre la imagen */
+/* Contenido (Texto) sobre la imagen */
 .overlay-content {
     position: relative;
     z-index: 2;
@@ -66,452 +75,357 @@
 }
 
 /* ==========================================================================
-   3. NAVEGACIÓN (Botón Volver)
+   3. NAVEGACIÓN (Botón "Volver al inicio")
    ========================================================================== */
 .back-link {
     position: absolute;
-    top: var(--space-8);  /* 32px */
-    left: var(--space-8);
+    top: 32px;
+    left: 32px;
     
     font-family: var(--font-sans);
     font-size: 14px;
-    font-weight: var(--weight-medium);
+    font-weight: 500;
     color: var(--text-muted);
     
     text-decoration: none;
     display: flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: 8px;
     
-    transition: color var(--transition-fast);
+    transition: color 0.3s ease;
     z-index: 20;
 }
 
 .back-link i {
-    transition: transform var(--transition-fast) ease-out;
+    transition: transform 0.3s ease;
 }
 
-.back-link span {
-    font-weight: var(--weight-medium);
-}
-
-/* Hover States */
 .back-link:hover {
-    color: var(--hover-link); /* Negro */
+    color: var(--text-primary); /* Se pone negro al pasar el mouse */
 }
 
 .back-link:hover i {
-    transform: translateX(-4px);
+    transform: translateX(-4px); /* La flecha se mueve un poco */
 }
 
 /* ==========================================================================
    4. TIPOGRAFÍA Y LOGO
    ========================================================================== */
 .auth-icon {
-    margin-bottom: var(--space-6);
+    margin-bottom: 24px;
 }
 
 .auth-icon img {
-    height: 55px;
+    height: 55px; /* Tamaño del logo */
     width: auto;
     display: block;
     margin: 0 auto;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .auth-title {
     font-family: var(--font-sans);
     font-size: 24px;
-    font-weight: var(--weight-semibold);
+    font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: var(--space-1); /* ~4px */
+    margin-bottom: 8px;
     text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .auth-subtitle {
     font-family: var(--font-sans);
-    font-size: 13px;
+    font-size: 14px;
     color: var(--text-muted);
-    margin-bottom: var(--space-12); /* 48px */
+    margin-bottom: 40px;
     text-align: center;
 }
 
-/* Textos sobre la imagen */
+/* Textos grandes sobre la imagen */
 .promo-heading {
-    font-family: var(--font-sans);
-    font-size: 32px;
-    font-weight: var(--weight-semibold);
-    margin-bottom: var(--space-4);
+    font-family: 'Marcellus', serif; /* Fuente elegante */
+    font-size: 36px;
+    font-weight: 400;
+    margin-bottom: 16px;
     color: var(--text-inverse);
 }
 
 .promo-text {
     font-family: var(--font-sans);
-    font-size: 15px; 
-    line-height: 1.5;
-    margin-bottom: var(--space-8);
-    color: var(--color-gris-claro);
-    font-weight: var(--weight-regular);
+    font-size: 16px; 
+    line-height: 1.6;
+    margin-bottom: 32px;
+    color: #E0E0E0; /* Gris muy claro */
 }
 
 /* ==========================================================================
-   5. FORMULARIOS (Inputs y Select Personalizado)
+   5. FORMULARIOS (Inputs y Estilos)
    ========================================================================== */
 .form-wrapper {
     width: 100%;
-    max-width: 360px;
+    max-width: 380px; /* Ancho máximo del formulario */
 }
 
 .input-group-line {
     position: relative;
-    margin-bottom: var(--space-6); /* 24px */
+    margin-bottom: 24px;
     text-align: left;
 }
 
-/* --- Estilos Generales para Inputs --- */
+/* Estilo Minimalista (Solo borde inferior) */
 .input-group-line input {
     width: 100%;
-    padding: var(--space-3) 0; /* 12px vertical */
+    padding: 12px 0;
     
     font-family: var(--font-sans);
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-primary);
     
     background: transparent;
     border: none;
-    border-bottom: 1px solid var(--border-sutil);
+    border-bottom: 1px solid var(--color-gris-claro); /* Gris suave */
     border-radius: 0;
     
     outline: none;
-    transition: border-color var(--transition-fast);
+    transition: border-color 0.3s ease;
 }
 
 .input-group-line input:focus {
-    border-bottom-color: var(--border-fuerte);
+    border-bottom-color: var(--text-primary); /* Se pone negro al escribir */
 }
 
 .input-group-line input::placeholder {
     color: var(--text-muted);
+    opacity: 0.7;
 }
 
-/* --- ESTILOS DEL SELECT PERSONALIZADO (Nuevo Diseño) --- */
-
-.custom-select-wrapper {
-    cursor: pointer;
-    user-select: none;
-}
-
-/* 1. El Botón (Trigger) */
-.custom-select-trigger {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: var(--space-3) 0;
-    
-    border-bottom: 1px solid var(--border-sutil);
-    background: transparent;
-    
-    font-family: var(--font-sans);
-    font-size: 14px;
-    color: var(--text-muted); /* Color placeholder inicial */
-    transition: all var(--transition-fast);
-}
-
-/* Cuando se selecciona algo */
-.custom-select-trigger.selected {
-    color: var(--text-primary); /* Se pone negro */
-}
-
-/* 2. La Lista Desplegable (Menú Flotante) */
-.custom-options {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    z-index: 50;
-    
-    background: var(--bg-surface);
-    border-radius: 8px; /* Bordes redondeados modernos */
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-    
-    overflow: hidden;
-    margin-top: 5px;
-}
-
-/* Estado Abierto */
-.custom-select-wrapper.open .custom-options {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-/* 3. Opciones Individuales */
-.custom-option {
-    padding: 12px 16px;
-    font-size: 14px;
-    color: var(--text-primary);
-    transition: background 0.2s;
-}
-
-/* Hover Gris Claro (Estilo Google) */
-.custom-option:hover {
-    background-color: #F5F5F5; 
-    color: var(--color-negro);
-}
-
-/* Opción Seleccionada */
-.custom-option.selected {
-    font-weight: var(--weight-semibold);
-    background-color: #FAFAFA;
-}
-
-/* 4. Flecha e Iconos */
-.select-arrow, 
+/* Icono de "Ver Contraseña" (Ojo) */
 .show-pass-icon {
     position: absolute;
     right: 0;
-    top: var(--space-3);
+    top: 12px;
     color: var(--text-muted);
-    font-size: 14px;
-    pointer-events: none;
-    transition: transform 0.3s ease, color 0.3s ease;
-}
-
-.show-pass-icon {
-    pointer-events: auto;
     cursor: pointer;
+    font-size: 14px;
+    transition: color 0.3s;
 }
 
 .show-pass-icon:hover {
     color: var(--text-primary);
 }
 
-/* Rotación de flecha en custom select */
-.custom-select-wrapper.open .select-arrow {
-    transform: rotate(180deg);
-    color: var(--text-primary);
-}
-
-/* --- Links del Formulario --- */
+/* Link "¿Olvidaste contraseña?" */
 .form-options {
     text-align: right;
-    margin-top: calc(var(--space-2) * -1); /* -8px */
-    margin-bottom: var(--space-8);
+    margin-top: -10px;
+    margin-bottom: 32px;
 }
 
 .forgot-link {
-    font-size: var(--size-small);
+    font-size: 12px;
     color: var(--text-muted);
     text-decoration: none;
-    transition: color var(--transition-fast);
+    transition: color 0.3s;
 }
 
 .forgot-link:hover {
-    color: var(--hover-link);
+    color: var(--text-primary);
     text-decoration: underline;
 }
 
 /* ==========================================================================
-   6. BOTONES
+   6. SELECT PERSONALIZADO (Dropdown)
+   ========================================================================== */
+.custom-select-wrapper {
+    position: relative;
+    user-select: none;
+    margin-bottom: 24px;
+}
+
+.custom-select-trigger {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--color-gris-claro);
+    cursor: pointer;
+    font-size: 15px;
+    color: var(--text-muted);
+    transition: all 0.3s;
+}
+
+.custom-select-trigger.selected {
+    color: var(--text-primary);
+}
+
+.select-arrow {
+    transition: transform 0.3s;
+    font-size: 12px;
+}
+
+.custom-select-wrapper.open .select-arrow {
+    transform: rotate(180deg);
+}
+
+.custom-options {
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    background: #fff;
+    border: 1px solid #eee;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.custom-select-wrapper.open .custom-options {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.custom-option {
+    padding: 12px 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 14px;
+}
+
+.custom-option:hover {
+    background-color: #f5f5f5;
+}
+
+.custom-option.selected {
+    background-color: #f0f0f0;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   7. BOTONES
    ========================================================================== */
 
-/* A) Botón Negro Sólido (Para el Formulario principal) */
+/* Botón Principal (Negro) */
 .btn-black-full {
     width: 100%;
-    display: block;
-    height: var(--btn-height); /* 48px */
-    
-    background-color: var(--bg-inverse);
-    color: var(--text-inverse);
-    
+    height: 50px;
+    background-color: var(--color-negro);
+    color: #fff;
     border: none;
-    border-radius: var(--input-radius); /* 4px */
-    
-    font-family: var(--font-sans);
-    font-size: var(--size-small);
-    font-weight: var(--weight-semibold);
+    font-size: 13px;
+    font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    
     cursor: pointer;
-    transition: background-color var(--transition-fast);
+    transition: background 0.3s, transform 0.2s;
 }
 
 .btn-black-full:hover {
-    background-color: var(--hover-negro);
+    background-color: #333; /* Un poco más claro */
+    transform: translateY(-1px);
 }
 
-/* B) Botón Negro Sólido (Overlay Imagen - "REGISTRARSE") */
-.btn-black-solid-overlay {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: var(--btn-height);       /* 48px */
-    min-width: 220px;                /* Ancho visual específico */
-    padding: 0 var(--space-8);       /* 32px */
-    
-    background-color: var(--bg-inverse); 
-    color: var(--text-inverse);
-    border: 1px solid var(--bg-inverse);
-    
-    border-radius: var(--input-radius);
-    
-    font-family: var(--font-sans);
-    font-size: 13px;
-    font-weight: var(--weight-semibold);
+/* Botón Borde Blanco (Para la zona de imagen) */
+.btn-outline-white {
+    display: inline-block;
+    padding: 12px 30px;
+    border: 1px solid #fff;
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    text-decoration: none;
-    
-    transition: all var(--transition-fast);
-    box-shadow: var(--shadow-md);
+    transition: all 0.3s;
 }
 
-.btn-black-solid-overlay:hover {
-    background-color: var(--hover-negro);
-    border-color: var(--hover-negro);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-floating);
-}
-
-/* C) Botón Transparente (Overlay Imagen - "INICIAR SESIÓN") */
-.btn-black-overlay {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: var(--btn-height);
-    padding: 0 50px;
-    
-    background-color: transparent; 
-    color: var(--text-inverse); 
-    border: 1px solid var(--text-inverse); /* Borde blanco */
-    
-    border-radius: var(--input-radius);
-    
-    font-family: var(--font-sans);
-    font-size: var(--size-small);
-    font-weight: var(--weight-semibold);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-decoration: none;
-    
-    transition: all var(--transition-fast);
-}
-
-.btn-black-overlay:hover {
-    background-color: var(--text-inverse); /* Se vuelve blanco */
-    color: var(--text-primary);            /* Texto negro */
-    transform: translateY(-2px);
+.btn-outline-white:hover {
+    background-color: #fff;
+    color: #000;
 }
 
 /* ==========================================================================
-   7. TRANSICIONES DE PANELES (SLIDING)
+   8. RESPONSIVE (Móvil)
    ========================================================================== */
-
-/* Animaciones de entrada sólida */
-@keyframes slideSolidFromLeft {
-    from { transform: translateX(-100%); }
-    to { transform: translateX(0); }
-}
-
-@keyframes slideSolidFromRight {
-    from { transform: translateX(100%); }
-    to { transform: translateX(0); }
-}
-
-/* Clases aplicables */
-.enter-from-left {
-    animation: slideSolidFromLeft var(--transition-smooth) forwards;
-    z-index: 1;
-}
-
-.enter-from-right {
-    animation: slideSolidFromRight var(--transition-smooth) forwards;
-    z-index: 1;
-}
-
-/* RESPONSIVE */
 @media (max-width: 900px) {
-    /* Desactivar animaciones de slide en móvil */
-    .enter-from-left, .enter-from-right {
-        animation: none !important;
-        transform: none !important;
-    }
-    
     .auth-split-layout {
-        flex-direction: column;
+        flex-direction: column-reverse; /* Imagen arriba, formulario abajo */
         height: auto;
         min-height: 100vh;
+        overflow-y: auto; /* Habilitar scroll en el contenedor principal */
     }
 
-    .auth-panel-white, 
-    .auth-panel-image {
-        flex: none;
+    .auth-panel-white {
         width: 100%;
-        padding: var(--space-8) var(--space-4);
-        min-height: auto;
+        padding: 40px 20px;
+        flex: none; /* Quitar comportamiento flexible */
     }
 
-    /* Orden Mobile: Formulario arriba, Imagen abajo */
-    .auth-panel-white { order: 1; }
-    .auth-panel-image { order: 2; min-height: 350px; }
+    .auth-panel-image {
+        width: 100%;
+        height: 250px; /* Altura fija para la imagen en móvil */
+        flex: none;
+    }
+    
+    .promo-heading {
+        font-size: 24px;
+    }
+    
+    .promo-text {
+        font-size: 14px;
+    }
+
+    /* Ocultar botón volver en la imagen si molesta, o moverlo */
+    .back-link {
+        top: 20px;
+        left: 20px;
+    }
 }
 
 /* ==========================================================================
-   8. MODALES (Popups)
+   9. MODALES (Popups)
    ========================================================================== */
-
-/* Fondo oscuro que cubre toda la pantalla */
 .modal-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente oscuro */
-    z-index: var(--z-modal-bg); /* 1900, muy alto */
-    
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    z-index: 2000;
     display: flex;
     justify-content: center;
     align-items: center;
     
-    /* Estado inicial: Oculto */
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
-    backdrop-filter: blur(4px); /* Efecto borroso elegante en el fondo */
 }
 
-/* Cuando el modal está activo (Abierto) */
 .modal-overlay.active {
     opacity: 1;
     visibility: visible;
 }
 
-/* La caja blanca del contenido */
 .modal-content {
-    background-color: var(--bg-surface);
+    background: #fff;
     padding: 40px;
     width: 90%;
     max-width: 400px;
-    border-radius: 8px;
+    text-align: center;
     position: relative;
-    box-shadow: var(--shadow-floating);
-    
     transform: translateY(20px);
-    transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    transition: transform 0.3s ease;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 }
 
-/* Animación de entrada de la caja */
 .modal-overlay.active .modal-content {
     transform: translateY(0);
 }
 
-/* Botón de cerrar (X) */
 .modal-close {
     position: absolute;
     top: 15px;
@@ -519,21 +433,15 @@
     background: none;
     border: none;
     font-size: 24px;
-    color: var(--text-muted);
     cursor: pointer;
-    transition: color 0.2s;
+    color: #999;
 }
 
-.modal-close:hover {
-    color: var(--text-primary);
-}
+.modal-close:hover { color: #000; }
 
-/* Mensaje de error en el modal */
 .error-message {
-    color: var(--color-rojo); /* O usa #8B2E2F si la variable no carga */
-    font-size: 12px;
-    margin-top: -10px;
-    margin-bottom: 15px;
-    display: none; /* Oculto inicialmentne */
-    text-align: left;
+    color: #d32f2f;
+    font-size: 13px;
+    margin-top: 10px;
+    display: none; /* Oculto por defecto */
 }
