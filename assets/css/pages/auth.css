@@ -6,8 +6,9 @@
     width: 100%;
     height: 100vh; /* Fuerza altura completa de ventana */
     overflow: hidden; /* Evita scrollbars innecesarios */
-    background-color: #FFFFFF;
-    font-family: 'Inter', sans-serif; /* Asegura la fuente global */
+    background-color: var(--bg-page);
+    font-family: var(--font-sans); /* 'Inter' desde variables */
+    color: var(--text-primary);
 }
 
 /* ==========================================================================
@@ -22,8 +23,8 @@
     justify-content: center; /* Centra verticalmente */
     align-items: center;     /* Centra horizontalmente */
     position: relative;
-    padding: 60px;
-    background-color: #FFFFFF;
+    padding: var(--space-16); /* 64px aprox */
+    background-color: var(--bg-surface);
     z-index: 10;
 }
 
@@ -36,7 +37,7 @@
     align-items: center;
     
     /* IMAGEN DE FONDO */
-    background-color: #333; /* Color de respaldo si falla la imagen */
+    background-color: var(--color-gris-oscuro); /* Color de respaldo */
     background-image: url('../../assets/img/login-bg.jpg'); 
     background-size: cover;
     background-position: center;
@@ -47,7 +48,8 @@
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.4); /* Oscuridad al 40% */
+    /* Mantenemos rgba aquí para la transparencia alpha, usando tu negro base */
+    background: rgba(17, 17, 17, 0.4); 
     z-index: 1;
 }
 
@@ -56,7 +58,7 @@
     position: relative;
     z-index: 2;
     text-align: center;
-    color: #FFFFFF;
+    color: var(--color-blanco);
     padding: 0 40px;
     max-width: 480px;
 }
@@ -66,31 +68,54 @@
    ========================================================================== */
 
 /* Botón "Volver al inicio" */
+/* ==========================================================================
+   ELEMENTOS DE NAVEGACIÓN (Botón Volver)
+   ========================================================================== */
+
 .back-link {
     position: absolute;
     top: 30px;
     left: 30px;
-    font-family: var(--font-sans, sans-serif);
-    font-size: 13px;
-    color: #888;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text-muted); /* Color inicial gris */
     text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 8px;
-    transition: color 0.3s;
+    gap: var(--space-2); /* Espacio entre flecha y texto */
+    transition: color var(--transition-fast); /* Transición suave para el color */
+    z-index: 20; /* Asegura que esté por encima de todo */
 }
 
+/* Estilo para el icono de la flecha */
+.back-link i {
+    transition: transform var(--transition-fast) ease-out; /* Transición para el movimiento */
+}
+
+/* Estilo para el texto */
+.back-link span {
+    font-weight: var(--weight-medium);
+}
+
+/* --- ESTADOS HOVER (Animación) --- */
+
+/* Cuando pasas el ratón por encima del enlace completo */
 .back-link:hover {
-    color: #000;
+    color: var(--color-negro); /* El texto cambia a negro */
+}
+
+/* Cuando pasas el ratón, la flecha se mueve a la izquierda */
+.back-link:hover i {
+    transform: translateX(-4px); /* Mueve la flecha 4px a la izquierda */
 }
 
 /* Logo Vértice (Columnas) */
 .auth-icon {
-    margin-bottom: 20px;
+    margin-bottom: var(--space-6);
 }
 
 .auth-icon img {
-    height: 40px; /* Tamaño fijo para que no se deforme */
+    height: 40px;
     width: auto;
     display: block;
     margin: 0 auto;
@@ -101,38 +126,38 @@
    4. TIPOGRAFÍA
    ========================================================================== */
 .auth-title {
-    font-family: var(--font-sans, sans-serif);
+    font-family: var(--font-sans);
     font-size: 24px;
-    font-weight: 600;
-    color: #000;
+    font-weight: var(--weight-semibold);
+    color: var(--text-primary);
     margin-bottom: 5px;
     text-align: center;
 }
 
 .auth-subtitle {
-    font-family: var(--font-sans, sans-serif);
+    font-family: var(--font-sans);
     font-size: 13px;
-    color: #888;
+    color: var(--text-muted);
     margin-bottom: 40px;
     text-align: center;
 }
 
 /* Textos del lado de la Imagen */
 .promo-heading {
-    font-family: var(--font-sans, sans-serif);
+    font-family: var(--font-sans);
     font-size: 32px;
-    font-weight: 600;
-    margin-bottom: 15px;
-    color: #FFFFFF;
+    font-weight: var(--weight-semibold);
+    margin-bottom: var(--space-4);
+    color: var(--color-blanco);
 }
 
 .promo-text {
-    font-family: var(--font-sans, sans-serif);
+    font-family: var(--font-sans);
     font-size: 15px;
     line-height: 1.5;
     margin-bottom: 30px;
-    color: #F0F0F0;
-    font-weight: 400;
+    color: var(--color-gris-claro); /* Usamos gris claro en lugar de F0F0F0 */
+    font-weight: var(--weight-regular);
 }
 
 /* ==========================================================================
@@ -140,7 +165,7 @@
    ========================================================================== */
 .form-wrapper {
     width: 100%;
-    max-width: 360px; /* Ancho máximo del formulario */
+    max-width: 360px;
 }
 
 .input-group-line {
@@ -154,24 +179,24 @@
 .input-group-line select {
     width: 100%;
     padding: 12px 0;
-    font-family: var(--font-sans, sans-serif);
+    font-family: var(--font-sans);
     font-size: 14px;
-    color: #000;
+    color: var(--text-primary);
     background: transparent;
     border: none;
-    border-bottom: 1px solid #E0E0E0; /* Línea gris clara */
+    border-bottom: 1px solid var(--border-sutil); /* Gris claro */
     border-radius: 0;
     outline: none;
-    transition: border-color 0.3s;
+    transition: border-color var(--transition-fast);
 }
 
 .input-group-line input:focus,
 .input-group-line select:focus {
-    border-bottom-color: #000; /* Línea negra al escribir */
+    border-bottom-color: var(--border-fuerte); /* Negro */
 }
 
 .input-group-line input::placeholder {
-    color: #999;
+    color: var(--text-muted);
 }
 
 /* Correcciones para Select */
@@ -179,7 +204,7 @@
     appearance: none;
     -webkit-appearance: none;
     cursor: pointer;
-    color: #555;
+    color: var(--text-secondary);
 }
 
 /* Iconos dentro de inputs (Ojo, Flecha) */
@@ -188,7 +213,7 @@
     position: absolute;
     right: 0;
     top: 12px;
-    color: #999;
+    color: var(--text-muted);
     font-size: 14px;
     pointer-events: none;
 }
@@ -207,12 +232,13 @@
 
 .forgot-link {
     font-size: 12px;
-    color: #888;
+    color: var(--text-muted);
     text-decoration: none;
+    transition: color var(--transition-fast);
 }
 
 .forgot-link:hover {
-    color: #000;
+    color: var(--color-negro);
     text-decoration: underline;
 }
 
@@ -224,66 +250,66 @@
 .btn-black-full {
     width: 100%;
     display: block;
-    background-color: #111;
-    color: #FFF;
+    background-color: var(--bg-inverse); /* Negro */
+    color: var(--text-inverse); /* Blanco */
     border: none;
     padding: 16px;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: var(--weight-semibold);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background var(--transition-fast);
     text-align: center;
-    border-radius: 4px;
+    border-radius: var(--input-radius);
 }
 
 .btn-black-full:hover {
-    background-color: #333;
+    background-color: var(--hover-negro);
 }
 
 /* Botón Negro Sólido (Para el lado de la Imagen - Login) */
 .btn-black-solid-overlay {
     display: inline-block;
-    background-color: #000;
-    color: #FFF;
-    border: 1px solid #000;
+    background-color: var(--bg-inverse);
+    color: var(--text-inverse);
+    border: 1px solid var(--bg-inverse);
     padding: 15px 60px;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: var(--weight-semibold);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     text-decoration: none;
-    transition: all 0.3s;
-    border-radius: 4px;
+    transition: all var(--transition-fast);
+    border-radius: var(--input-radius);
     min-width: 200px;
 }
 
 .btn-black-solid-overlay:hover {
-    background-color: #222;
-    border-color: #222;
+    background-color: var(--hover-negro);
+    border-color: var(--hover-negro);
     transform: translateY(-2px);
 }
 
-/* Botón Borde/Transparente (Opcional, si lo usas en Registro) */
+/* Botón Borde/Transparente (Opcional) */
 .btn-black-overlay {
     display: inline-block;
-    background-color: #111;
-    color: #FFF;
-    border: 1px solid #111;
+    background-color: var(--bg-inverse);
+    color: var(--text-inverse);
+    border: 1px solid var(--bg-inverse);
     padding: 15px 50px;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: var(--weight-semibold);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     text-decoration: none;
-    transition: all 0.3s;
-    border-radius: 4px;
+    transition: all var(--transition-fast);
+    border-radius: var(--input-radius);
 }
 
 .btn-black-overlay:hover {
-    background-color: #333;
-    border-color: #333;
+    background-color: var(--hover-negro);
+    border-color: var(--hover-negro);
     transform: translateY(-2px);
 }
 
@@ -292,8 +318,8 @@
    ========================================================================== */
 @media (max-width: 900px) {
     .auth-split-layout {
-        flex-direction: column; /* Apila los paneles verticalmente */
-        height: auto; /* Permite scroll */
+        flex-direction: column;
+        height: auto;
         min-height: 100vh;
     }
 
@@ -306,71 +332,57 @@
     }
 
     .auth-panel-white {
-        order: 1; /* El formulario siempre visible primero en móvil */
+        order: 1;
     }
 
     .auth-panel-image {
         order: 2;
-        min-height: 350px; /* Altura mínima para que se vea la imagen */
+        min-height: 350px;
     }
 }
 
 /* ==========================================================================
-   8. ANIMACIONES Y TRANSICIONES (NUEVO)
+   8. TRANSICIONES DE PANELES SÓLIDOS (SLIDING PANELS)
    ========================================================================== */
 
-/* --- Animación de Entrada (Fade In Up) --- */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+/* La lógica es: "Entra desde donde estabas en la otra página".
+   No usamos opacidad para que el bloque se sienta sólido.
+*/
+
+/* Moverse desde la Izquierda hacia el Centro (0) */
+@keyframes slideSolidFromLeft {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+/* Moverse desde la Derecha hacia el Centro (0) */
+@keyframes slideSolidFromRight {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+/* CLASES PARA EL HTML */
+/* Usamos un cubic-bezier para que el movimiento sea suave y fluido (acelera y frena) */
+.enter-from-left {
+    animation: slideSolidFromLeft 0.6s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+    z-index: 1; /* Asegura que no se superponga raramente durante el cruce */
+}
+
+.enter-from-right {
+    animation: slideSolidFromRight 0.6s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+    z-index: 1;
+}
+
+/* Aseguramos que el contenedor principal corte lo que se sale durante el movimiento */
+.auth-split-layout {
+    overflow: hidden;
+    position: relative;
+}
+
+/* RESPONSIVE: En móvil desactivamos este efecto porque los paneles se apilan */
+@media (max-width: 900px) {
+    .enter-from-left, .enter-from-right {
+        animation: none !important;
+        transform: none !important;
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Clase base para elementos animados */
-.animate-up {
-    opacity: 0; /* Invisible al inicio */
-    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* Retardos en cascada (Stagger) */
-.delay-1 { animation-delay: 0.1s; }
-.delay-2 { animation-delay: 0.2s; } /* Logo */
-.delay-3 { animation-delay: 0.3s; } /* Título */
-.delay-4 { animation-delay: 0.4s; } /* Subtítulo */
-.delay-5 { animation-delay: 0.5s; } /* Inputs */
-.delay-6 { animation-delay: 0.6s; } /* Botones */
-
-/* --- Animación de Transición de Salida (Page Exit) --- */
-body {
-    transition: opacity 0.4s ease;
-    opacity: 1; /* Estado normal visible */
-}
-
-body.fade-out {
-    opacity: 0; /* Estado al salir */
-    pointer-events: none; /* Evita clics múltiples */
-}
-
-/* Efecto de Hover en Inputs (Feedback visual) */
-.input-group-line input {
-    transition: border-color 0.3s, transform 0.3s;
-}
-
-.input-group-line:focus-within {
-    transform: translateX(5px); /* Pequeño desplazamiento al escribir */
-}
-
-/* Efecto suave en el panel de imagen al cargar */
-.auth-panel-image {
-    animation: fadeInImage 1.2s ease-out forwards;
-}
-
-@keyframes fadeInImage {
-    from { opacity: 0; transform: scale(1.05); }
-    to { opacity: 1; transform: scale(1); }
 }
