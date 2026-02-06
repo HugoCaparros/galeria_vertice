@@ -4,112 +4,109 @@
 .auth-split-layout {
     display: flex;
     width: 100%;
-    height: 100vh; /* Fuerza altura completa de ventana */
-    overflow: hidden; /* Evita scrollbars innecesarios */
+    height: 100vh;
+    overflow: hidden;
     background-color: var(--bg-page);
-    font-family: var(--font-sans); /* 'Inter' desde variables */
+    font-family: var(--font-sans);
     color: var(--text-primary);
+    position: relative;
 }
 
 /* ==========================================================================
-   2. PANELES (Blanco vs Imagen)
+   2. PANELES
    ========================================================================== */
 
 /* --- Panel del Formulario (Blanco) --- */
 .auth-panel-white {
-    flex: 1; /* Ocupa el 50% del ancho */
+    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centra verticalmente */
-    align-items: center;     /* Centra horizontalmente */
+    justify-content: center;
+    align-items: center;
     position: relative;
-    padding: var(--space-16); /* 64px aprox */
+    padding: var(--space-16); /* 64px */
     background-color: var(--bg-surface);
-    z-index: 10;
+    z-index: var(--z-normal);
 }
 
 /* --- Panel de la Imagen (Promocional) --- */
 .auth-panel-image {
-    flex: 1; /* Ocupa el otro 50% */
+    flex: 1;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     
-    /* IMAGEN DE FONDO */
-    background-color: var(--color-gris-oscuro); /* Color de respaldo */
+    /* Fondo de respaldo + Imagen */
+    background-color: var(--color-gris-oscuro);
     background-image: url('../../assets/img/login-bg.jpg'); 
     background-size: cover;
     background-position: center;
 }
 
-/* Capa oscura sobre la imagen para que se lea el texto blanco */
+/* Capa oscura (Overlay) */
 .auth-panel-image::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    /* Mantenemos rgba aquí para la transparencia alpha, usando tu negro base */
-    background: rgba(17, 17, 17, 0.4); 
+    /* Usamos el negro de la marca con opacidad */
+    background-color: var(--color-negro);
+    opacity: 0.4;
     z-index: 1;
 }
 
-/* Contenido sobre la imagen (Texto y Botón) */
+/* Contenido sobre la imagen */
 .overlay-content {
     position: relative;
     z-index: 2;
     text-align: center;
-    color: var(--color-blanco);
-    padding: 0 40px;
+    color: var(--text-inverse); /* Blanco */
+    padding: 0 var(--space-8);
     max-width: 480px;
 }
 
 /* ==========================================================================
-   3. ELEMENTOS DE NAVEGACIÓN Y LOGO
+   3. NAVEGACIÓN (Botón Volver)
    ========================================================================== */
-
-/* Botón "Volver al inicio" */
-/* ==========================================================================
-   ELEMENTOS DE NAVEGACIÓN (Botón Volver)
-   ========================================================================== */
-
 .back-link {
     position: absolute;
-    top: 30px;
-    left: 30px;
+    top: var(--space-8);  /* 32px */
+    left: var(--space-8);
+    
     font-family: var(--font-sans);
     font-size: 14px;
-    color: var(--text-muted); /* Color inicial gris */
+    font-weight: var(--weight-medium);
+    color: var(--text-muted);
+    
     text-decoration: none;
     display: flex;
     align-items: center;
-    gap: var(--space-2); /* Espacio entre flecha y texto */
-    transition: color var(--transition-fast); /* Transición suave para el color */
-    z-index: 20; /* Asegura que esté por encima de todo */
+    gap: var(--space-2);
+    
+    transition: color var(--transition-fast);
+    z-index: 20;
 }
 
-/* Estilo para el icono de la flecha */
 .back-link i {
-    transition: transform var(--transition-fast) ease-out; /* Transición para el movimiento */
+    transition: transform var(--transition-fast) ease-out;
 }
 
-/* Estilo para el texto */
 .back-link span {
     font-weight: var(--weight-medium);
 }
 
-/* --- ESTADOS HOVER (Animación) --- */
-
-/* Cuando pasas el ratón por encima del enlace completo */
+/* Hover States */
 .back-link:hover {
-    color: var(--color-negro); /* El texto cambia a negro */
+    color: var(--hover-link); /* Negro */
 }
 
-/* Cuando pasas el ratón, la flecha se mueve a la izquierda */
 .back-link:hover i {
-    transform: translateX(-4px); /* Mueve la flecha 4px a la izquierda */
+    transform: translateX(-4px);
 }
 
-/* Logo Vértice (Columnas) */
+/* ==========================================================================
+   4. TIPOGRAFÍA Y LOGO
+   ========================================================================== */
 .auth-icon {
     margin-bottom: var(--space-6);
 }
@@ -122,15 +119,12 @@
     opacity: 0.8;
 }
 
-/* ==========================================================================
-   4. TIPOGRAFÍA
-   ========================================================================== */
 .auth-title {
     font-family: var(--font-sans);
     font-size: 24px;
     font-weight: var(--weight-semibold);
     color: var(--text-primary);
-    margin-bottom: 5px;
+    margin-bottom: var(--space-1); /* ~4px */
     text-align: center;
 }
 
@@ -138,30 +132,30 @@
     font-family: var(--font-sans);
     font-size: 13px;
     color: var(--text-muted);
-    margin-bottom: 40px;
+    margin-bottom: var(--space-12); /* 48px */
     text-align: center;
 }
 
-/* Textos del lado de la Imagen */
+/* Textos sobre la imagen */
 .promo-heading {
     font-family: var(--font-sans);
     font-size: 32px;
     font-weight: var(--weight-semibold);
     margin-bottom: var(--space-4);
-    color: var(--color-blanco);
+    color: var(--text-inverse);
 }
 
 .promo-text {
     font-family: var(--font-sans);
-    font-size: 15px;
+    font-size: 15px; 
     line-height: 1.5;
-    margin-bottom: 30px;
-    color: var(--color-gris-claro); /* Usamos gris claro en lugar de F0F0F0 */
+    margin-bottom: var(--space-8);
+    color: var(--color-gris-claro);
     font-weight: var(--weight-regular);
 }
 
 /* ==========================================================================
-   5. FORMULARIOS (Inputs estilo línea)
+   5. FORMULARIOS (Inputs y Select Personalizado)
    ========================================================================== */
 .form-wrapper {
     width: 100%;
@@ -170,52 +164,124 @@
 
 .input-group-line {
     position: relative;
-    margin-bottom: 25px;
+    margin-bottom: var(--space-6); /* 24px */
     text-align: left;
 }
 
-/* Estilo Base de Inputs y Selects */
-.input-group-line input,
-.input-group-line select {
+/* --- Estilos Generales para Inputs --- */
+.input-group-line input {
     width: 100%;
-    padding: 12px 0;
+    padding: var(--space-3) 0; /* 12px vertical */
+    
     font-family: var(--font-sans);
     font-size: 14px;
     color: var(--text-primary);
+    
     background: transparent;
     border: none;
-    border-bottom: 1px solid var(--border-sutil); /* Gris claro */
+    border-bottom: 1px solid var(--border-sutil);
     border-radius: 0;
+    
     outline: none;
     transition: border-color var(--transition-fast);
 }
 
-.input-group-line input:focus,
-.input-group-line select:focus {
-    border-bottom-color: var(--border-fuerte); /* Negro */
+.input-group-line input:focus {
+    border-bottom-color: var(--border-fuerte);
 }
 
 .input-group-line input::placeholder {
     color: var(--text-muted);
 }
 
-/* Correcciones para Select */
-.input-group-line select {
-    appearance: none;
-    -webkit-appearance: none;
+/* --- ESTILOS DEL SELECT PERSONALIZADO (Nuevo Diseño) --- */
+
+.custom-select-wrapper {
     cursor: pointer;
-    color: var(--text-secondary);
+    user-select: none;
 }
 
-/* Iconos dentro de inputs (Ojo, Flecha) */
-.show-pass-icon,
-.select-arrow {
+/* 1. El Botón (Trigger) */
+.custom-select-trigger {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: var(--space-3) 0;
+    
+    border-bottom: 1px solid var(--border-sutil);
+    background: transparent;
+    
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text-muted); /* Color placeholder inicial */
+    transition: all var(--transition-fast);
+}
+
+/* Cuando se selecciona algo */
+.custom-select-trigger.selected {
+    color: var(--text-primary); /* Se pone negro */
+}
+
+/* 2. La Lista Desplegable (Menú Flotante) */
+.custom-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    
+    background: var(--bg-surface);
+    border-radius: 8px; /* Bordes redondeados modernos */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    
+    overflow: hidden;
+    margin-top: 5px;
+}
+
+/* Estado Abierto */
+.custom-select-wrapper.open .custom-options {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* 3. Opciones Individuales */
+.custom-option {
+    padding: 12px 16px;
+    font-size: 14px;
+    color: var(--text-primary);
+    transition: background 0.2s;
+}
+
+/* Hover Gris Claro (Estilo Google) */
+.custom-option:hover {
+    background-color: #F5F5F5; 
+    color: var(--color-negro);
+}
+
+/* Opción Seleccionada */
+.custom-option.selected {
+    font-weight: var(--weight-semibold);
+    background-color: #FAFAFA;
+}
+
+/* 4. Flecha e Iconos */
+.select-arrow, 
+.show-pass-icon {
     position: absolute;
     right: 0;
-    top: 12px;
+    top: var(--space-3);
     color: var(--text-muted);
     font-size: 14px;
     pointer-events: none;
+    transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .show-pass-icon {
@@ -223,22 +289,32 @@
     cursor: pointer;
 }
 
-/* Link "¿Olvidaste tu contraseña?" */
+.show-pass-icon:hover {
+    color: var(--text-primary);
+}
+
+/* Rotación de flecha en custom select */
+.custom-select-wrapper.open .select-arrow {
+    transform: rotate(180deg);
+    color: var(--text-primary);
+}
+
+/* --- Links del Formulario --- */
 .form-options {
     text-align: right;
-    margin-top: -10px;
-    margin-bottom: 30px;
+    margin-top: calc(var(--space-2) * -1); /* -8px */
+    margin-bottom: var(--space-8);
 }
 
 .forgot-link {
-    font-size: 12px;
+    font-size: var(--size-small);
     color: var(--text-muted);
     text-decoration: none;
     transition: color var(--transition-fast);
 }
 
 .forgot-link:hover {
-    color: var(--color-negro);
+    color: var(--hover-link);
     text-decoration: underline;
 }
 
@@ -246,77 +322,129 @@
    6. BOTONES
    ========================================================================== */
 
-/* Botón Negro Sólido (Para el Formulario) */
+/* A) Botón Negro Sólido (Para el Formulario principal) */
 .btn-black-full {
     width: 100%;
     display: block;
-    background-color: var(--bg-inverse); /* Negro */
-    color: var(--text-inverse); /* Blanco */
+    height: var(--btn-height); /* 48px */
+    
+    background-color: var(--bg-inverse);
+    color: var(--text-inverse);
+    
     border: none;
-    padding: 16px;
-    font-size: 12px;
+    border-radius: var(--input-radius); /* 4px */
+    
+    font-family: var(--font-sans);
+    font-size: var(--size-small);
     font-weight: var(--weight-semibold);
     letter-spacing: 0.1em;
     text-transform: uppercase;
+    
     cursor: pointer;
-    transition: background var(--transition-fast);
-    text-align: center;
-    border-radius: var(--input-radius);
+    transition: background-color var(--transition-fast);
 }
 
 .btn-black-full:hover {
     background-color: var(--hover-negro);
 }
 
-/* Botón Negro Sólido (Para el lado de la Imagen - Login) */
+/* B) Botón Negro Sólido (Overlay Imagen - "REGISTRARSE") */
 .btn-black-solid-overlay {
-    display: inline-block;
-    background-color: var(--bg-inverse);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--btn-height);       /* 48px */
+    min-width: 220px;                /* Ancho visual específico */
+    padding: 0 var(--space-8);       /* 32px */
+    
+    background-color: var(--bg-inverse); 
     color: var(--text-inverse);
     border: 1px solid var(--bg-inverse);
-    padding: 15px 60px;
-    font-size: 12px;
+    
+    border-radius: var(--input-radius);
+    
+    font-family: var(--font-sans);
+    font-size: 13px;
     font-weight: var(--weight-semibold);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     text-decoration: none;
+    
     transition: all var(--transition-fast);
-    border-radius: var(--input-radius);
-    min-width: 200px;
+    box-shadow: var(--shadow-md);
 }
 
 .btn-black-solid-overlay:hover {
     background-color: var(--hover-negro);
     border-color: var(--hover-negro);
     transform: translateY(-2px);
+    box-shadow: var(--shadow-floating);
 }
 
-/* Botón Borde/Transparente (Opcional) */
+/* C) Botón Transparente (Overlay Imagen - "INICIAR SESIÓN") */
 .btn-black-overlay {
-    display: inline-block;
-    background-color: var(--bg-inverse);
-    color: var(--text-inverse);
-    border: 1px solid var(--bg-inverse);
-    padding: 15px 50px;
-    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--btn-height);
+    padding: 0 50px;
+    
+    background-color: transparent; 
+    color: var(--text-inverse); 
+    border: 1px solid var(--text-inverse); /* Borde blanco */
+    
+    border-radius: var(--input-radius);
+    
+    font-family: var(--font-sans);
+    font-size: var(--size-small);
     font-weight: var(--weight-semibold);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     text-decoration: none;
+    
     transition: all var(--transition-fast);
-    border-radius: var(--input-radius);
 }
 
 .btn-black-overlay:hover {
-    background-color: var(--hover-negro);
-    border-color: var(--hover-negro);
+    background-color: var(--text-inverse); /* Se vuelve blanco */
+    color: var(--text-primary);            /* Texto negro */
     transform: translateY(-2px);
 }
 
 /* ==========================================================================
-   7. RESPONSIVE (Móviles)
+   7. TRANSICIONES DE PANELES (SLIDING)
    ========================================================================== */
+
+/* Animaciones de entrada sólida */
+@keyframes slideSolidFromLeft {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+@keyframes slideSolidFromRight {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+/* Clases aplicables */
+.enter-from-left {
+    animation: slideSolidFromLeft var(--transition-smooth) forwards;
+    z-index: 1;
+}
+
+.enter-from-right {
+    animation: slideSolidFromRight var(--transition-smooth) forwards;
+    z-index: 1;
+}
+
+/* RESPONSIVE */
 @media (max-width: 900px) {
+    /* Desactivar animaciones de slide en móvil */
+    .enter-from-left, .enter-from-right {
+        animation: none !important;
+        transform: none !important;
+    }
+    
     .auth-split-layout {
         flex-direction: column;
         height: auto;
@@ -327,62 +455,85 @@
     .auth-panel-image {
         flex: none;
         width: 100%;
-        padding: 50px 20px;
+        padding: var(--space-8) var(--space-4);
         min-height: auto;
     }
 
-    .auth-panel-white {
-        order: 1;
-    }
-
-    .auth-panel-image {
-        order: 2;
-        min-height: 350px;
-    }
+    /* Orden Mobile: Formulario arriba, Imagen abajo */
+    .auth-panel-white { order: 1; }
+    .auth-panel-image { order: 2; min-height: 350px; }
 }
 
 /* ==========================================================================
-   8. TRANSICIONES DE PANELES SÓLIDOS (SLIDING PANELS)
+   8. MODALES (Popups)
    ========================================================================== */
 
-/* La lógica es: "Entra desde donde estabas en la otra página".
-   No usamos opacidad para que el bloque se sienta sólido.
-*/
-
-/* Moverse desde la Izquierda hacia el Centro (0) */
-@keyframes slideSolidFromLeft {
-    from { transform: translateX(-100%); }
-    to { transform: translateX(0); }
+/* Fondo oscuro que cubre toda la pantalla */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente oscuro */
+    z-index: var(--z-modal-bg); /* 1900, muy alto */
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Estado inicial: Oculto */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px); /* Efecto borroso elegante en el fondo */
 }
 
-/* Moverse desde la Derecha hacia el Centro (0) */
-@keyframes slideSolidFromRight {
-    from { transform: translateX(100%); }
-    to { transform: translateX(0); }
+/* Cuando el modal está activo (Abierto) */
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
 }
 
-/* CLASES PARA EL HTML */
-/* Usamos un cubic-bezier para que el movimiento sea suave y fluido (acelera y frena) */
-.enter-from-left {
-    animation: slideSolidFromLeft 0.6s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
-    z-index: 1; /* Asegura que no se superponga raramente durante el cruce */
-}
-
-.enter-from-right {
-    animation: slideSolidFromRight 0.6s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
-    z-index: 1;
-}
-
-/* Aseguramos que el contenedor principal corte lo que se sale durante el movimiento */
-.auth-split-layout {
-    overflow: hidden;
+/* La caja blanca del contenido */
+.modal-content {
+    background-color: var(--bg-surface);
+    padding: 40px;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 8px;
     position: relative;
+    box-shadow: var(--shadow-floating);
+    
+    transform: translateY(20px);
+    transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-/* RESPONSIVE: En móvil desactivamos este efecto porque los paneles se apilan */
-@media (max-width: 900px) {
-    .enter-from-left, .enter-from-right {
-        animation: none !important;
-        transform: none !important;
-    }
+/* Animación de entrada de la caja */
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+}
+
+/* Botón de cerrar (X) */
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: var(--text-primary);
+}
+
+/* Mensaje de error en el modal */
+.error-message {
+    color: var(--color-rojo); /* O usa #8B2E2F si la variable no carga */
+    font-size: 12px;
+    margin-top: -10px;
+    margin-bottom: 15px;
+    display: none; /* Oculto inicialmentne */
+    text-align: left;
 }

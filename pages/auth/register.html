@@ -1,29 +1,35 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VÉRTICE | Crear Cuenta</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Marcellus&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Marcellus&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../../assets/css/main.css">
+
+    <link rel="stylesheet" href="../../assets/css/main.css?v=1.0">
 </head>
+
 <body>
 
     <main class="auth-split-layout">
-        
-        <div class="auth-panel-image enter-from-right" style="background-image: url('../../assets/img/LoginBackgroundPage.png');">
+
+        <div class="auth-panel-image enter-from-right"
+            style="background-image: url('../../assets/img/LoginBackgroundPage2.png');">
             <div class="overlay-content">
                 <h2 class="promo-heading">¡Bienvenido de nuevo!</h2>
-                <p class="promo-text">Para mantenerte conectado con nosotros, por favor inicia sesión con tu información personal</p>
+                <p class="promo-text">Para mantenerte conectado con nosotros, por favor inicia sesión con tu información
+                    personal</p>
                 <a href="login.html" class="btn-black-overlay">INICIAR SESIÓN</a>
             </div>
         </div>
 
         <div class="auth-panel-white enter-from-left">
-            
-            <a href="index.html" class="back-link">
+
+            <a href="../../index.html" class="back-link">
                 <i class="fa-solid fa-arrow-left"></i>
                 <span>Volver al inicio</span>
             </a>
@@ -37,36 +43,42 @@
                 <p class="auth-subtitle">Únete a Galería Vértice</p>
 
                 <form action="sesion_iniciada.html" class="auth-form-clean">
-                    
-                    <div class="input-group-wrapper">
-                        <div class="input-group-line">
-                            <input type="text" placeholder="Nombre completo" required>
-                        </div>
 
-                        <div class="input-group-line">
-                            <input type="email" placeholder="Correo electrónico" required>
-                        </div>
+                    <div class="input-group-line">
+                        <input type="text" placeholder="Nombre completo" required>
+                    </div>
 
-                        <div class="input-group-line">
-                            <select required>
-                                <option value="" disabled selected hidden>Tipo de Usuario</option>
-                                <option value="coleccionista">Usuario</option>
-                                <option value="artista">Artista</option>
-                            </select>
+                    <div class="input-group-line">
+                        <input type="email" placeholder="Correo electrónico" required>
+                    </div>
+
+                    <div class="input-group-line custom-select-wrapper">
+
+                        <input type="hidden" name="tipoUsuario" id="tipoUsuarioValue" required>
+
+                        <div class="custom-select-trigger" id="customSelectTrigger">
+                            <span class="custom-select-text">Tipo de Usuario</span>
                             <i class="fa-solid fa-chevron-down select-arrow"></i>
                         </div>
 
-                        <div class="input-group-line">
-                            <input type="password" placeholder="Contraseña" required>
-                            <i class="fa-regular fa-eye show-pass-icon"></i>
+                        <div class="custom-options">
+                            <div class="custom-option" data-value="artista">Artista</div>
+                            <div class="custom-option" data-value="galeria">Usuario</div>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn-black-full mt-4">REGISTRARSE</button>
+                    <div class="input-group-line">
+                        <input type="password" placeholder="Contraseña" required>
+                        <i class="fa-regular fa-eye show-pass-icon"></i>
+                    </div>
+
+                    <button type="submit" class="btn-black-full">REGISTRARSE</button>
                 </form>
             </div>
         </div>
 
     </main>
-    </body>
+
+<script src="../../assets/js/services/auth.js"></script>
+</body>
 </html>
