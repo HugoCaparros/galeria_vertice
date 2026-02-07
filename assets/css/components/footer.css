@@ -1,20 +1,19 @@
 /* ==========================================================================
-   FOOTER GLOBAL (Componente)
+   FOOTER GLOBAL (Componente) - Versión Compacta
    ========================================================================== */
 
 .site-footer {
-    /* Fondo negro de marca */
     background-color: var(--color-negro); 
-    color: var(--text-inverse); /* Texto blanco */
+    color: var(--text-inverse);
     
     padding-top: var(--space-16);    /* 64px */
-    padding-bottom: var(--space-8);  /* 32px */
+    
+    /* CAMBIO 1: Espacio final muy reducido (de 32px a ~16px) */
+    padding-bottom: var(--space-4); 
     
     font-family: var(--font-sans);
     width: 100%;
-    margin-top: auto; /* Empuja el footer al fondo */
-    
-    /* Borde superior sutil */
+    margin-top: auto;
     border-top: 1px solid var(--color-gris-oscuro);
 }
 
@@ -34,7 +33,7 @@
     margin-bottom: var(--space-12);
 }
 
-/* Marca y Logo (Izquierda) */
+/* Marca y Logo */
 .footer-brand {
     max-width: 400px;
     display: flex;
@@ -53,14 +52,13 @@
 }
 
 .footer-logo img.logo-white-filter {
-    height: 55px;
+    height: 75px;
     width: auto;
-    /* FILTRO: Invierte tu logo negro a blanco puro */
     filter: invert(1) brightness(100%);
     opacity: 0.9;
 }
 
-/* Navegación (Derecha) */
+/* Navegación */
 .footer-nav {
     display: flex;
     gap: var(--space-12);
@@ -91,7 +89,7 @@
 }
 
 .footer-col ul li a {
-    color: var(--text-muted); /* Gris medio (#8C8C8C) */
+    color: var(--text-muted);
     text-decoration: none;
     font-size: 13px;
     font-weight: var(--weight-medium);
@@ -100,14 +98,16 @@
 }
 
 .footer-col ul li a:hover {
-    color: var(--text-inverse); /* Blanco al hover */
+    color: var(--text-inverse);
 }
 
-/* --- DIVISOR --- */
+/* --- DIVISOR (Línea) --- */
 .footer-divider {
     border: 0;
     border-top: 1px solid var(--color-gris-oscuro); 
-    margin-bottom: var(--space-8);
+    
+    /* CAMBIO 2: Pegamos las letras a la línea (de 32px a ~16px) */
+    margin-bottom: var(--space-4);
 }
 
 /* --- SECCIÓN INFERIOR --- */
@@ -139,27 +139,31 @@
 }
 
 /* Redes Sociales */
+/* Redes Sociales */
 .footer-social {
     display: flex;
     gap: var(--space-6);
 }
 
 .footer-social a {
-    color: var(--text-inverse);
+    /* CAMBIO: Empiezan en gris (muted) */
+    color: var(--text-muted); 
     font-size: 18px;
     transition: transform var(--transition-fast), color var(--transition-fast);
 }
 
 .footer-social a:hover {
-    color: var(--text-muted);
+    /* CAMBIO: Se vuelven blancos al pasar el ratón */
+    color: var(--text-inverse); 
     transform: translateY(-2px);
 }
 
-/* --- RESPONSIVE (Móvil) --- */
+/* --- RESPONSIVE --- */
 @media (max-width: 900px) {
     .footer-top {
         flex-direction: column;
         gap: var(--space-8);
+        margin-bottom: 25px; 
     }
     
     .footer-brand {
