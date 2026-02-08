@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "obra_id": 111,
+    "usuario_id": 3,
+    "handle": "@glitch_boy",
+    "avatar": "assets/img/avatars/user_mark.jpg",
+    "fecha": "Hace 2 horas",
+    "texto": "Esto es historia del arte digital 🔥. El uso del aerosol sobre lienzo físico pero con estética glitch es brutal.",
+    "likes": 45
+  },
+  {
+    "id": 2,
+    "obra_id": 111,
+    "usuario_id": 2,
+    "handle": "@curator_jane",
+    "avatar": "assets/img/avatars/user_jane.jpg",
+    "fecha": "Hace 5 horas",
+    "texto": "Aunque prefiero su etapa anterior, hay que reconocer que esta pieza tiene una energía innegable.",
+    "likes": 12
+  },
+  {
+    "id": 3,
+    "obra_id": 102,
+    "usuario_id": 2,
+    "handle": "@curator_jane",
+    "avatar": "assets/img/avatars/user_jane.jpg",
+    "fecha": "Hace 1 día",
+    "texto": "Sublime. La técnica del óleo es perfecta, y la ruptura digital crea una tensión narrativa exquisita.",
+    "likes": 120
+  },
+  {
+    "id": 4,
+    "obra_id": 104,
+    "usuario_id": 3,
+    "handle": "@glitch_boy",
+    "avatar": "assets/img/avatars/user_mark.jpg",
+    "fecha": "Hace 3 días",
+    "texto": "La gente no entiende que el prompt engineering es el nuevo pincel. Gran trabajo @algo_dreams.",
+    "likes": 89
+  },
+  {
+    "id": 5,
+    "obra_id": 119,
+    "usuario_id": 1,
+    "handle": "@alex_collector",
+    "avatar": "assets/img/avatars/user_me.jpg",
+    "fecha": "Hace 1 semana",
+    "texto": "Necesité estar frente a esta obra 20 minutos para entenderla. La paz que transmite es real.",
+    "likes": 15
+  },
+  {
+    "id": 6,
+    "obra_id": 121,
+    "usuario_id": 2,
+    "handle": "@curator_jane",
+    "avatar": "assets/img/avatars/user_jane.jpg",
+    "fecha": "Hace 4 horas",
+    "texto": "Valentina está redefiniendo el vidrio soplado. Esa forma orgánica es imposible de replicar.",
+    "likes": 230
+  }
+]

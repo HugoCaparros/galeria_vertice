@@ -1,20 +1,62 @@
 [
   {
-    "id": "moderno",
-    "nombre": "Moderno",
-    "descripcion": "Arte que rompe moldes. Digital, neón y nuevas narrativas.",
-    "imagen_cover": "assets/img/cat-moderno.jpg"
+    "id": "clasico",
+    "nombre": "Clásico & Neo-Renacimiento",
+    "slug": "clasico",
+    "descripcion": "Una mirada contemporánea a las técnicas maestras. Desde el óleo hiperrealista hasta el grabado y la fotografía analógica. Respetar la tradición para romperla.",
+    "imagen": "assets/img/obras/clasico-2.jpg",
+    "total_obras": 42,
+    "curador": "Dra. Elena S. (Conservadora Jefe)",
+    "artista_destacado_id": 2,
+    "obras_trending_ids": [102, 101, 110],
+    "tags_populares": ["Óleo", "Barroco Digital", "Fine Art", "Patrimonio"],
+    "subcategorias": [
+      { "id": "pintura_figurativa", "nombre": "Pintura Figurativa & Hiperrealismo" },
+      { "id": "fotografia_documental", "nombre": "Fotografía Documental & Fine Art" },
+      { "id": "grabado_impresion", "nombre": "Grabado & Técnicas de Impresión" },
+      { "id": "ilustracion_cientifica", "nombre": "Ilustración Científica & Bio-Arte" },
+      { "id": "restauracion_patrimonio", "nombre": "Restauración & Patrimonio" },
+      { "id": "ceramica_contemporanea", "nombre": "Cerámica & Artes del Fuego" }
+    ]
   },
   {
-    "id": "clasico",
-    "nombre": "Clásico",
-    "descripcion": "La belleza atemporal. Fotografía tradicional y escultura.",
-    "imagen_cover": "assets/img/cat-clasico.jpg"
+    "id": "moderno",
+    "nombre": "Moderno & Digital",
+    "slug": "moderno",
+    "descripcion": "La vanguardia del ahora. Arte generativo, inteligencia artificial, muralismo urbano y nuevos medios. El pulso de la ciudad y la tecnología.",
+    "imagen": "assets/img/obras/moderno-5.jpg",
+    "total_obras": 156,
+    "curador": "Mark Z. (Especialista en Nuevos Medios)",
+    "artista_destacado_id": 11,
+    "obras_trending_ids": [111, 104, 107],
+    "tags_populares": ["AI Art", "Street Style", "NFT", "Cyberpunk", "Viral"],
+    "subcategorias": [
+      { "id": "arte_generativo", "nombre": "Arte Generativo & IA" },
+      { "id": "street_art", "nombre": "Street Art & Muralismo" },
+      { "id": "escultura_expandida", "nombre": "Escultura Expandida" },
+      { "id": "new_media", "nombre": "New Media & Videoarte" },
+      { "id": "diseno_grafico", "nombre": "Diseño Gráfico & Tipografía" },
+      { "id": "pop_satira", "nombre": "Pop Art & Sátira Visual" }
+    ]
   },
   {
     "id": "abstracto",
-    "nombre": "Abstracto",
-    "descripcion": "Formas y colores puros. La interpretación es tuya.",
-    "imagen_cover": "assets/img/cat-abstracto.jpg"
+    "nombre": "Abstracto & Conceptual",
+    "slug": "abstracto",
+    "descripcion": "Más allá de la forma. Minimalismo, instalaciones de luz, textil y escultura conceptual. Arte que no se explica, se siente.",
+    "imagen": "assets/img/obras/abstracto-6.jpg",
+    "total_obras": 38,
+    "curador": "Sarah Thornton (Crítica Invitada)",
+    "artista_destacado_id": 19,
+    "obras_trending_ids": [119, 121, 117],
+    "tags_populares": ["Minimalismo", "Slow Art", "Texturas", "Silencio"],
+    "subcategorias": [
+      { "id": "minimalismo_zen", "nombre": "Minimalismo & Silencio Visual" },
+      { "id": "fiber_art", "nombre": "Fiber Art & Textil" },
+      { "id": "performance", "nombre": "Performance & Cuerpo" },
+      { "id": "arquitectura_especulativa", "nombre": "Arquitectura Especulativa" },
+      { "id": "luz_espacio", "nombre": "Luz & Espacio" },
+      { "id": "arte_vidrio", "nombre": "Vidrio & Transparencias" }
+    ]
   }
 ]

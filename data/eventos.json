@@ -1,0 +1,41 @@
+[
+  {
+    "id": 1,
+    "titulo": "Neon Nights: Retrospectiva",
+    "tipo": "Exposición",
+    "fecha_inicio": "2024-03-10",
+    "fecha_fin": "2024-06-15",
+    "lugar": "Sala Principal, Vértice",
+    "descripcion": "La mayor exposición de Leo Nakamura hasta la fecha. Un recorrido desde sus inicios en el metro de Tokio hasta sus lienzos monumentales.",
+    "imagen": "assets/img/eventos/evento-1.jpg",
+    "artista_relacionado_id": 11,
+    "tickets": "Sold Out",
+    "asistentes_confirmados": 1240
+  },
+  {
+    "id": 2,
+    "titulo": "Taller: El Error como Herramienta",
+    "tipo": "Masterclass",
+    "fecha_inicio": "2024-04-05",
+    "fecha_fin": "2024-04-05",
+    "lugar": "Auditorio Digital",
+    "descripcion": "Andrés Vega y Daniel Ortiz debaten sobre el uso del glitch y la IA en el proceso creativo tradicional.",
+    "imagen": "assets/img/eventos/evento-2.jpg",
+    "artista_relacionado_id": [2, 4],
+    "tickets": "Últimas plazas",
+    "asistentes_confirmados": 85
+  },
+  {
+    "id": 3,
+    "titulo": "Aliento de Fuego: Live",
+    "tipo": "Performance",
+    "fecha_inicio": "2024-04-20",
+    "fecha_fin": "2024-04-20",
+    "lugar": "Patio Central",
+    "descripcion": "Valentina Russo creará una escultura en vivo usando un horno portátil. Una experiencia visceral de calor y creación.",
+    "imagen": "assets/img/eventos/evento-3.jpg",
+    "artista_relacionado_id": 21,
+    "tickets": "Disponibles",
+    "asistentes_confirmados": 120
+  }
+]

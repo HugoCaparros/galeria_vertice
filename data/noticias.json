@@ -1,29 +1,78 @@
 [
   {
     "id": 1,
-    "titulo": "El Renacimiento Digital",
-    "subtitulo": "TENDENCIAS 2024",
-    "fecha": "12 OCT 2023",
+    "titulo": "¿Es el fin del pincel? El debate sobre la IA",
+    "subtitulo": "TENDENCIAS & POLÉMICA",
+    "fecha": "Hace 2 horas",
     "autor": "Redacción Vértice",
-    "extracto": "¿Cómo está transformando la inteligencia artificial la creación artística? Analizamos las nuevas herramientas que están empoderando a los creadores.",
-    "imagen": "https://images.unsplash.com/photo-1617791160505-6f00504e3519?q=80&w=1000&auto=format&fit=crop"
+    "extracto": "La obra 'Sueño Algorítmico' de Daniel Ortiz ha desatado una tormenta en la crítica. Analizamos si las herramientas generativas son una amenaza o el nuevo óleo del siglo XXI.",
+    "imagen": "assets/img/obras/moderno-2.jpg",
+    "tags": ["IA", "Debate", "Tecnología"],
+    "relaciones": {
+      "artista_id": 4,
+      "obra_id": 104
+    },
+    "stats": {
+      "vistas": 15400,
+      "comentarios": 342
+    },
+    "accion": "Leer el Debate"
   },
   {
     "id": 2,
-    "titulo": "Entrevista a Elena Miró",
-    "subtitulo": "ARTISTA DEL MES",
-    "fecha": "05 NOV 2023",
-    "autor": "Carlos Vives",
-    "extracto": "Visitamos el estudio en Madrid de la artista revelación del año. Entre lienzos y olor a trementina, nos cuenta sus secretos.",
-    "imagen": "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=1000&auto=format&fit=crop"
+    "titulo": "Entrevista a Valentina Russo: 'El fuego no perdona'",
+    "subtitulo": "ARTISTA REVELACIÓN",
+    "fecha": "Hace 2 días",
+    "autor": "Carlos Vives (Curador)",
+    "extracto": "Visitamos el taller en Venecia de la artista que está desafiando la tradición de Murano. Entre hornos a 1000 grados, nos cuenta por qué decidió romper los moldes de su familia.",
+    "imagen": "assets/img/valentina_russo.jpg",
+    "tags": ["Entrevista", "Vidrio", "Craft"],
+    "relaciones": {
+      "artista_id": 21,
+      "obra_id": 121
+    },
+    "stats": {
+      "vistas": 8200,
+      "comentarios": 120
+    },
+    "accion": "Ver Entrevista"
   },
   {
     "id": 3,
-    "titulo": "Inauguración: 'Sombras'",
-    "subtitulo": "EVENTOS",
-    "fecha": "20 DIC 2023",
+    "titulo": "SOLD OUT: El fenómeno 'Midnight Protocol'",
+    "subtitulo": "DROP EXCLUSIVO",
+    "fecha": "Hace 1 semana",
     "autor": "Equipo Vértice",
-    "extracto": "La nueva exposición colectiva sobre el blanco y negro abre sus puertas este viernes. Copa de bienvenida para socios.",
-    "imagen": "https://images.unsplash.com/photo-1518998053901-5348d3969105?q=80&w=1000&auto=format&fit=crop"
+    "extracto": "Leo Nakamura lo ha vuelto a hacer. Su última serie limitada se agotó en 24 minutos. Analizamos las claves de su éxito viral y qué significa para el mercado del Street Art.",
+    "imagen": "assets/img/obras/moderno-5.jpg",
+    "tags": ["Sold Out", "Street Art", "Viral"],
+    "relaciones": {
+      "artista_id": 11,
+      "obra_id": 112
+    },
+    "stats": {
+      "vistas": 45000,
+      "comentarios": 890
+    },
+    "accion": "Ver Lista de Espera"
+  },
+  {
+    "id": 4,
+    "titulo": "Inauguración: 'Barroco Glitch'",
+    "subtitulo": "EVENTOS",
+    "fecha": "Próximamente",
+    "autor": "Andrés Vega",
+    "extracto": "La esperada exposición retrospectiva de Andrés Vega llega a la sala principal. Una inmersión en la fusión entre Velázquez y el error digital. Acceso anticipado para miembros.",
+    "imagen": "assets/img/obras/clasico-2.jpg",
+    "tags": ["Exposición", "Madrid", "Pintura"],
+    "relaciones": {
+      "artista_id": 2,
+      "obra_id": 102
+    },
+    "stats": {
+      "vistas": 12000,
+      "comentarios": 450
+    },
+    "accion": "Reservar Entrada"
   }
 ]
