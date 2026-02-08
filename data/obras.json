@@ -12,7 +12,7 @@
     "fecha_publicacion": "2021-11-03",
     "badge": "Culto",
     "descripcion": "Una oda silenciosa a la soledad urbana. Capturada en analógico de 35mm durante el amanecer en la periferia parisina. Grano grueso, alma pesada.",
-    "imagen": "assets/img/obras/clasico-1.jpg",
+    "imagen": "assets/img/obras/clasico-1.webp",
     "stats": {
       "likes": 3200,
       "vistas": 15400,
@@ -39,7 +39,7 @@
     "fecha_publicacion": "2022-08-01",
     "badge": "Obra Maestra",
     "descripcion": "Fusión de técnica maestra del claroscuro barroco con errores digitales pintados a mano. Vega cuestiona la permanencia de la imagen clásica en la era del JPEG corrupto.",
-    "imagen": "assets/img/obras/clasico-2.jpg",
+    "imagen": "assets/img/obras/clasico-2.webp",
     "stats": {
       "likes": 38900,
       "vistas": 92000,
@@ -56,28 +56,6 @@
         "texto": "El glitch pintado a mano es una locura técnica."
       }
     ]
-  },
-  {
-    "id": 1022,
-    "titulo": "El Ángel Pixelado",
-    "artista_id": 2,
-    "artista_nombre": "Andrés Vega",
-    "handle_artista": "@vega_studio",
-    "categoria": "clasico",
-    "subcategoria": "pintura_figurativa",
-    "tecnica": "Óleo sobre Tabla",
-    "dimensiones": "80 x 60 cm",
-    "fecha_publicacion": "2023-05-15",
-    "badge": null,
-    "descripcion": "Estudio de anatomía clásica interrumpida por estática visual. Una pieza más íntima y cruda que sus grandes lienzos.",
-    "imagen": "assets/img/obras/clasico-2.jpg",
-    "stats": {
-      "likes": 12500,
-      "vistas": 35000,
-      "guardados": 2400,
-      "compartidos": 800
-    },
-    "comentarios_destacados": []
   },
   {
     "id": 103,

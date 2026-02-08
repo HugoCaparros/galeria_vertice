@@ -1,142 +1,93 @@
-document.addEventListener('DOMContentLoaded', function() {
+/**
+ * DATA LOADER SERVICE
+ * Ubicación: assets/js/services/dataLoader.js
+ * Misión: Encontrar la carpeta 'data' que está en la RAÍZ del proyecto.
+ */
+
+const DataLoader = {
     
-    /* =========================================================
-       1. LÓGICA DEL SELECT PERSONALIZADO (Register)
-       ========================================================= */
-    const wrapper = document.querySelector('.custom-select-wrapper');
-    
-    if (wrapper) {
-        const trigger = document.querySelector('.custom-select-trigger');
-        const triggerText = document.querySelector('.custom-select-text');
-        const options = document.querySelectorAll('.custom-option');
-        const hiddenInput = document.getElementById('tipoUsuarioValue');
+    // 1. GESTIÓN DE RUTAS (CORREGIDO SEGÚN TU FOTO)
+    getBasePath: () => {
+        const path = window.location.pathname;
+        
+        // Si la URL contiene '/pages/', significa que estamos dentro de una subcarpeta (catalogo, usuario, auth...)
+        // Tenemos que subir 2 niveles para llegar a la raíz.
+        if (path.includes('/pages/')) {
+            return '../../data/';
+        }
+        
+        // Si no estamos en pages, asumimos que estamos en index.html (Raíz)
+        // La carpeta data está justo al lado.
+        return 'data/';
+    },
 
-        trigger.addEventListener('click', () => wrapper.classList.toggle('open'));
+    // 2. CARGADOR GENÉRICO
+    async loadJSON(filename) {
+        const basePath = this.getBasePath();
+        const url = `${basePath}${filename}`;
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`Status: ${response.status}`);
+            return await response.json();
+        } catch (error) {
+            console.error(`❌ Error cargando ${url} (Revisa la ruta)`, error);
+            return []; 
+        }
+    },
 
-        options.forEach(option => {
-            option.addEventListener('click', function() {
-                options.forEach(opt => opt.classList.remove('selected'));
-                this.classList.add('selected');
-                triggerText.textContent = this.textContent;
-                trigger.classList.add('selected');
-                hiddenInput.value = this.getAttribute('data-value');
-                wrapper.classList.remove('open');
-            });
-        });
+    // 3. GETTERS
+    async getArtistas() { return await this.loadJSON('artistas.json'); },
+    async getObras() { return await this.loadJSON('obras.json'); },
+    async getUsuarios() { return await this.loadJSON('usuarios.json'); },
+    async getNoticias() { return await this.loadJSON('noticias.json'); },
+    async getColecciones() { return await this.loadJSON('colecciones.json'); },
+    async getEventos() { return await this.loadJSON('eventos.json'); },
+    async getComentarios() { return await this.loadJSON('comentarios.json'); },
+    async getNotificaciones() { return await this.loadJSON('notificaciones.json'); },
+    async getCategorias() { return await this.loadJSON('categorias.json'); },
 
-        document.addEventListener('click', (e) => {
-            if (!wrapper.contains(e.target)) wrapper.classList.remove('open');
-        });
+    // 4. FUNCIONES RELACIONALES
+    async getArtistaCompleto(id) {
+        const artistaId = parseInt(id);
+        const artistas = await this.getArtistas();
+        const artista = artistas.find(a => a.id === artistaId);
+        if (!artista) return null;
+
+        const obras = await this.getObras();
+        artista.lista_obras = obras.filter(o => o.artista_id === artistaId);
+
+        const colecciones = await this.getColecciones();
+        if (artista.colecciones_ids) {
+            artista.lista_colecciones = colecciones.filter(c => artista.colecciones_ids.includes(c.id));
+        }
+        return artista;
+    },
+
+    async getObraCompleta(id) {
+        const obraId = parseInt(id);
+        const obras = await this.getObras();
+        const obra = obras.find(o => o.id === obraId);
+        if (!obra) return null;
+
+        const artistas = await this.getArtistas();
+        obra.artista_data = artistas.find(a => a.id === obra.artista_id);
+
+        const comentarios = await this.getComentarios();
+        obra.lista_comentarios = comentarios.filter(c => c.obra_id === obraId);
+
+        return obra;
+    },
+
+    async getUsuarioActual() {
+        const userId = 1; 
+        const usuarios = await this.getUsuarios();
+        return usuarios.find(u => u.id === userId);
+    },
+
+    async getObrasDestacadas() {
+        const obras = await this.getObras();
+        return obras.filter(o => o.badge === 'Viral' || o.badge === 'Trending' || o.badge === 'Nuevo').slice(0, 4);
     }
+};
 
-    /* =========================================================
-       2. LÓGICA GENERAL: VER/OCULTAR CONTRASEÑAS (Global)
-       ========================================================= */
-    // Esto hace que CUALQUIER icono de ojo funcione, sea del login o del modal
-    document.querySelectorAll('.show-pass-icon').forEach(icon => {
-        icon.addEventListener('click', function() {
-            // Buscamos el input hermano anterior (el campo de contraseña)
-            const input = this.previousElementSibling;
-            if (input && input.tagName === 'INPUT') {
-                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-                input.setAttribute('type', type);
-                
-                // Cambiar el icono (ojo abierto/tachado)
-                this.classList.toggle('fa-eye');
-                this.classList.toggle('fa-eye-slash');
-            }
-        });
-    });
-
-    /* =========================================================
-       3. LÓGICA DEL MODAL "RESTABLECER CONTRASEÑA"
-       ========================================================= */
-    const forgotLink = document.getElementById('forgotPasswordLink');
-    const modal = document.getElementById('forgotModal');
-
-    if (forgotLink && modal) {
-        const closeModalBtn = document.getElementById('closeModal');
-        const recoveryForm = document.getElementById('recoveryForm');
-        const successMsg = document.getElementById('recoverySuccess');
-        
-        // Elementos específicos del formulario de cambio
-        const newPassInput = document.getElementById('newPassword');
-        const confirmPassInput = document.getElementById('confirmPassword');
-        const errorMsg = document.getElementById('passwordError');
-        
-        // --- ABRIR MODAL ---
-        forgotLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            modal.classList.add('active');
-            
-            // Reseteo completo al abrir
-            successMsg.style.display = 'none';
-            recoveryForm.style.display = 'block';
-            errorMsg.style.display = 'none';
-            recoveryForm.reset();
-        });
-
-        // --- CERRAR MODAL ---
-        const closeModal = () => modal.classList.remove('active');
-        closeModalBtn.addEventListener('click', closeModal);
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
-        });
-
-        // --- VALIDAR Y ENVIAR ---
-        recoveryForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // 1. Validación: ¿Coinciden las contraseñas?
-            if (newPassInput.value !== confirmPassInput.value) {
-                errorMsg.textContent = "Las contraseñas no coinciden.";
-                errorMsg.style.display = 'block';
-                // Pequeña animación de vibración si quieres
-                confirmPassInput.parentElement.style.animation = "shake 0.3s";
-                setTimeout(() => confirmPassInput.parentElement.style.animation = "", 300);
-                return;
-            }
-
-            // 2. Validación: Longitud mínima (opcional, aunque el HTML ya tiene minlength)
-            if (newPassInput.value.length < 6) {
-                errorMsg.textContent = "La contraseña debe tener al menos 6 caracteres.";
-                errorMsg.style.display = 'block';
-                return;
-            }
-
-            // Si pasa validaciones, ocultamos error y procesamos
-            errorMsg.style.display = 'none';
-            
-            const btn = recoveryForm.querySelector('button');
-            const originalText = btn.innerText;
-            
-            // Feedback visual de "Cargando"
-            btn.innerText = "ACTUALIZANDO...";
-            btn.style.opacity = "0.7";
-            btn.disabled = true;
-
-            setTimeout(() => {
-                // Éxito
-                recoveryForm.style.display = 'none';
-                successMsg.style.display = 'block';
-                
-                // Restaurar botón
-                btn.innerText = originalText;
-                btn.style.opacity = "1";
-                btn.disabled = false;
-
-                // Cerrar auto tras 3 seg
-                setTimeout(() => {
-                    closeModal();
-                }, 3000);
-
-            }, 1500); // Simula 1.5s de petición al servidor
-        });
-        
-        // Quitar mensaje de error cuando el usuario empieza a escribir de nuevo
-        confirmPassInput.addEventListener('input', () => {
-             errorMsg.style.display = 'none';
-        });
-    }
-
-});
+window.DataLoader = DataLoader;

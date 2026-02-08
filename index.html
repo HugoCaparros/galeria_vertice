@@ -1,30 +1,35 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VÉRTICE | Galería de Arte</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Marcellus&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Marcellus&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link rel="stylesheet" href="assets/css/base/variables.css"> 
+    <link rel="stylesheet" href="assets/css/base/variables.css">
     <link rel="stylesheet" href="assets/css/base/reset.css">
     <link rel="stylesheet" href="assets/css/base/typography.css">
-    
+
     <link rel="stylesheet" href="assets/css/components/navbar.css">
     <link rel="stylesheet" href="assets/css/components/footer.css">
+    <link rel="stylesheet" href="assets/css/components/cards.css">
+
     <link rel="stylesheet" href="assets/css/pages/home.css">
 </head>
+
 <body>
 
     <div id="navbar-placeholder"></div>
 
     <main class="home-container">
-        
+
         <div class="selection-wrapper">
             <h1 class="selection-title">SELECCIONA CATEGORÍA</h1>
-            
+
             <nav class="category-nav">
                 <a href="pages/catalogo/moderno.html" class="cat-trigger" data-cat="moderno">MODERNO</a>
                 <a href="pages/catalogo/clasico.html" class="cat-trigger" data-cat="clasico">CLÁSICO</a>
@@ -32,11 +37,11 @@
             </nav>
 
             <div class="preview-grid" id="art-grid">
-                <div class="art-slot"><img src="" alt="" class="art-img"></div>
-                <div class="art-slot"><img src="" alt="" class="art-img"></div>
-                <div class="art-slot"><img src="" alt="" class="art-img"></div>
-                <div class="art-slot"><img src="" alt="" class="art-img"></div>
-                <div class="art-slot"><img src="" alt="" class="art-img"></div>
+                <div class="art-slot"></div>
+                <div class="art-slot"></div>
+                <div class="art-slot"></div>
+                <div class="art-slot"></div>
+                <div class="art-slot"></div>
             </div>
         </div>
 
@@ -44,22 +49,33 @@
 
     <div id="footer-placeholder"></div>
 
+    <script src="assets/js/services/dataLoader.js"></script>
     <script src="assets/js/main.js"></script>
-    <script src="assets/js/services/dataLoader.js"></script> 
-
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Cargar Footer (Usando tu ruta)
-            fetch('pages/partials/footer.html')
-                .then(response => {
-                    if (!response.ok) throw new Error("No se encontró footer.html");
-                    return response.text();
-                })
-                .then(data => {
-                    document.getElementById('footer-placeholder').innerHTML = data;
-                })
-                .catch(error => console.error('Error cargando footer:', error));
+        document.addEventListener("DOMContentLoaded", function () {
+            // Definimos las rutas a los parciales
+            const navUrl = 'pages/partials/iniciar_sesion.html'; // Asegúrate de tener este archivo
+            const footerUrl = '../pages/partials/footer.html';
+
+            // Función para cargar HTML en un div
+            function loadHTML(url, elementId) {
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) throw new Error(`Error cargando ${url}`);
+                        return response.text();
+                    })
+                    .then(data => {
+                        document.getElementById(elementId).innerHTML = data;
+                    })
+                    .catch(err => console.error(err));
+            }
+
+            // Ejecutamos la carga
+            loadHTML(navUrl, 'navbar-placeholder');
+            loadHTML(footerUrl, 'footer-placeholder');
         });
     </script>
+
 </body>
+
 </html>
