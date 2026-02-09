@@ -1,145 +1,203 @@
 /* ==========================================================================
-   ESTILOS DE PÁGINA DE CATEGORÍA (Adaptado al Root VÉRTICE)
+   ESTILOS DE PÁGINA DE CATEGORÍA (Moderno, Clásico, Abstracto)
+   Ubicación: assets/css/pages/category.css
    ========================================================================== */
 
 .category-container {
-    /* Usamos la variable de seguridad del header + un extra */
-    padding-top: calc(var(--space-header) + var(--space-8)); 
-    padding-bottom: var(--space-16);
-    
-    /* Márgenes laterales consistentes */
-    padding-left: var(--container-padding);
-    padding-right: var(--container-padding);
-    
-    background-color: var(--bg-page);
-    min-height: 80vh;
-}
-
-/* TÍTULO (Centrado y en mayúsculas) */
-.category-title {
-    /* Usamos la fuente Serif (Marcellus) para títulos grandes, según tu ADN */
-    font-family: var(--font-serif); 
-    font-size: var(--size-h2); 
-    font-weight: var(--weight-regular);
-    
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    
-    margin-bottom: var(--space-16); /* 64px de separación */
-    color: var(--text-primary);
-}
-
-/* GRID DE 5 COLUMNAS */
-.art-grid-5-col {
-    display: grid;
-    /* 5 columnas iguales */
-    grid-template-columns: repeat(5, 1fr); 
-    
-    /* Espaciados usando tus variables */
-    gap: var(--space-12) var(--space-6); /* Vertical grande, Horizontal medio */
-    
-    width: 100%;
-    max-width: var(--container-width);
-    margin: 0 auto; /* Centrar el grid si la pantalla es muy grande */
-}
-
-/* TARJETA DE OBRA (Minimalista) */
-.cat-card {
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-    cursor: pointer;
-    
-    /* Transición suave definida en tu root */
-    transition: opacity var(--transition-fast);
-}
-
-.cat-card:hover {
-    opacity: 0.7; /* Efecto sutil */
-}
-
-/* Imagen Vertical */
-.cat-card-img-wrapper {
-    width: 100%;
-    aspect-ratio: 4 / 5; /* Formato vertical */
-    
-    /* Color de fondo mientras carga (Gris claro del root) */
-    background-color: var(--bg-secondary); 
-    
-    overflow: hidden;
-    margin-bottom: var(--space-4); /* 16px */
-}
-
-.cat-card-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    
-    /* Animación de entrada suave */
-    transition: transform var(--transition-smooth);
-}
-
-/* Efecto Zoom sutil en la imagen al hacer hover (Opcional, queda muy elegante) */
-.cat-card:hover .cat-card-img {
-    transform: scale(1.03);
-}
-
-/* Textos (Alineados a la izquierda) */
-.cat-card-info {
-    text-align: left;
-}
-
-.cat-card-title {
-    font-family: var(--font-sans); /* Inter */
-    font-size: var(--size-body);   /* 16px */
-    font-weight: var(--weight-semibold); /* Semibold para destacar */
-    
-    text-transform: uppercase;
-    color: var(--text-primary);
-    
-    margin-bottom: var(--space-1); /* 4px */
-    display: block;
-    line-height: 1.2;
-}
-
-.cat-card-artist {
-    font-family: var(--font-sans);
-    font-size: var(--size-small); /* 12px */
-    font-weight: var(--weight-medium);
-    
-    color: var(--text-muted); /* Gris medio #8C8C8C */
-    text-transform: uppercase;
-    display: block;
-    letter-spacing: 0.05em;
+  padding-top: 120px;
+  padding-bottom: var(--space-16);
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+  background-color: var(--bg-page);
+  min-height: 80vh;
 }
 
 /* ==========================================================================
-   RESPONSIVE
+   1. NAVEGACIÓN SUPERIOR "EDITORIAL"
    ========================================================================== */
+.category-nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* Alineación arriba para el bloque de texto */
+
+  border-bottom: 1px solid var(--border-sutil);
+  padding-bottom: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+/* El bloque completo del enlace */
+.nav-control {
+  display: flex;
+  flex-direction: column; /* Apilamos etiqueta y título */
+  text-decoration: none;
+  group: nav-hover; /* Nombre de grupo para animaciones */
+  cursor: pointer;
+}
+
+/* Alineación específica */
+.nav-control.prev {
+  align-items: flex-start;
+  text-align: left;
+}
+.nav-control.next {
+  align-items: flex-end;
+  text-align: right;
+}
+
+/* PISO 1: La etiqueta pequeña "ANTERIOR" / "SIGUIENTE" */
+.nav-context-label {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  color: var(--text-muted); /* Gris claro */
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+  transition: color var(--transition-fast);
+}
+
+/* PISO 2: El Título y la Flecha */
+.nav-main-row {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espacio entre flecha y texto */
+  color: var(--text-secondary); /* Gris oscuro inicial */
+  transition: color var(--transition-fast);
+}
+
+.nav-title {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.nav-icon {
+  font-size: 14px;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* --- INTERACCIONES (HOVER) --- */
+
+.nav-control:hover .nav-context-label {
+  color: var(--text-primary); /* La etiqueta se oscurece */
+}
+
+.nav-control:hover .nav-main-row {
+  color: var(--text-primary); /* El título se pone negro */
+}
+
+/* Animación Flecha Izquierda */
+.nav-control.prev:hover .nav-icon {
+  transform: translateX(-4px);
+}
+
+/* Animación Flecha Derecha */
+.nav-control.next:hover .nav-icon {
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   2. TÍTULO Y GRID (Igual)
+   ========================================================================== */
+.category-title {
+  font-family: var(--font-serif);
+  font-size: 42px;
+  font-weight: var(--weight-regular);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-primary);
+  margin-bottom: var(--space-12);
+  margin-top: var(--space-4);
+}
+
+.art-grid-5-col {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-12) var(--space-6);
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+}
+
+/* ... Resto de estilos de tarjeta (sin cambios) ... */
+.cat-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+}
+.cat-card:hover {
+  opacity: 0.8;
+}
+.cat-card-img-wrapper {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background-color: var(--bg-secondary);
+  overflow: hidden;
+  margin-bottom: var(--space-4);
+}
+.cat-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--transition-smooth);
+}
+.cat-card:hover .cat-card-img {
+  transform: scale(1.03);
+}
+.cat-card-info {
+  text-align: left;
+}
+.cat-card-title {
+  font-family: var(--font-sans);
+  font-size: var(--size-body);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+  display: block;
+  line-height: 1.2;
+}
+.cat-card-artist {
+  font-family: var(--font-sans);
+  font-size: var(--size-small);
+  font-weight: var(--weight-medium);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  display: block;
+  letter-spacing: 0.05em;
+}
+
+/* Responsive */
 @media (max-width: 1400px) {
-    .art-grid-5-col { grid-template-columns: repeat(4, 1fr); }
+  .art-grid-5-col {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
-
 @media (max-width: 1100px) {
-    .art-grid-5-col { grid-template-columns: repeat(3, 1fr); }
+  .art-grid-5-col {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
-
 @media (max-width: 768px) {
-    .art-grid-5-col { 
-        grid-template-columns: repeat(2, 1fr); 
-        gap: var(--space-8) var(--space-4);
-    }
-    .category-title { 
-        margin-bottom: var(--space-8);
-        font-size: 28px; /* Ajuste manual para móviles */
-    }
-    .category-container {
-        padding-top: calc(var(--space-header) + var(--space-4));
-    }
+  .art-grid-5-col {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8) var(--space-4);
+  }
+  .category-container {
+    padding-top: 110px;
+  }
+  .category-title {
+    font-size: 32px;
+    margin-bottom: var(--space-8);
+  }
 }
-
 @media (max-width: 480px) {
-    .art-grid-5-col { grid-template-columns: 1fr; } 
+  .art-grid-5-col {
+    grid-template-columns: 1fr;
+  }
 }

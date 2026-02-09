@@ -1,70 +1,77 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arte Abstracto | VÉRTICE</title>
-    
-    <link rel="stylesheet" href="../../assets/css/base/reset.css">
+    <title>VÉRTICE | Colección Abstracto</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Marcellus&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <link rel="stylesheet" href="../../assets/css/base/variables.css">
+    <link rel="stylesheet" href="../../assets/css/base/reset.css">
     <link rel="stylesheet" href="../../assets/css/base/typography.css">
     <link rel="stylesheet" href="../../assets/css/components/navbar.css">
     <link rel="stylesheet" href="../../assets/css/components/footer.css">
-    <link rel="stylesheet" href="../../assets/css/components/cards.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        .cat-header { padding: 160px 5% 4rem; text-align: center; background: #fff; }
-        .cat-header h1 { font-family: 'Marcellus', serif; font-size: 3rem; margin-bottom: 1rem; }
-        .cat-desc { max-width: 600px; margin: 0 auto; color: #666; }
-        
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            padding: 0 5% 6rem;
-        }
-        .art-card { cursor: pointer; }
-        .art-card img { aspect-ratio: 3/4; width: 100%; object-fit: cover; filter: grayscale(20%); transition: filter 0.3s, transform 0.3s; }
-        .art-card:hover img { filter: grayscale(0%); transform: scale(1.02); }
-    </style>
+    <link rel="stylesheet" href="../../assets/css/pages/category.css">
+    <link rel="stylesheet" href="../../assets/css/pages/auth.css">
 </head>
+
 <body>
-    <nav class="navbar">
-        <div class="nav-left"><a href="../../index.html">← Inicio</a></div>
+
+    <div id="navbar-placeholder"></div>
+
+<main class="category-container">
+    
+    <div class="category-nav-header">
         
-        <div class="nav-center"><a href="../../index.html" class="logo">VÉRTICE</a></div>
-        
-        <div class="nav-right" id="auth-actions">
+        <a href="clasico.html" class="nav-control prev">
+            <span class="nav-context-label">Anterior</span>
+            <div class="nav-main-row">
+                <i class="fa-solid fa-arrow-left-long nav-icon"></i>
+                <span class="nav-title">CLÁSICO</span>
             </div>
-    </nav>
+        </a>
+        
+        <a href="moderno.html" class="nav-control next">
+            <span class="nav-context-label">Siguiente</span>
+            <div class="nav-main-row">
+                <span class="nav-title">MODERNO</span>
+                <i class="fa-solid fa-arrow-right-long nav-icon"></i>
+            </div>
+        </a>
 
-    <header class="cat-header">
-        <h1>ABSTRACTO</h1>
-        <p class="cat-desc">Formas puras, texturas y emociones sin filtro. Una invitación a interpretar la realidad desde el subconsciente.</p>
-    </header>
+    </div>
 
-    <section class="gallery-grid">
-        <div class="art-card" onclick="window.location.href='obra-detalle.html'">
-            <img src="../../assets/img/abstracto-1.jpg" alt="Caos Cromático">
-            <h3 style="margin-top:1rem; font-size:0.9rem;">CAOS CROMÁTICO</h3>
-            <span style="color:#666; font-size:0.8rem;">Elena Miró</span>
-        </div>
-        <div class="art-card" onclick="window.location.href='obra-detalle.html'">
-            <img src="../../assets/img/abstracto-2.jpg" alt="Estructura Azul">
-            <h3 style="margin-top:1rem; font-size:0.9rem;">ESTRUCTURA AZUL</h3>
-            <span style="color:#666; font-size:0.8rem;">Elena Miró</span>
-        </div>
-        <div class="art-card" onclick="window.location.href='obra-detalle.html'">
-            <img src="../../assets/img/abstracto-3.jpg" alt="Nebula Interior">
-            <h3 style="margin-top:1rem; font-size:0.9rem;">NEBULA INTERIOR</h3>
-            <span style="color:#666; font-size:0.8rem;">Elena Miró</span>
-        </div>
-    </section>
+    <h1 class="category-title">ABSTRACTO</h1>
+    <div id="category-grid" class="art-grid-5-col"></div>
+
+</main>
 
     <div id="footer-placeholder"></div>
-    
+
+    <div id="authRequiredModal" class="modal-overlay">
+        <div class="modal-content modal-exclusive">
+            <button class="modal-close" id="closeAuthModal">&times;</button>
+            <div class="modal-header-logo"><img src="../../assets/icons/Logo_negro.svg" alt="VÉRTICE"></div>
+            <h2 class="modal-title">CONTENIDO EXCLUSIVO</h2>
+            <p class="modal-description">Únete a nuestra comunidad para acceder a la colección completa.</p>
+            <div class="modal-buttons">
+                <a href="../auth/login.html" class="btn-modal-solid">INICIAR SESIÓN</a>
+                <a href="../auth/register.html" class="btn-modal-outline">REGISTRARSE</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../assets/js/services/dataLoader.js"></script>
     <script src="../../assets/js/main.js"></script>
-    <script>fetch('../partials/footer.html').then(r => r.text()).then(h => document.getElementById('footer-placeholder').innerHTML = h);</script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.initCategoryPage) window.initCategoryPage('abstracto');
+        });
+    </script>
 </body>
+
 </html>
