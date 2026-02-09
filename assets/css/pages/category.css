@@ -1,0 +1,145 @@
+/* ==========================================================================
+   ESTILOS DE PÁGINA DE CATEGORÍA (Adaptado al Root VÉRTICE)
+   ========================================================================== */
+
+.category-container {
+    /* Usamos la variable de seguridad del header + un extra */
+    padding-top: calc(var(--space-header) + var(--space-8)); 
+    padding-bottom: var(--space-16);
+    
+    /* Márgenes laterales consistentes */
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+    
+    background-color: var(--bg-page);
+    min-height: 80vh;
+}
+
+/* TÍTULO (Centrado y en mayúsculas) */
+.category-title {
+    /* Usamos la fuente Serif (Marcellus) para títulos grandes, según tu ADN */
+    font-family: var(--font-serif); 
+    font-size: var(--size-h2); 
+    font-weight: var(--weight-regular);
+    
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    
+    margin-bottom: var(--space-16); /* 64px de separación */
+    color: var(--text-primary);
+}
+
+/* GRID DE 5 COLUMNAS */
+.art-grid-5-col {
+    display: grid;
+    /* 5 columnas iguales */
+    grid-template-columns: repeat(5, 1fr); 
+    
+    /* Espaciados usando tus variables */
+    gap: var(--space-12) var(--space-6); /* Vertical grande, Horizontal medio */
+    
+    width: 100%;
+    max-width: var(--container-width);
+    margin: 0 auto; /* Centrar el grid si la pantalla es muy grande */
+}
+
+/* TARJETA DE OBRA (Minimalista) */
+.cat-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    cursor: pointer;
+    
+    /* Transición suave definida en tu root */
+    transition: opacity var(--transition-fast);
+}
+
+.cat-card:hover {
+    opacity: 0.7; /* Efecto sutil */
+}
+
+/* Imagen Vertical */
+.cat-card-img-wrapper {
+    width: 100%;
+    aspect-ratio: 4 / 5; /* Formato vertical */
+    
+    /* Color de fondo mientras carga (Gris claro del root) */
+    background-color: var(--bg-secondary); 
+    
+    overflow: hidden;
+    margin-bottom: var(--space-4); /* 16px */
+}
+
+.cat-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    
+    /* Animación de entrada suave */
+    transition: transform var(--transition-smooth);
+}
+
+/* Efecto Zoom sutil en la imagen al hacer hover (Opcional, queda muy elegante) */
+.cat-card:hover .cat-card-img {
+    transform: scale(1.03);
+}
+
+/* Textos (Alineados a la izquierda) */
+.cat-card-info {
+    text-align: left;
+}
+
+.cat-card-title {
+    font-family: var(--font-sans); /* Inter */
+    font-size: var(--size-body);   /* 16px */
+    font-weight: var(--weight-semibold); /* Semibold para destacar */
+    
+    text-transform: uppercase;
+    color: var(--text-primary);
+    
+    margin-bottom: var(--space-1); /* 4px */
+    display: block;
+    line-height: 1.2;
+}
+
+.cat-card-artist {
+    font-family: var(--font-sans);
+    font-size: var(--size-small); /* 12px */
+    font-weight: var(--weight-medium);
+    
+    color: var(--text-muted); /* Gris medio #8C8C8C */
+    text-transform: uppercase;
+    display: block;
+    letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 1400px) {
+    .art-grid-5-col { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (max-width: 1100px) {
+    .art-grid-5-col { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .art-grid-5-col { 
+        grid-template-columns: repeat(2, 1fr); 
+        gap: var(--space-8) var(--space-4);
+    }
+    .category-title { 
+        margin-bottom: var(--space-8);
+        font-size: 28px; /* Ajuste manual para móviles */
+    }
+    .category-container {
+        padding-top: calc(var(--space-header) + var(--space-4));
+    }
+}
+
+@media (max-width: 480px) {
+    .art-grid-5-col { grid-template-columns: 1fr; } 
+}

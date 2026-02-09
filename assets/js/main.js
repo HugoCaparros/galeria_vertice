@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // 1. SEGURIDAD (Redirige si intentas entrar a perfil sin loguearte)
+    // 1. SEGURIDAD
     authGuard();
 
     // 2. LAYOUT (Carga Navbar y Footer)
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // D. Lógica de PERFIL USUARIO
     if (path.includes('perfil.html')) initUserProfile();
 
-    // E. MODAL RECUPERACIÓN (Solo en Login)
+    // E. MODAL RECUPERACIÓN
     if (document.getElementById('forgotModal')) {
         initRecoveryModal();
     }
@@ -49,21 +49,20 @@ async function renderLayout() {
     const navPlaceholder = document.getElementById('navbar-placeholder');
     const footerPlaceholder = document.getElementById('footer-placeholder');
     
-    // Ajuste de rutas para partials
-    const basePath = DataLoader.getBasePath().replace('data/', 'pages/partials/'); 
+    // Calculamos la ruta base (ej: "" o "../../")
+    const rootPath = DataLoader.getBasePath().replace('data/', ''); 
 
     // A. Cargar Navbar
     if (navPlaceholder) {
         const usuario = JSON.parse(localStorage.getItem('usuario_logueado'));
-        // Si hay usuario, carga menú de usuario. Si no, carga menú público.
         const archivoMenu = usuario ? 'sesion_iniciada.html' : 'iniciar_sesion.html'; 
+        const partialsPath = rootPath + 'pages/partials/';
 
         try {
-            const resp = await fetch(basePath + archivoMenu);
+            const resp = await fetch(partialsPath + archivoMenu);
             if (resp.ok) {
                 navPlaceholder.innerHTML = await resp.text();
-                // IMPORTANTE: Aquí inicializamos los eventos (Logout y POPUPS)
-                initNavbarEvents();
+                initNavbarEvents(); // Inicializar eventos (Logout, Popups)
             }
         } catch (e) { console.error("Error Navbar:", e); }
     }
@@ -71,15 +70,45 @@ async function renderLayout() {
     // B. Cargar Footer
     if (footerPlaceholder) {
         try {
-            const resp = await fetch(basePath + 'footer.html');
+            const footerPath = rootPath + 'pages/partials/footer.html';
+            const resp = await fetch(footerPath);
             if (resp.ok) footerPlaceholder.innerHTML = await resp.text();
         } catch (e) { console.error("Error Footer:", e); }
+    }
+
+    // C. ARREGLAR LOGOS Y RUTAS (Una vez cargado todo)
+    fixLayoutPaths(rootPath);
+}
+
+/**
+ * FUNCIÓN PARA PONER LOS LOGOS CORRECTOS Y ARREGLAR RUTAS
+ */
+function fixLayoutPaths(rootPath) {
+    // 1. HEADER -> logo_letras.svg
+    const navLogo = document.getElementById('dynamic-logo');
+    if (navLogo) {
+        navLogo.src = rootPath + 'assets/icons/logo_letras.svg';
+    }
+
+    // Enlace del logo del header al inicio
+    const brandLink = document.querySelector('.brand-link');
+    if (brandLink) {
+        brandLink.href = rootPath + 'index.html';
+    }
+
+    // 2. FOOTER -> logo_blanco.svg
+    const footerPlaceholder = document.getElementById('footer-placeholder');
+    if (footerPlaceholder) {
+        // Buscamos la primera imagen dentro del footer (Asumimos que es el logo)
+        const footerLogo = footerPlaceholder.querySelector('img');
+        if (footerLogo) {
+            footerLogo.src = rootPath + 'assets/icons/logo_blanco.svg';
+        }
     }
 }
 
 /* --- LÓGICA DE LOS POPUPS Y LOGOUT --- */
 function initNavbarEvents() {
-    // 1. Botón Logout (solo existe si cargamos sesion_iniciada.html)
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', (e) => {
@@ -88,43 +117,29 @@ function initNavbarEvents() {
         });
     }
 
-    // 2. LÓGICA DE ACCESO RESTRINGIDO (El Popup)
-    // Buscamos los enlaces que marcamos con la clase 'restricted-link'
+    // LÓGICA ACCESO RESTRINGIDO
     const restrictedLinks = document.querySelectorAll('.restricted-link');
     const authModal = document.getElementById('authRequiredModal');
     const closeAuthBtn = document.getElementById('closeAuthModal');
 
-    // Función para cerrar el modal
-    const closeAuth = () => {
-        if (authModal) authModal.classList.remove('active');
-    };
+    const closeAuth = () => { if (authModal) authModal.classList.remove('active'); };
 
-    // Eventos de cierre
     if (closeAuthBtn) closeAuthBtn.addEventListener('click', closeAuth);
-    if (authModal) authModal.addEventListener('click', (e) => {
-        if (e.target === authModal) closeAuth();
-    });
+    if (authModal) authModal.addEventListener('click', (e) => { if (e.target === authModal) closeAuth(); });
 
-    // INTERCEPTAR CLICS EN EL MENÚ
     restrictedLinks.forEach(link => {
         link.addEventListener('click', (e) => {
-            // Comprobamos si hay usuario
             const usuario = localStorage.getItem('usuario_logueado');
-            
             if (!usuario) {
-                // SI NO HAY USUARIO:
-                e.preventDefault(); // 1. Detenemos la navegación
-                console.log("🔒 Acceso denegado. Abriendo popup...");
-                
+                e.preventDefault();
                 if (authModal) {
-                    authModal.classList.add('active'); // 2. Mostramos popup
+                    authModal.classList.add('active');
                 } else {
-                    // Fallback por si no estás en el index
-                    alert("⚠️ Debes iniciar sesión para ver esta sección.");
-                    window.location.href = 'pages/auth/login.html';
+                    alert("⚠️ Debes iniciar sesión.");
+                    const rootPath = DataLoader.getBasePath().replace('data/', '');
+                    window.location.href = rootPath + 'pages/auth/login.html';
                 }
             }
-            // Si hay usuario, el enlace funciona normal
         });
     });
 }
@@ -145,8 +160,8 @@ function authGuard() {
 
 function logout() {
     localStorage.removeItem('usuario_logueado');
-    const isSubPage = window.location.pathname.includes('/pages/');
-    window.location.href = isSubPage ? '../../index.html' : 'index.html';
+    const rootPath = DataLoader.getBasePath().replace('data/', '');
+    window.location.href = rootPath + 'index.html';
 }
 
 /* ==========================================================================
@@ -156,33 +171,23 @@ async function initHome() {
     const grid = document.getElementById('art-grid');
     if (grid) {
         const obras = await DataLoader.getObras();
-        
         window.updateHomeGrid = (categoria) => {
             const slots = grid.querySelectorAll('.art-slot');
             const filtradas = obras.filter(o => o.categoria === categoria);
             const seleccion = filtradas.sort(() => 0.5 - Math.random()).slice(0, 5);
-            
             slots.forEach((slot, index) => {
                 if (seleccion[index]) {
                     slot.innerHTML = `<img src="${seleccion[index].imagen}" style="width:100%; height:100%; object-fit:cover; opacity:0; transition: opacity 0.5s;">`;
-                    setTimeout(() => {
-                        const img = slot.querySelector('img');
-                        if(img) img.style.opacity = 1;
-                    }, 50);
-                } else {
-                    slot.innerHTML = '';
-                }
+                    setTimeout(() => { if(slot.querySelector('img')) slot.querySelector('img').style.opacity = 1; }, 50);
+                } else slot.innerHTML = '';
             });
         };
-
         document.querySelectorAll('.cat-trigger').forEach(link => {
             link.addEventListener('mouseenter', () => window.updateHomeGrid(link.getAttribute('data-cat')));
         });
-        
         window.updateHomeGrid('moderno');
     }
 
-    // Carga de virales (si añadiste la sección)
     const viralContainer = document.getElementById('viral-container');
     if (viralContainer) {
         const virales = await DataLoader.getObrasDestacadas();
@@ -197,7 +202,7 @@ async function initHome() {
 }
 
 /* ==========================================================================
-   4. CATÁLOGO
+   4. CATÁLOGO Y CATEGORÍAS
    ========================================================================== */
 async function initCatalog() {
     const container = document.getElementById('collection-grid-container');
@@ -236,6 +241,37 @@ async function initCatalog() {
     if (sortSelect) sortSelect.addEventListener('change', applyFilters);
     render(todasLasObras);
 }
+
+// PÁGINAS DE CATEGORÍA ESPECÍFICA (Moderno, Clásico...)
+window.initCategoryPage = async function(categoriaFiltro) {
+    const grid = document.getElementById('category-grid');
+    if (!grid) return;
+
+    try {
+        const obras = await DataLoader.getObras();
+        const filtradas = obras.filter(o => o.categoria.toLowerCase() === categoriaFiltro.toLowerCase());
+
+        if (filtradas.length === 0) {
+            grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center;">No hay obras en esta categoría.</p>';
+            return;
+        }
+
+        // Renderizamos las tarjetas con enlaces corregidos (../catalogo/...)
+        // ASUMIMOS que estás en pages/catalogo/moderno.html, así que el enlace es local
+        grid.innerHTML = filtradas.map(obra => `
+            <a href="obra-detalle.html?id=${obra.id}" class="cat-card">
+                <div class="cat-card-img-wrapper">
+                    <img src="${obra.imagen}" alt="${obra.titulo}" class="cat-card-img" loading="lazy">
+                </div>
+                <div class="cat-card-info">
+                    <span class="cat-card-title">${obra.titulo}</span>
+                    <span class="cat-card-artist">${obra.artista_nombre}</span>
+                </div>
+            </a>
+        `).join('');
+
+    } catch (error) { console.error("Error cargando categoría:", error); }
+};
 
 /* ==========================================================================
    5. DETALLES (Obras y Artistas)
