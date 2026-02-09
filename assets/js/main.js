@@ -11,10 +11,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // 1. SEGURIDAD
+    // 1. SEGURIDAD (Redirige si intentas entrar a perfil sin loguearte)
     authGuard();
 
-    // 2. LAYOUT
+    // 2. LAYOUT (Carga Navbar y Footer)
     if (document.getElementById('navbar-placeholder')) { 
         await renderLayout(); 
     }
@@ -36,8 +36,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // D. Lógica de PERFIL USUARIO
     if (path.includes('perfil.html')) initUserProfile();
 
-    // E. MODAL RECUPERACIÓN (¡AQUÍ ACTIVAMOS EL POPUP!)
-    // Buscamos si el modal existe en la página actual antes de intentar iniciarlo
+    // E. MODAL RECUPERACIÓN (Solo en Login)
     if (document.getElementById('forgotModal')) {
         initRecoveryModal();
     }
@@ -50,21 +49,26 @@ async function renderLayout() {
     const navPlaceholder = document.getElementById('navbar-placeholder');
     const footerPlaceholder = document.getElementById('footer-placeholder');
     
+    // Ajuste de rutas para partials
     const basePath = DataLoader.getBasePath().replace('data/', 'pages/partials/'); 
 
+    // A. Cargar Navbar
     if (navPlaceholder) {
         const usuario = JSON.parse(localStorage.getItem('usuario_logueado'));
+        // Si hay usuario, carga menú de usuario. Si no, carga menú público.
         const archivoMenu = usuario ? 'sesion_iniciada.html' : 'iniciar_sesion.html'; 
 
         try {
             const resp = await fetch(basePath + archivoMenu);
             if (resp.ok) {
                 navPlaceholder.innerHTML = await resp.text();
+                // IMPORTANTE: Aquí inicializamos los eventos (Logout y POPUPS)
                 initNavbarEvents();
             }
         } catch (e) { console.error("Error Navbar:", e); }
     }
 
+    // B. Cargar Footer
     if (footerPlaceholder) {
         try {
             const resp = await fetch(basePath + 'footer.html');
@@ -73,7 +77,9 @@ async function renderLayout() {
     }
 }
 
+/* --- LÓGICA DE LOS POPUPS Y LOGOUT --- */
 function initNavbarEvents() {
+    // 1. Botón Logout (solo existe si cargamos sesion_iniciada.html)
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', (e) => {
@@ -81,6 +87,46 @@ function initNavbarEvents() {
             logout();
         });
     }
+
+    // 2. LÓGICA DE ACCESO RESTRINGIDO (El Popup)
+    // Buscamos los enlaces que marcamos con la clase 'restricted-link'
+    const restrictedLinks = document.querySelectorAll('.restricted-link');
+    const authModal = document.getElementById('authRequiredModal');
+    const closeAuthBtn = document.getElementById('closeAuthModal');
+
+    // Función para cerrar el modal
+    const closeAuth = () => {
+        if (authModal) authModal.classList.remove('active');
+    };
+
+    // Eventos de cierre
+    if (closeAuthBtn) closeAuthBtn.addEventListener('click', closeAuth);
+    if (authModal) authModal.addEventListener('click', (e) => {
+        if (e.target === authModal) closeAuth();
+    });
+
+    // INTERCEPTAR CLICS EN EL MENÚ
+    restrictedLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            // Comprobamos si hay usuario
+            const usuario = localStorage.getItem('usuario_logueado');
+            
+            if (!usuario) {
+                // SI NO HAY USUARIO:
+                e.preventDefault(); // 1. Detenemos la navegación
+                console.log("🔒 Acceso denegado. Abriendo popup...");
+                
+                if (authModal) {
+                    authModal.classList.add('active'); // 2. Mostramos popup
+                } else {
+                    // Fallback por si no estás en el index
+                    alert("⚠️ Debes iniciar sesión para ver esta sección.");
+                    window.location.href = 'pages/auth/login.html';
+                }
+            }
+            // Si hay usuario, el enlace funciona normal
+        });
+    });
 }
 
 /* ==========================================================================
@@ -123,16 +169,20 @@ async function initHome() {
                         const img = slot.querySelector('img');
                         if(img) img.style.opacity = 1;
                     }, 50);
-                } else slot.innerHTML = '';
+                } else {
+                    slot.innerHTML = '';
+                }
             });
         };
 
         document.querySelectorAll('.cat-trigger').forEach(link => {
             link.addEventListener('mouseenter', () => window.updateHomeGrid(link.getAttribute('data-cat')));
         });
+        
         window.updateHomeGrid('moderno');
     }
 
+    // Carga de virales (si añadiste la sección)
     const viralContainer = document.getElementById('viral-container');
     if (viralContainer) {
         const virales = await DataLoader.getObrasDestacadas();
@@ -188,7 +238,7 @@ async function initCatalog() {
 }
 
 /* ==========================================================================
-   5. DETALLES
+   5. DETALLES (Obras y Artistas)
    ========================================================================== */
 async function initObraDetalle() {
     const params = new URLSearchParams(window.location.search);
@@ -247,6 +297,9 @@ async function initArtists() {
     `).join('');
 }
 
+/* ==========================================================================
+   6. PERFIL USUARIO
+   ========================================================================== */
 async function initUserProfile() {
     const usuario = await DataLoader.getUsuarioActual();
     if (usuario) {
@@ -261,96 +314,73 @@ async function initUserProfile() {
 }
 
 /* ==========================================================================
-   7. MODAL DE RECUPERACIÓN DE CONTRASEÑA (LÓGICA DEL POPUP)
+   7. MODAL DE RECUPERACIÓN (LOGIN)
    ========================================================================== */
 function initRecoveryModal() {
     const modal = document.getElementById('forgotModal');
-    // IMPORTANTE: Este ID debe coincidir con tu HTML del enlace "¿Olvidaste...?"
     const openBtn = document.getElementById('forgotLink'); 
     const closeBtn = document.getElementById('closeModal');
     const form = document.getElementById('recoveryForm');
     
-    // Inputs y Feedback
+    // Inputs
     const pass1 = document.getElementById('newPassword');
     const pass2 = document.getElementById('confirmPassword');
     const errorMsg = document.getElementById('passwordError');
     const successMsg = document.getElementById('recoverySuccess');
     
-    // Iconos de ojos
+    // Toggles
     const toggle1 = document.getElementById('toggleNewPass');
     const toggle2 = document.getElementById('toggleConfirmPass');
 
-    // 1. ABRIR MODAL
+    // Abrir
     if (openBtn) {
         openBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            modal.classList.add('active'); // CSS hace el efecto fade-in
-            
-            // Limpiar estado anterior
-            if(form) {
-                form.reset();
-                form.style.display = 'block';
-            }
+            modal.classList.add('active');
+            if(form) { form.reset(); form.style.display = 'block'; }
             if(successMsg) successMsg.style.display = 'none';
             if(errorMsg) errorMsg.textContent = '';
         });
-    } else {
-        console.warn("⚠️ No se encontró el botón con id='forgotLink'. Revisa tu HTML.");
     }
 
-    // 2. CERRAR MODAL
+    // Cerrar
     const closeModal = () => modal.classList.remove('active');
-    
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
-    
-    // Cerrar al hacer clic fuera del recuadro blanco
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-    });
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
-    // 3. VER / OCULTAR CONTRASEÑA
+    // Ojitos
     const toggleVisibility = (input, icon) => {
         const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
         input.setAttribute('type', type);
         icon.classList.toggle('fa-eye');
         icon.classList.toggle('fa-eye-slash');
     };
-
     if(toggle1 && pass1) toggle1.addEventListener('click', () => toggleVisibility(pass1, toggle1));
     if(toggle2 && pass2) toggle2.addEventListener('click', () => toggleVisibility(pass2, toggle2));
 
-    // 4. ENVIAR FORMULARIO (Validación y Simulación)
+    // Submit
     if (form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            
-            // Validar que coincidan
             if (pass1.value !== pass2.value) {
                 errorMsg.textContent = "❌ Las contraseñas no coinciden.";
                 return;
             }
-            // Validar longitud
             if (pass1.value.length < 6) {
                 errorMsg.textContent = "⚠️ Mínimo 6 caracteres.";
                 return;
             }
-
-            // Éxito simulado
             errorMsg.textContent = "";
             const btn = form.querySelector('button[type="submit"]');
             const originalText = btn.textContent;
-            
             btn.textContent = "Procesando...";
             btn.disabled = true;
 
             setTimeout(() => {
                 form.style.display = 'none';
                 successMsg.style.display = 'block';
-                
-                // Cerrar modal automáticamente
                 setTimeout(() => {
                     closeModal();
-                    // Resetear botón para la próxima
                     btn.textContent = originalText;
                     btn.disabled = false;
                 }, 2000);

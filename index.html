@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VÉRTICE - Galería de arte digital y colección exclusiva.">
     <title>VÉRTICE | Galería de Arte</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Marcellus&display=swap"
@@ -19,6 +20,7 @@
     <link rel="stylesheet" href="assets/css/components/cards.css">
 
     <link rel="stylesheet" href="assets/css/pages/home.css">
+    <link rel="stylesheet" href="assets/css/pages/auth.css">
 </head>
 
 <body>
@@ -31,9 +33,9 @@
             <h1 class="selection-title">SELECCIONA CATEGORÍA</h1>
 
             <nav class="category-nav">
-                <a href="pages/catalogo/moderno.html" class="cat-trigger" data-cat="moderno">MODERNO</a>
-                <a href="pages/catalogo/clasico.html" class="cat-trigger" data-cat="clasico">CLÁSICO</a>
-                <a href="pages/catalogo/abstracto.html" class="cat-trigger" data-cat="abstracto">ABSTRACTO</a>
+                <span class="cat-trigger" data-cat="moderno">MODERNO</span>
+                <span class="cat-trigger" data-cat="clasico">CLÁSICO</span>
+                <span class="cat-trigger" data-cat="abstracto">ABSTRACTO</span>
             </nav>
 
             <div class="preview-grid" id="art-grid">
@@ -48,33 +50,29 @@
     </main>
 
     <div id="footer-placeholder"></div>
+    <div id="authRequiredModal" class="modal-overlay">
+        <div class="modal-content modal-exclusive">
+            <button class="modal-close" id="closeAuthModal">&times;</button>
+
+            <div class="modal-header-logo">
+                <img src="assets/icons/Logo_negro.svg" alt="VÉRTICE">
+            </div>
+
+            <h2 class="modal-title">CONTENIDO EXCLUSIVO</h2>
+            <p class="modal-description">
+                Únete a nuestra comunidad para acceder a la colección completa de artistas y obras.
+            </p>
+
+            <div class="modal-buttons">
+                <a href="pages/auth/login.html" class="btn-modal-solid">INICIAR SESIÓN</a>
+                <a href="pages/auth/register.html" class="btn-modal-outline">REGISTRARSE</a>
+            </div>
+        </div>
+    </div>
+
 
     <script src="assets/js/services/dataLoader.js"></script>
     <script src="assets/js/main.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Definimos las rutas a los parciales
-            const navUrl = 'pages/partials/iniciar_sesion.html'; // Asegúrate de tener este archivo
-            const footerUrl = '../pages/partials/footer.html';
-
-            // Función para cargar HTML en un div
-            function loadHTML(url, elementId) {
-                fetch(url)
-                    .then(response => {
-                        if (!response.ok) throw new Error(`Error cargando ${url}`);
-                        return response.text();
-                    })
-                    .then(data => {
-                        document.getElementById(elementId).innerHTML = data;
-                    })
-                    .catch(err => console.error(err));
-            }
-
-            // Ejecutamos la carga
-            loadHTML(navUrl, 'navbar-placeholder');
-            loadHTML(footerUrl, 'footer-placeholder');
-        });
-    </script>
 
 </body>
 
