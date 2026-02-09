@@ -70,7 +70,7 @@
     "fecha_publicacion": "2022-02-14",
     "badge": null,
     "descripcion": "Dubois logra lo imposible: hacer que el acero pesado parezca mercurio líquido en caída libre, distorsionando el entorno y al propio espectador.",
-    "imagen": "assets/img/obras/moderno-1.jpg",
+    "imagen": "assets/img/obras/moderno-1.webp",
     "stats": {
       "likes": 8100,
       "vistas": 28500,
@@ -92,7 +92,7 @@
     "fecha_publicacion": "2023-06-12",
     "badge": "Polémico",
     "descripcion": "Paisaje inexistente generado por una IA alimentada con descripciones de sueños. La obra que desató el debate sobre si las máquinas pueden tener subconsciente.",
-    "imagen": "assets/img/obras/moderno-2.jpg",
+    "imagen": "assets/img/obras/moderno-2.webp",
     "stats": {
       "likes": 45000,
       "vistas": 80000,

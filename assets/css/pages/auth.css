@@ -1,5 +1,6 @@
 /* ==========================================================================
    AUTH.CSS - Estilos para Login y Registro
+   (Adaptado a Variables del Root)
    ========================================================================== */
 
 /* ==========================================================================
@@ -7,10 +8,10 @@
    ========================================================================== */
 .auth-split-layout {
     display: flex;
-    flex-direction: row; /* FORZAMOS fila para que salgan lado a lado */
+    flex-direction: row; 
     width: 100%;
-    min-height: 100vh;   /* Ocupa toda la altura de la ventana */
-    overflow: hidden;    /* Evita scroll en desktop */
+    min-height: 100vh;
+    overflow: hidden;
     
     background-color: var(--bg-page);
     font-family: var(--font-sans);
@@ -24,23 +25,22 @@
 
 /* --- Panel del Formulario (Blanco) --- */
 .auth-panel-white {
-    flex: 1; /* Ocupa el 50% */
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
-    padding: var(--space-16); /* ~64px */
+    padding: var(--space-16); /* 64px */
     background-color: var(--bg-surface);
-    z-index: 2; /* Por encima de la imagen si se cruzan */
+    z-index: var(--z-normal);
     
-    /* Permite scroll interno si la pantalla es muy bajita */
     overflow-y: auto; 
 }
 
 /* --- Panel de la Imagen (Promocional) --- */
 .auth-panel-image {
-    flex: 1; /* Ocupa el otro 50% */
+    flex: 1;
     position: relative;
     display: flex;
     justify-content: center;
@@ -48,28 +48,28 @@
     overflow: hidden;
     
     background-color: var(--color-gris-oscuro);
-    /* Asegúrate de que esta ruta sea correcta o cámbiala por tu imagen */
+    /* Ajusta la ruta si es necesario */
     background-image: url('../../assets/img/login-bg.jpg'); 
     background-size: cover;
     background-position: center;
 }
 
-/* Capa oscura (Overlay) para que el texto blanco se lea bien */
+/* Capa oscura (Overlay) */
 .auth-panel-image::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: var(--color-negro); /* Negro */
-    opacity: 0.4; /* Oscuridad al 40% */
-    z-index: 1;
+    background-color: var(--color-negro);
+    opacity: 0.4;
+    z-index: var(--z-normal);
 }
 
-/* Contenido (Texto) sobre la imagen */
+/* Contenido sobre la imagen */
 .overlay-content {
     position: relative;
-    z-index: 2;
+    z-index: 2; /* Un poco más que z-normal para estar encima del overlay */
     text-align: center;
-    color: var(--text-inverse); /* Blanco */
+    color: var(--text-inverse);
     padding: 0 var(--space-8);
     max-width: 480px;
 }
@@ -79,44 +79,44 @@
    ========================================================================== */
 .back-link {
     position: absolute;
-    top: 32px;
-    left: 32px;
+    top: var(--space-8); /* 32px */
+    left: var(--space-8);
     
     font-family: var(--font-sans);
-    font-size: 14px;
-    font-weight: 500;
+    font-size: var(--size-small); /* 14px aprox */
+    font-weight: var(--weight-medium);
     color: var(--text-muted);
     
     text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--space-2); /* 8px */
     
-    transition: color 0.3s ease;
+    transition: color var(--transition-fast);
     z-index: 20;
 }
 
 .back-link i {
-    transition: transform 0.3s ease;
+    transition: transform var(--transition-fast);
 }
 
 .back-link:hover {
-    color: var(--text-primary); /* Se pone negro al pasar el mouse */
+    color: var(--text-primary);
 }
 
 .back-link:hover i {
-    transform: translateX(-4px); /* La flecha se mueve un poco */
+    transform: translateX(-4px);
 }
 
 /* ==========================================================================
    4. TIPOGRAFÍA Y LOGO
    ========================================================================== */
 .auth-icon {
-    margin-bottom: 24px;
+    margin-bottom: var(--space-6); /* 24px */
 }
 
 .auth-icon img {
-    height: 55px; /* Tamaño del logo */
+    height: 55px; 
     width: auto;
     display: block;
     margin: 0 auto;
@@ -124,11 +124,10 @@
 }
 
 .auth-title {
-    font-family: var(--font-sans);
-    font-size: 24px;
-    font-weight: 600;
+    font: var(--font-h2); /* Usa el shorthand definido en root */
+    font-size: 24px;      /* Ajuste específico para login (más pequeño que h2 normal) */
     color: var(--text-primary);
-    margin-bottom: 8px;
+    margin-bottom: var(--space-2);
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -136,27 +135,27 @@
 
 .auth-subtitle {
     font-family: var(--font-sans);
-    font-size: 14px;
+    font-size: var(--size-small);
     color: var(--text-muted);
-    margin-bottom: 40px;
+    margin-bottom: var(--space-8); /* 40px */
     text-align: center;
 }
 
 /* Textos grandes sobre la imagen */
 .promo-heading {
-    font-family: 'Marcellus', serif; /* Fuente elegante */
-    font-size: 36px;
-    font-weight: 400;
-    margin-bottom: 16px;
+    font-family: var(--font-serif);
+    font-size: var(--size-h2);
+    font-weight: var(--weight-regular);
+    margin-bottom: var(--space-4);
     color: var(--text-inverse);
 }
 
 .promo-text {
     font-family: var(--font-sans);
-    font-size: 16px; 
+    font-size: var(--size-body); 
     line-height: 1.6;
-    margin-bottom: 32px;
-    color: #E0E0E0; /* Gris muy claro */
+    margin-bottom: var(--space-8);
+    color: var(--color-gris-claro);
 }
 
 /* ==========================================================================
@@ -164,12 +163,12 @@
    ========================================================================== */
 .form-wrapper {
     width: 100%;
-    max-width: 380px; /* Ancho máximo del formulario */
+    max-width: 380px; 
 }
 
 .input-group-line {
     position: relative;
-    margin-bottom: 24px;
+    margin-bottom: var(--space-6); /* 24px */
     text-align: left;
 }
 
@@ -184,15 +183,15 @@
     
     background: transparent;
     border: none;
-    border-bottom: 1px solid var(--color-gris-claro); /* Gris suave */
+    border-bottom: 1px solid var(--border-sutil);
     border-radius: 0;
     
     outline: none;
-    transition: border-color 0.3s ease;
+    transition: border-color var(--transition-fast);
 }
 
 .input-group-line input:focus {
-    border-bottom-color: var(--text-primary); /* Se pone negro al escribir */
+    border-bottom-color: var(--text-primary);
 }
 
 .input-group-line input::placeholder {
@@ -200,7 +199,12 @@
     opacity: 0.7;
 }
 
-/* Icono de "Ver Contraseña" (Ojo) */
+/* Ajuste para inputs de contraseña */
+.input-group-line input[type="password"] {
+    margin-bottom: 0; 
+}
+
+/* Icono de "Ver Contraseña" */
 .show-pass-icon {
     position: absolute;
     right: 0;
@@ -208,7 +212,7 @@
     color: var(--text-muted);
     cursor: pointer;
     font-size: 14px;
-    transition: color 0.3s;
+    transition: color var(--transition-fast);
 }
 
 .show-pass-icon:hover {
@@ -219,17 +223,27 @@
 .form-options {
     text-align: right;
     margin-top: -10px;
-    margin-bottom: 32px;
+    margin-bottom: var(--space-8);
 }
 
-.forgot-link {
-    font-size: 12px;
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color 0.3s;
+/* Estilo específico para el ID #forgotLink o clase .forgot-link */
+#forgotLink, .forgot-link {
+    display: block;             
+    width: 100%;
+    text-align: right;          
+    
+    font-size: var(--size-small); /* 12px */
+    color: var(--text-muted); 
+    
+    margin-top: var(--space-2);   /* 8px */
+    margin-bottom: var(--space-6); /* 24px */
+    
+    text-decoration: none;      
+    transition: color var(--transition-fast);
+    font-family: var(--font-sans);
 }
 
-.forgot-link:hover {
+#forgotLink:hover, .forgot-link:hover {
     color: var(--text-primary);
     text-decoration: underline;
 }
@@ -240,7 +254,7 @@
 .custom-select-wrapper {
     position: relative;
     user-select: none;
-    margin-bottom: 24px;
+    margin-bottom: var(--space-6);
 }
 
 .custom-select-trigger {
@@ -250,11 +264,11 @@
     justify-content: space-between;
     width: 100%;
     padding: 12px 0;
-    border-bottom: 1px solid var(--color-gris-claro);
+    border-bottom: 1px solid var(--border-sutil);
     cursor: pointer;
     font-size: 15px;
     color: var(--text-muted);
-    transition: all 0.3s;
+    transition: all var(--transition-fast);
 }
 
 .custom-select-trigger.selected {
@@ -262,7 +276,7 @@
 }
 
 .select-arrow {
-    transition: transform 0.3s;
+    transition: transform var(--transition-fast);
     font-size: 12px;
 }
 
@@ -273,15 +287,15 @@
 .custom-options {
     position: absolute;
     top: 100%; left: 0; right: 0;
-    background: #fff;
-    border: 1px solid #eee;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    border-radius: 4px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-sutil);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--input-radius);
     z-index: 100;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
-    transition: all 0.3s ease;
+    transition: all var(--transition-fast);
 }
 
 .custom-select-wrapper.open .custom-options {
@@ -293,17 +307,20 @@
 .custom-option {
     padding: 12px 15px;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background var(--transition-fast);
     font-size: 14px;
+    color: var(--text-secondary);
 }
 
 .custom-option:hover {
-    background-color: #f5f5f5;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
 }
 
 .custom-option.selected {
-    background-color: #f0f0f0;
-    font-weight: 600;
+    background-color: var(--bg-secondary);
+    font-weight: var(--weight-semibold);
+    color: var(--text-primary);
 }
 
 /* ==========================================================================
@@ -313,20 +330,20 @@
 /* Botón Principal (Negro) */
 .btn-black-full {
     width: 100%;
-    height: 50px;
+    height: var(--btn-height); /* 48px */
     background-color: var(--color-negro);
-    color: #fff;
+    color: var(--text-inverse);
     border: none;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: var(--weight-semibold);
     letter-spacing: 0.1em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: background 0.3s, transform 0.2s;
+    transition: background var(--transition-fast), transform 0.2s;
 }
 
 .btn-black-full:hover {
-    background-color: #333; /* Un poco más claro */
+    background-color: var(--hover-negro);
     transform: translateY(-1px);
 }
 
@@ -334,19 +351,19 @@
 .btn-outline-white {
     display: inline-block;
     padding: 12px 30px;
-    border: 1px solid #fff;
-    color: #fff;
+    border: 1px solid var(--color-blanco);
+    color: var(--text-inverse);
     text-decoration: none;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: var(--weight-semibold);
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    transition: all 0.3s;
+    transition: all var(--transition-fast);
 }
 
 .btn-outline-white:hover {
-    background-color: #fff;
-    color: #000;
+    background-color: var(--color-blanco);
+    color: var(--color-negro);
 }
 
 /* ==========================================================================
@@ -354,21 +371,21 @@
    ========================================================================== */
 @media (max-width: 900px) {
     .auth-split-layout {
-        flex-direction: column-reverse; /* Imagen arriba, formulario abajo */
+        flex-direction: column-reverse; 
         height: auto;
         min-height: 100vh;
-        overflow-y: auto; /* Habilitar scroll en el contenedor principal */
+        overflow-y: auto; 
     }
 
     .auth-panel-white {
         width: 100%;
-        padding: 40px 20px;
-        flex: none; /* Quitar comportamiento flexible */
+        padding: var(--space-8) var(--space-4); /* 32px 16px */
+        flex: none; 
     }
 
     .auth-panel-image {
         width: 100%;
-        height: 250px; /* Altura fija para la imagen en móvil */
+        height: 250px; 
         flex: none;
     }
     
@@ -380,29 +397,34 @@
         font-size: 14px;
     }
 
-    /* Ocultar botón volver en la imagen si molesta, o moverlo */
     .back-link {
-        top: 20px;
-        left: 20px;
+        top: var(--space-4);
+        left: var(--space-4);
     }
 }
 
-/* ==========================================================================
-   9. MODALES (Popups)
-   ========================================================================== */
+/* =========================================
+   MODAL OLVIDASTE CONTRASEÑA (Estilo Línea)
+   ========================================= */
+
+/* Fondo oscuro */
 .modal-overlay {
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(5px);
-    z-index: 2000;
+    backdrop-filter: blur(4px);
+    z-index: var(--z-modal-bg, 1900);
+    
     display: flex;
     justify-content: center;
     align-items: center;
     
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .modal-overlay.active {
@@ -410,38 +432,93 @@
     visibility: visible;
 }
 
+/* La caja blanca */
 .modal-content {
-    background: #fff;
-    padding: 40px;
+    background: var(--bg-surface, #fff);
     width: 90%;
-    max-width: 400px;
-    text-align: center;
+    max-width: 420px;
+    padding: 40px 30px;
+    border-radius: 8px;
     position: relative;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
     transform: translateY(20px);
     transition: transform 0.3s ease;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    text-align: center;
 }
 
 .modal-overlay.active .modal-content {
     transform: translateY(0);
 }
 
+/* Botón cerrar (X) */
 .modal-close {
     position: absolute;
     top: 15px;
-    right: 15px;
+    right: 20px;
     background: none;
     border: none;
-    font-size: 24px;
+    font-size: 28px;
     cursor: pointer;
-    color: #999;
+    color: var(--text-muted, #888);
+    transition: color 0.3s;
 }
 
-.modal-close:hover { color: #000; }
+.modal-close:hover {
+    color: var(--text-primary, #000);
+}
 
+/* --- ESTILO DE INPUTS (LÍNEAS) --- */
+.modal-content .input-group-line {
+    margin-bottom: 24px;
+    position: relative; 
+    text-align: left;
+}
+
+/* Aquí está el cambio clave: Quitamos borde y dejamos solo el de abajo */
+.modal-content input {
+    width: 100%;
+    padding: 12px 0; /* Sin padding lateral para alinear con el texto */
+    
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--text-primary, #111);
+    
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border-sutil, #e5e5e5);
+    border-radius: 0; /* Recto */
+    
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.modal-content input:focus {
+    border-bottom-color: var(--text-primary, #000);
+}
+
+.modal-content input::placeholder {
+    color: var(--text-muted, #999);
+}
+
+/* Icono del ojo dentro del modal */
+.modal-content .show-pass-icon {
+    position: absolute;
+    right: 0; /* Pegado a la derecha */
+    top: 12px;
+    color: var(--text-muted, #888);
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.modal-content .show-pass-icon:hover {
+    color: var(--text-primary, #000);
+}
+
+/* Mensajes de error/éxito */
 .error-message {
-    color: #d32f2f;
-    font-size: 13px;
-    margin-top: 10px;
-    display: none; /* Oculto por defecto */
+    color: var(--text-error, #d9534f);
+    font-size: 14px;
+    margin-bottom: 15px;
+    display: block;
+    min-height: 20px;
 }

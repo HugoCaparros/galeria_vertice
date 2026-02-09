@@ -1,95 +1,134 @@
 /* ==========================================================================
-   HOME INTERACTIVA (Minimalist)
+   ESTRUCTURA BASE (Pantalla Completa)
+   ========================================================================== */
+
+body {
+    margin: 0;
+    min-height: 100vh;      /* Ocupa toda la altura de la ventana */
+    display: flex;
+    flex-direction: column; /* Orden: Navbar -> Contenido -> Footer */
+    
+    /* Variables del Root */
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font-sans); /* Inter por defecto */
+}
+
+/* ==========================================================================
+   HOME INTERACTIVA (Layout Flexible)
    ========================================================================== */
 
 .home-container {
-    /* Centrado total en pantalla */
+    flex: 1; 
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 85vh; /* Ocupa casi toda la altura */
+    
     width: 100%;
-    padding: var(--space-8);
+    box-sizing: border-box;
+
+    /* --- ESPACIADO SIMÉTRICO --- */
+    
+    /* ARRIBA: Altura navbar (160px) + Extra (32px) = 192px */
+    padding-top: calc(var(--space-header) + var(--space-8)); 
+    
+    /* ABAJO: Igualamos la distancia para que quede centrado visualmente */
+    /* Antes tenías var(--space-12), ahora usamos el mismo cálculo que arriba */
+    padding-bottom: calc(var(--space-header) + var(--space-8)); 
+    
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
 }
 
 .selection-wrapper {
     text-align: center;
     width: 100%;
-    max-width: 1100px;
+    max-width: var(--container-width); /* 1400px */
 }
 
-/* TÍTULO (Marcellus) */
+/* TÍTULO "SELECCIONA CATEGORÍA" */
 .selection-title {
-    font-family: 'Marcellus', serif;
-    font-size: 24px;
-    font-weight: 400;
+    font-family: var(--font-serif);   /* Marcellus */
+    font-size: var(--size-h2);        /* 36px */
+    font-weight: var(--weight-regular);
+    color: var(--text-primary);       /* Negro #111 */
+    
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin-bottom: 40px;
-    color: var(--text-primary);
+    margin-bottom: var(--space-8);    /* 32px */
 }
 
-/* MENÚ DE CATEGORÍAS */
+/* MENÚ DE CATEGORÍAS (Moderno, Clásico...) */
 .category-nav {
     display: flex;
     justify-content: center;
-    gap: 80px; /* Separación amplia entre palabras */
-    margin-bottom: 60px;
+    gap: var(--space-16);             /* 64px de separación */
+    margin-bottom: var(--space-12);   /* 48px antes de las fotos */
 }
 
 .cat-trigger {
-    font-family: 'Marcellus', serif;
-    font-size: 16px;
-    color: var(--text-primary);
+    font-family: var(--font-serif);   /* Marcellus */
+    font-size: var(--size-body);      /* 16px */
+    font-weight: var(--weight-medium);
+    color: var(--text-secondary);     /* Gris Oscuro #333 */
+    
     text-transform: uppercase;
     text-decoration: none;
     letter-spacing: 0.05em;
     cursor: pointer;
-    opacity: 0.6;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    
+    /* Transiciones suaves definidas en tu root */
+    transition: color var(--transition-fast), transform var(--transition-fast);
 }
 
 .cat-trigger:hover {
-    opacity: 1;
-    transform: translateY(-2px);
+    color: var(--text-primary);       /* Negro al pasar el ratón */
+    transform: translateY(-2px);      /* Pequeña elevación */
 }
 
 /* GRID DE 5 IMÁGENES */
 .preview-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr); /* 5 columnas iguales */
-    gap: 20px;
+    gap: var(--space-4);                   /* 16px entre fotos */
     width: 100%;
 }
 
-/* EL HUECO (Cuadrado con fondo de ajedrez) */
+/* EL HUECO (Cuadrado con fondo sutil) */
 .art-slot {
     aspect-ratio: 1 / 1; /* Cuadrado perfecto */
-    background-color: #ffffff;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-sutil); /* Borde gris claro */
+    border-radius: 2px;
     
-    /* Patrón de ajedrez sutil (simulando transparencia como en tu imagen) */
+    /* Patrón de ajedrez usando tus variables de color */
     background-image:
-        linear-gradient(45deg, #f0f0f0 25%, transparent 25%),
-        linear-gradient(-45deg, #f0f0f0 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, #f0f0f0 75%),
-        linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
+        linear-gradient(45deg, var(--bg-secondary) 25%, transparent 25%),
+        linear-gradient(-45deg, var(--bg-secondary) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, var(--bg-secondary) 75%),
+        linear-gradient(-45deg, transparent 75%, var(--bg-secondary) 75%);
     background-size: 20px 20px;
     background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
     
     overflow: hidden;
     position: relative;
-    border: 1px solid rgba(0,0,0,0.05); /* Borde muy sutil */
+    transition: border-color var(--transition-fast);
 }
 
-/* LA IMAGEN DENTRO */
+.art-slot:hover {
+    border-color: var(--border-focus); /* Se oscurece el borde al pasar el ratón */
+}
+
+/* LA IMAGEN DENTRO DEL HUECO */
 .art-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0; /* Oculta hasta que carga */
-    transition: opacity 0.4s ease, transform 0.6s ease;
-    transform: scale(1.1);
+    opacity: 0; 
+    transform: scale(1.05);
+    transition: opacity 0.4s ease, transform var(--transition-smooth);
 }
 
 /* Clase que añade JS para mostrar la imagen */
@@ -100,18 +139,27 @@
 
 /* RESPONSIVE (Móvil) */
 @media (max-width: 900px) {
+    .home-container {
+        /* En móvil reducimos un poco el espacio superior */
+        padding-top: var(--space-header); 
+    }
+
+    .selection-title {
+        font-size: 24px; /* Un poco más pequeño */
+    }
+
     .category-nav {
-        gap: 30px;
+        gap: var(--space-6); /* 24px */
         flex-direction: column;
-        margin-bottom: 40px;
+        margin-bottom: var(--space-8);
     }
     
     .preview-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 columnas en móvil */
-        gap: 15px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-3);
     }
     
-    /* Ocultar el 5º elemento en móvil para que quede par */
+    /* Ocultamos la 5ª imagen en móvil para mantener la simetría (2x2) */
     .art-slot:nth-child(5) {
         display: none;
     }
