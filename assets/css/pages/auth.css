@@ -249,74 +249,101 @@
 }
 
 /* ==========================================================================
-   6. SELECT PERSONALIZADO (Dropdown)
+   6. SELECT PERSONALIZADO (Dropdown - Estilo Línea)
    ========================================================================== */
 .custom-select-wrapper {
     position: relative;
     user-select: none;
-    margin-bottom: var(--space-6);
+    margin-bottom: var(--space-6); /* 24px */
+    font-family: var(--font-sans);
 }
 
+/* El disparador (Lo que parece el input) */
 .custom-select-trigger {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border-sutil);
+    padding: 12px 0; /* Sin padding lateral para alinear con el texto */
+    
+    background: transparent;
+    border-bottom: 1px solid var(--border-sutil); /* Solo línea gris abajo */
+    
     cursor: pointer;
     font-size: 15px;
-    color: var(--text-muted);
+    color: var(--text-muted); /* Gris inicial */
     transition: all var(--transition-fast);
 }
 
+/* Hover o cuando está abierto: La línea y texto se ponen negros */
+.custom-select-trigger:hover,
+.custom-select-wrapper.open .custom-select-trigger {
+    border-bottom-color: var(--text-primary);
+    color: var(--text-primary); 
+}
+
+/* Cuando ya has seleccionado una opción */
 .custom-select-trigger.selected {
     color: var(--text-primary);
 }
 
+/* La flechita (Chevron) */
 .select-arrow {
-    transition: transform var(--transition-fast);
     font-size: 12px;
+    color: var(--text-muted);
+    transition: transform var(--transition-fast), color var(--transition-fast);
 }
 
+/* Rotar flecha al abrir */
 .custom-select-wrapper.open .select-arrow {
     transform: rotate(180deg);
+    color: var(--text-primary);
 }
 
+/* EL MENÚ DESPLEGABLE (La lista de opciones) */
 .custom-options {
     position: absolute;
     top: 100%; left: 0; right: 0;
-    background: var(--bg-surface);
+    
+    background: var(--bg-surface); /* Blanco */
     border: 1px solid var(--border-sutil);
-    box-shadow: var(--shadow-md);
-    border-radius: var(--input-radius);
+    border-radius: 4px; 
+    box-shadow: var(--shadow-md); /* Sombra flotante */
+    
     z-index: 100;
+    margin-top: 8px; /* Un poco de espacio debajo de la línea */
+    
+    /* Animación de entrada */
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
     transition: all var(--transition-fast);
 }
 
+/* Estado Abierto (JS añade la clase .open al wrapper) */
 .custom-select-wrapper.open .custom-options {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
 }
 
+/* Las opciones individuales */
 .custom-option {
-    padding: 12px 15px;
-    cursor: pointer;
-    transition: background var(--transition-fast);
+    display: block;
+    padding: 12px 16px;
     font-size: 14px;
     color: var(--text-secondary);
+    cursor: pointer;
+    transition: background var(--transition-fast), color var(--transition-fast);
 }
 
 .custom-option:hover {
-    background-color: var(--bg-secondary);
+    background-color: var(--bg-secondary); /* Gris muy suave */
     color: var(--text-primary);
 }
 
+/* Opción seleccionada actualmente */
 .custom-option.selected {
     background-color: var(--bg-secondary);
     font-weight: var(--weight-semibold);

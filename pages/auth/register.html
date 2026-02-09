@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VÉRTICE | Crear Cuenta</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Marcellus&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Marcellus&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <link rel="stylesheet" href="../../assets/css/base/variables.css">
@@ -23,7 +24,8 @@
         <div class="auth-panel-image" style="background-image: url('../../assets/img/LoginBackgroundPage2.png');">
             <div class="overlay-content">
                 <h2 class="promo-heading">¡Bienvenido de nuevo!</h2>
-                <p class="promo-text">Para mantenerte conectado con nosotros, por favor inicia sesión con tu información personal</p>
+                <p class="promo-text">Para mantenerte conectado con nosotros, por favor inicia sesión con tu información
+                    personal</p>
                 <a href="login.html" class="btn-outline-white">INICIAR SESIÓN</a>
             </div>
         </div>
@@ -53,18 +55,14 @@
                         <input type="email" placeholder="Correo electrónico" required>
                     </div>
 
-                    <div class="input-group-line custom-select-wrapper">
-                        
-                        <input type="hidden" name="tipoUsuario" id="tipoUsuarioValue" required>
-
-                        <div class="custom-select-trigger" id="customSelectTrigger">
-                            <span class="custom-select-text">Tipo de Usuario</span>
+                    <div class="custom-select-wrapper">
+                        <div class="custom-select-trigger">
+                            <span>Tipo de Usuario</span>
                             <i class="fa-solid fa-chevron-down select-arrow"></i>
                         </div>
-
                         <div class="custom-options">
-                            <div class="custom-option" data-value="artista">Artista</div>
-                            <div class="custom-option" data-value="galeria">Coleccionista / Usuario</div>
+                            <span class="custom-option" data-value="artist">Artista</span>
+                            <span class="custom-option" data-value="collector">Coleccionista/Usuario</span>
                         </div>
                     </div>
 

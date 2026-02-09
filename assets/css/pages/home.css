@@ -69,25 +69,25 @@ body {
 }
 
 .cat-trigger {
-    font-family: var(--font-serif);   /* Marcellus */
-    font-size: var(--size-body);      /* 16px */
+    font-family: var(--font-serif);
+    font-size: var(--size-body);
     font-weight: var(--weight-medium);
-    color: var(--text-secondary);     /* Gris Oscuro #333 */
+    color: var(--text-secondary);
     
     text-transform: uppercase;
-    text-decoration: none;
     letter-spacing: 0.05em;
     cursor: pointer;
     
-    /* Transiciones suaves definidas en tu root */
+    /* AÑADE ESTO: Quita el subrayado del enlace */
+    text-decoration: none; 
+    
     transition: color var(--transition-fast), transform var(--transition-fast);
 }
 
 .cat-trigger:hover {
-    color: var(--text-primary);       /* Negro al pasar el ratón */
-    transform: translateY(-2px);      /* Pequeña elevación */
+    color: var(--text-primary);
+    transform: translateY(-2px);
 }
-
 /* GRID DE 5 IMÁGENES */
 .preview-grid {
     display: grid;
