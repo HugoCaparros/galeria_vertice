@@ -95,6 +95,7 @@ function fixLayoutPaths(rootPath) {
 }
 
 function initNavbarEvents(rootPath) {
+    // 1. LOGOUT (Para cuando sí estás logueado)
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', (e) => {
@@ -103,6 +104,28 @@ function initNavbarEvents(rootPath) {
             window.location.href = rootPath + 'index.html';
         });
     }
+
+    // 2. BLOQUEO DE ENLACES (Para Artistas, Obras, Categorías)
+    // Seleccionamos todos los enlaces con la clase 'auth-trigger'
+    const triggers = document.querySelectorAll('.auth-trigger');
+    
+    triggers.forEach(link => {
+        link.addEventListener('click', (e) => {
+            // ¡STOP! Evitamos que el navegador vaya a la página
+            e.preventDefault();
+            
+            console.log("🔒 Acceso restringido: Abriendo modal...");
+            
+            // Abrimos el Popup
+            // (Si showAuthModal no está definida aquí, asegúrate de que esté en layout.js)
+            if (typeof showAuthModal === 'function') {
+                showAuthModal(rootPath);
+            } else {
+                // Fallback de emergencia si no encuentra la función del modal
+                window.location.href = rootPath + 'pages/auth/login.html';
+            }
+        });
+    });
 }
 
 /* ==========================================================================
@@ -147,17 +170,16 @@ function authGuard() {
 }
 
 /* --- NUEVA FUNCIÓN: INYECTAR Y MOSTRAR MODAL --- */
+/* --- FUNCIÓN: INYECTAR Y GESTIONAR EL MODAL --- */
 function showAuthModal(rootPath) {
-    // 1. Verificar si el modal ya existe
     let modal = document.getElementById('authRequiredModal');
 
-    // 2. Si no existe, lo creamos dinámicamente
+    // 1. Si no existe, lo creamos (HTML Injection)
     if (!modal) {
         modal = document.createElement('div');
         modal.id = 'authRequiredModal';
         modal.className = 'modal-overlay'; 
         
-        // HTML interno del Popup
         modal.innerHTML = `
             <div class="modal-content modal-exclusive">
                 <button class="modal-close" id="closeAuthModal">
@@ -168,38 +190,61 @@ function showAuthModal(rootPath) {
                     <img src="${rootPath}assets/icons/logo_letras.svg" alt="VÉRTICE">
                 </div>
                 
-                <h2 class="modal-title">Contenido Exclusivo</h2>
+                <h2 class="modal-title">CLUB PRIVADO</h2>
                 <p class="modal-description">
-                    Únete a nuestra comunidad para acceder a la colección completa.
+                    Este contenido es exclusivo para miembros. 
+                    Únete a Vértice para acceder a la colección completa.
                 </p>
                 
                 <div class="modal-buttons">
                     <a href="${rootPath}pages/auth/login.html" class="btn-modal-solid">INICIAR SESIÓN</a>
-                    <a href="${rootPath}pages/auth/login.html?mode=register" class="btn-modal-outline">CREAR CUENTA</a>
+                    <a href="${rootPath}pages/auth/register.html" class="btn-modal-outline">REGISTRARSE</a>
                 </div>
             </div>
         `;
-        
         document.body.appendChild(modal);
-        
-        // Lógica de cierre seguro
-        const closeBtn = modal.querySelector('#closeAuthModal');
-        
-        // Si cierran el modal, DEBEN salir de la página protegida
-        const safeExit = () => {
-            document.body.style.overflow = ''; // Restaurar scroll
-            window.location.href = rootPath + 'index.html'; // Redirigir al Home
-        };
-
-        closeBtn.onclick = safeExit;
-        
-        // Clic fuera del modal también saca al usuario
-        modal.onclick = (e) => {
-            if (e.target === modal) safeExit();
-        }
     }
 
-    // 3. Mostrar con pequeña pausa para animación CSS
+    // 2. LÓGICA DE CIERRE (LA "X")
+    const closeBtn = document.getElementById('closeAuthModal');
+    
+    // Definimos qué pasa al cerrar
+    const closeModalAction = () => {
+        // A. Restaurar el scroll de la página
+        document.body.style.overflow = ''; 
+
+        // B. Detectar si estamos en una página prohibida
+        const path = window.location.pathname;
+        const restrictedPages = [
+            'obras.html', 'artistas.html', 'categorias.html', 
+            'perfil.html', 'dashboard.html', 
+            'obra-detalle.html', 'abstracto.html', 'moderno.html', 'clasico.html'
+        ];
+        
+        const isRestricted = restrictedPages.some(page => path.includes(page));
+
+        if (isRestricted) {
+            // SI ESTÁS EN ZONA PROHIBIDA: Te mando al Home
+            window.location.href = rootPath + 'index.html';
+        } else {
+            // SI ESTÁS EN ZONA SEGURA (HOME): Solo cierro el popup
+            modal.classList.remove('active');
+        }
+    };
+
+    // Asignar el evento al botón X
+    closeBtn.onclick = closeModalAction;
+
+    // Asignar evento al hacer clic fuera del cuadro blanco (fondo oscuro)
+    modal.onclick = (e) => {
+        if (e.target === modal) closeModalAction();
+    };
+
+    // 3. MOSTRAR EL MODAL
+    // Bloqueamos el scroll del fondo
+    document.body.style.overflow = 'hidden'; 
+    
+    // Pequeño retardo para que la animación CSS funcione
     setTimeout(() => {
         modal.classList.add('active');
     }, 10);
