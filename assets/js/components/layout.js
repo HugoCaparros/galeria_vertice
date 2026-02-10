@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LAYOUT & SECURITY MODULE (VERSIÓN UNIFICADA)
+   LAYOUT & SECURITY MODULE (VERSIÓN UNIFICADA CON MODAL)
    Ubicación: assets/js/components/layout.js
    ========================================================================== */
 
@@ -21,7 +21,6 @@ window.initLayout = async function() {
         const usuario = JSON.parse(localStorage.getItem('usuario_logueado'));
         
         // LÓGICA SIMPLIFICADA: Solo existen dos estados (Logueado o No Logueado)
-        // Ya no buscamos 'menu_artista.html', usamos 'sesion_iniciada.html' para todos.
         const archivoMenu = usuario ? 'sesion_iniciada.html' : 'iniciar_sesion.html'; 
         
         const fullUrl = rootPath + 'pages/partials/' + archivoMenu;
@@ -34,7 +33,7 @@ window.initLayout = async function() {
                 // Inicializar eventos (Logout)
                 if (typeof initNavbarEvents === 'function') initNavbarEvents(rootPath);
                 
-                // PERSONALIZAR EL MENÚ SEGÚN EL ROL (Aquí ocurre la magia)
+                // PERSONALIZAR EL MENÚ SEGÚN EL ROL
                 if (usuario) updateUserInfo(usuario);
             } else {
                 console.error(`❌ Error 404: No se encuentra ${fullUrl}`);
@@ -55,7 +54,7 @@ window.initLayout = async function() {
 };
 
 /* ==========================================================================
-   FUNCIONES AUXILIARES
+   FUNCIONES AUXILIARES (LOGIN / UI)
    ========================================================================== */
 
 function updateUserInfo(usuario) {
@@ -67,9 +66,6 @@ function updateUserInfo(usuario) {
 
     // 2. Lógica de Roles (Artista vs Usuario)
     const roleEl = document.querySelector('.user-role-badge');
-    
-    // Seleccionamos TODOS los elementos que sean exclusivos de artista
-    // (Asegúrate de poner la clase 'artist-only-link' a cualquier enlace que solo el artista deba ver)
     const artistLinks = document.querySelectorAll('.artist-only-link');
     
     if (roleEl) {
@@ -77,68 +73,12 @@ function updateUserInfo(usuario) {
         roleEl.textContent = rol;
 
         if (rol === 'Artista') {
-            // ES ARTISTA:
-            roleEl.classList.add('is-artist'); // Pone el badge en negro/blanco
-            
-            // Mostramos los enlaces exclusivos
-            artistLinks.forEach(link => {
-                link.style.display = 'inline-flex'; 
-            });
+            roleEl.classList.add('is-artist'); 
+            artistLinks.forEach(link => { link.style.display = 'inline-flex'; });
         } else {
-            // NO ES ARTISTA:
             roleEl.classList.remove('is-artist');
-            
-            // Ocultamos los enlaces exclusivos
-            artistLinks.forEach(link => {
-                link.style.display = 'none';
-            });
+            artistLinks.forEach(link => { link.style.display = 'none'; });
         }
-    }
-}
-
-// ... (Mantén authGuard, fixLayoutPaths e initNavbarEvents igual que antes) ...
-/* ==========================================================================
-   GUARDIA DE SEGURIDAD (Protección de Rutas)
-   ========================================================================== */
-function authGuard() {
-    const usuario = JSON.parse(localStorage.getItem('usuario_logueado'));
-    const path = window.location.pathname;
-    
-    // LISTA NEGRA: Páginas que requieren estar logueado para verlas
-    const protectedPages = [
-        // 1. Áreas Personales
-        'perfil.html', 
-        'mis-colecciones.html', 
-        'ajustes.html', 
-        
-        // 2. Área de Artista
-        'dashboard.html', 
-        'subir-obra.html', 
-        'mis-obras.html',
-
-        // 3. CATÁLOGO (Club Privado)
-        // Si intentan entrar aquí, los mandamos al login
-        'artistas.html', 
-        'obras.html', 
-        'categorias.html',
-        'obra-detalle.html',
-        'artista-detalle.html' 
-    ];
-    
-    // LÓGICA: Si la URL actual incluye alguna página protegida Y no hay usuario...
-    if (protectedPages.some(page => path.includes(page)) && !usuario) {
-        
-        // Calculamos la ruta hacia el login
-        const basePath = DataLoader.getBasePath();
-        let rootPath = basePath.replace('assets/data/', '');
-        
-        // Fallback de seguridad para la ruta
-        if (rootPath === basePath) {
-            rootPath = basePath.replace('data/', '').replace('assets/', '');
-        }
-        
-        // ¡EXPULSADO! Redirigir al Login
-        window.location.href = rootPath + 'pages/auth/login.html';
     }
 }
 
@@ -163,4 +103,104 @@ function initNavbarEvents(rootPath) {
             window.location.href = rootPath + 'index.html';
         });
     }
+}
+
+/* ==========================================================================
+   GUARDIA DE SEGURIDAD (Protección de Rutas con Modal)
+   ========================================================================== */
+
+function authGuard() {
+    const usuario = JSON.parse(localStorage.getItem('usuario_logueado'));
+    const path = window.location.pathname;
+    
+    // LISTA NEGRA: Páginas que requieren estar logueado
+    const protectedPages = [
+        'perfil.html', 
+        'mis-colecciones.html', 
+        'ajustes.html', 
+        'dashboard.html', 
+        'subir-obra.html', 
+        'mis-obras.html',
+        'artistas.html', 
+        'obras.html', 
+        'categorias.html',
+        'obra-detalle.html',
+        'artista-detalle.html',
+    ];
+    
+    // LÓGICA: Si es protegida y NO hay usuario...
+    if (protectedPages.some(page => path.includes(page)) && !usuario) {
+        
+        // Calculamos la ruta raíz para cargar imágenes/links correctamente
+        const basePath = DataLoader.getBasePath();
+        let rootPath = basePath.replace('assets/data/', '');
+        if (rootPath === basePath) {
+            rootPath = basePath.replace('data/', '').replace('assets/', '');
+        }
+
+        // CAMBIO PRINCIPAL: En lugar de redirigir, mostramos el MODAL
+        showAuthModal(rootPath);
+        
+        // Bloqueamos el scroll para que no bajen a ver el contenido borroso
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+/* --- NUEVA FUNCIÓN: INYECTAR Y MOSTRAR MODAL --- */
+function showAuthModal(rootPath) {
+    // 1. Verificar si el modal ya existe
+    let modal = document.getElementById('authRequiredModal');
+
+    // 2. Si no existe, lo creamos dinámicamente
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'authRequiredModal';
+        modal.className = 'modal-overlay'; 
+        
+        // HTML interno del Popup
+        modal.innerHTML = `
+            <div class="modal-content modal-exclusive">
+                <button class="modal-close" id="closeAuthModal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                
+                <div class="modal-header-logo">
+                    <img src="${rootPath}assets/icons/logo_letras.svg" alt="VÉRTICE">
+                </div>
+                
+                <h2 class="modal-title">Contenido Exclusivo</h2>
+                <p class="modal-description">
+                    Únete a nuestra comunidad para acceder a la colección completa.
+                </p>
+                
+                <div class="modal-buttons">
+                    <a href="${rootPath}pages/auth/login.html" class="btn-modal-solid">INICIAR SESIÓN</a>
+                    <a href="${rootPath}pages/auth/login.html?mode=register" class="btn-modal-outline">CREAR CUENTA</a>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Lógica de cierre seguro
+        const closeBtn = modal.querySelector('#closeAuthModal');
+        
+        // Si cierran el modal, DEBEN salir de la página protegida
+        const safeExit = () => {
+            document.body.style.overflow = ''; // Restaurar scroll
+            window.location.href = rootPath + 'index.html'; // Redirigir al Home
+        };
+
+        closeBtn.onclick = safeExit;
+        
+        // Clic fuera del modal también saca al usuario
+        modal.onclick = (e) => {
+            if (e.target === modal) safeExit();
+        }
+    }
+
+    // 3. Mostrar con pequeña pausa para animación CSS
+    setTimeout(() => {
+        modal.classList.add('active');
+    }, 10);
 }
