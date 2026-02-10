@@ -1,32 +1,48 @@
 /* ==========================================================================
-   LAYOUT & SECURITY MODULE
+   LAYOUT & SECURITY MODULE (VERSIÓN UNIFICADA)
    Ubicación: assets/js/components/layout.js
    ========================================================================== */
 
 window.initLayout = async function() {
-    // 1. SEGURIDAD (Auth Guard)
-    authGuard();
+    // 1. SEGURIDAD
+    if (typeof authGuard === 'function') authGuard();
 
-    // 2. RENDERIZADO DE PARTIALS
+    // 2. RENDERIZADO (NAVBAR & FOOTER)
     const navPlaceholder = document.getElementById('navbar-placeholder');
     const footerPlaceholder = document.getElementById('footer-placeholder');
-    const rootPath = DataLoader.getBasePath().replace('data/', ''); 
 
-    // Cargar Navbar
+    // Corrección de ruta raíz
+    const basePath = DataLoader.getBasePath(); 
+    let rootPath = basePath.replace('assets/data/', '');
+    if (rootPath === basePath) rootPath = basePath.replace('data/', '').replace('assets/', '');
+
+    // --- CARGAR NAVBAR ---
     if (navPlaceholder) {
         const usuario = JSON.parse(localStorage.getItem('usuario_logueado'));
+        
+        // LÓGICA SIMPLIFICADA: Solo existen dos estados (Logueado o No Logueado)
+        // Ya no buscamos 'menu_artista.html', usamos 'sesion_iniciada.html' para todos.
         const archivoMenu = usuario ? 'sesion_iniciada.html' : 'iniciar_sesion.html'; 
-        const partialsPath = rootPath + 'pages/partials/';
+        
+        const fullUrl = rootPath + 'pages/partials/' + archivoMenu;
+
         try {
-            const resp = await fetch(partialsPath + archivoMenu);
+            const resp = await fetch(fullUrl);
             if (resp.ok) {
                 navPlaceholder.innerHTML = await resp.text();
-                initNavbarEvents(rootPath); // Pasamos rootPath para redirecciones
+                
+                // Inicializar eventos (Logout)
+                if (typeof initNavbarEvents === 'function') initNavbarEvents(rootPath);
+                
+                // PERSONALIZAR EL MENÚ SEGÚN EL ROL (Aquí ocurre la magia)
+                if (usuario) updateUserInfo(usuario);
+            } else {
+                console.error(`❌ Error 404: No se encuentra ${fullUrl}`);
             }
         } catch (e) { console.error("Error Navbar:", e); }
     }
 
-    // Cargar Footer
+    // --- CARGAR FOOTER ---
     if (footerPlaceholder) {
         try {
             const resp = await fetch(rootPath + 'pages/partials/footer.html');
@@ -35,17 +51,59 @@ window.initLayout = async function() {
     }
 
     // 3. ARREGLAR RUTAS DE IMÁGENES
-    fixLayoutPaths(rootPath);
+    if (typeof fixLayoutPaths === 'function') fixLayoutPaths(rootPath);
 };
 
-/* --- FUNCIONES PRIVADAS DEL MÓDULO --- */
+/* ==========================================================================
+   FUNCIONES AUXILIARES
+   ========================================================================== */
 
+function updateUserInfo(usuario) {
+    // 1. Rellenar Nombre
+    const nameEl = document.querySelector('.user-name-display');
+    if (nameEl && usuario.nombre) {
+        nameEl.textContent = usuario.nombre.split(' ')[0];
+    }
+
+    // 2. Lógica de Roles (Artista vs Usuario)
+    const roleEl = document.querySelector('.user-role-badge');
+    
+    // Seleccionamos TODOS los elementos que sean exclusivos de artista
+    // (Asegúrate de poner la clase 'artist-only-link' a cualquier enlace que solo el artista deba ver)
+    const artistLinks = document.querySelectorAll('.artist-only-link');
+    
+    if (roleEl) {
+        const rol = usuario.rol || 'Usuario';
+        roleEl.textContent = rol;
+
+        if (rol === 'Artista') {
+            // ES ARTISTA:
+            roleEl.classList.add('is-artist'); // Pone el badge en negro/blanco
+            
+            // Mostramos los enlaces exclusivos
+            artistLinks.forEach(link => {
+                link.style.display = 'inline-flex'; 
+            });
+        } else {
+            // NO ES ARTISTA:
+            roleEl.classList.remove('is-artist');
+            
+            // Ocultamos los enlaces exclusivos
+            artistLinks.forEach(link => {
+                link.style.display = 'none';
+            });
+        }
+    }
+}
+
+// ... (Mantén authGuard, fixLayoutPaths e initNavbarEvents igual que antes) ...
 function authGuard() {
     const usuario = JSON.parse(localStorage.getItem('usuario_logueado'));
     const path = window.location.pathname;
-    const protectedPages = ['perfil.html', 'mis-colecciones.html', 'ajustes.html'];
+    const protectedPages = ['perfil.html', 'mis-colecciones.html', 'ajustes.html']; 
     if (protectedPages.some(page => path.includes(page)) && !usuario) {
-        const rootPath = DataLoader.getBasePath().replace('data/', '');
+        const basePath = DataLoader.getBasePath();
+        let rootPath = basePath.replace('assets/data/', '');
         window.location.href = rootPath + 'pages/auth/login.html';
     }
 }
@@ -53,10 +111,8 @@ function authGuard() {
 function fixLayoutPaths(rootPath) {
     const navLogo = document.getElementById('dynamic-logo');
     if (navLogo) navLogo.src = rootPath + 'assets/icons/logo_letras.svg';
-
     const brandLink = document.querySelector('.brand-link');
     if (brandLink) brandLink.href = rootPath + 'index.html';
-
     const footerPlaceholder = document.getElementById('footer-placeholder');
     if (footerPlaceholder) {
         const footerLogo = footerPlaceholder.querySelector('img');
@@ -65,7 +121,6 @@ function fixLayoutPaths(rootPath) {
 }
 
 function initNavbarEvents(rootPath) {
-    // Logout
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', (e) => {
@@ -74,24 +129,4 @@ function initNavbarEvents(rootPath) {
             window.location.href = rootPath + 'index.html';
         });
     }
-
-    // Modal de Acceso Restringido
-    const restrictedLinks = document.querySelectorAll('.restricted-link');
-    const authModal = document.getElementById('authRequiredModal');
-    const closeAuthBtn = document.getElementById('closeAuthModal');
-    const closeAuth = () => { if (authModal) authModal.classList.remove('active'); };
-
-    if (closeAuthBtn) closeAuthBtn.addEventListener('click', closeAuth);
-    if (authModal) authModal.addEventListener('click', (e) => { if (e.target === authModal) closeAuth(); });
-
-    restrictedLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            const usuario = localStorage.getItem('usuario_logueado');
-            if (!usuario) {
-                e.preventDefault();
-                if (authModal) authModal.classList.add('active');
-                else window.location.href = rootPath + 'pages/auth/login.html';
-            }
-        });
-    });
 }
