@@ -1,194 +1,234 @@
 /* ==========================================================================
-   VÉRTICE AUTH STYLES
+   VÉRTICE AUTH STYLES (Login & Register)
    Ubicación: assets/css/pages/auth.css
    ========================================================================== */
 
 /* 1. LAYOUT DIVIDIDO (Izquierda Blanco / Derecha Imagen) */
-.auth-split-layout {
-    display: flex;
-    min-height: 100vh;
-    width: 100%;
+.auth-container {
+    display: flex;            /* Activa Flexbox */
+    flex-direction: row;      /* Fuerza dirección horizontal */
+    min-height: 100vh;        /* Altura completa */
+    width: 100%;              /* Ancho completo */
+    overflow-x: hidden;       /* Evita scroll horizontal */
+    background-color: var(--bg-page);
 }
 
-.auth-panel-white {
-    flex: 1;
-    background-color: var(--bg-surface);
+/* PANEL IZQUIERDO (Formulario) */
+.auth-form-side {
+    flex: 1;                  /* Ocupa el 50% */
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     padding: var(--space-8);
+    background-color: var(--bg-surface);
     position: relative;
+    z-index: 2;
 }
 
-.auth-panel-image {
-    flex: 1;
-    background-size: cover;
-    background-position: center;
+.auth-form-wrapper {
+    width: 100%;
+    max-width: 420px;         /* Ancho máximo para legibilidad */
+    text-align: center;
+}
+
+/* PANEL DERECHO (Imagen Promocional) */
+.auth-image-side {
+    flex: 1;                  /* Ocupa el otro 50% */
     position: relative;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-8);
+    color: var(--text-inverse); /* Texto blanco */
+    
+    /* Imagen de fondo genérica (se puede sobreescribir inline si quieres cambiarla por página) */
+    background-image: url('../../images/auth-bg.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 /* Capa oscura sobre la imagen */
-.auth-panel-image::before {
-    content: "";
+.auth-image-side::before {
+    content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.4); 
+    background: rgba(0, 0, 0, 0.4); /* Oscurecimiento al 40% */
+    z-index: 1;
 }
 
-/* Contenido sobre la imagen (Texto promocional) */
-.overlay-content {
+/* Contenido sobre la imagen */
+.auth-image-content {
     position: relative;
-    z-index: var(--z-normal);
-    text-align: center;
-    color: var(--text-inverse);
-    padding: var(--space-8);
+    z-index: 2;
+    max-width: 480px;
 }
 
-.promo-heading {
-    font-family: var(--font-serif);
-    font-size: var(--size-h1);
-    margin-bottom: var(--space-4);
-}
-
-.promo-text {
-    font-family: var(--font-sans);
-    font-size: var(--size-body);
-    margin-bottom: var(--space-8);
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* 2. BOTONES Y ENLACES DE AUTH */
-.back-link {
-    position: absolute;
-    top: 40px; left: 40px;
-    text-decoration: none;
-    color: var(--text-muted);
-    font-family: var(--font-sans);
-    font-size: var(--size-small);
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    transition: color var(--transition-fast);
-}
-
-.back-link:hover { color: var(--text-primary); }
-
-.btn-black-full {
-    background-color: var(--bg-inverse);
-    color: var(--text-inverse);
-    border: none;
-    width: 100%;
-    height: var(--btn-height);
-    font-family: var(--font-sans);
-    font-weight: var(--weight-semibold);
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    transition: background var(--transition-fast);
-    margin-top: var(--space-4);
-}
-
-.btn-black-full:hover { background-color: var(--hover-negro); }
-
-.btn-outline-white {
+/* ==========================================================================
+   2. ELEMENTOS DEL FORMULARIO
+   ========================================================================== */
+.auth-logo {
+    width: 120px; 
+    margin-bottom: var(--space-6);
+    opacity: 0.9;
     display: inline-block;
-    padding: 12px 30px;
-    border: 1px solid var(--text-inverse);
-    color: var(--text-inverse);
-    text-decoration: none;
-    text-transform: uppercase;
-    font-size: 13px;
-    letter-spacing: 0.1em;
-    transition: all var(--transition-fast);
 }
-
-.btn-outline-white:hover {
-    background-color: var(--text-inverse);
-    color: var(--text-primary);
-}
-
-/* 3. FORMULARIOS */
-.form-wrapper {
-    max-width: 380px;
-    margin: 0 auto;
-    width: 100%;
-    text-align: center;
-}
-
-.auth-icon img { height: 50px; margin-bottom: var(--space-6); }
 
 .auth-title {
     font-family: var(--font-serif);
     font-size: 32px;
-    color: var(--text-primary);
     margin-bottom: var(--space-2);
+    color: var(--text-primary);
 }
 
 .auth-subtitle {
     font-family: var(--font-sans);
+    font-size: 14px;
     color: var(--text-muted);
     margin-bottom: var(--space-8);
 }
 
-.input-group-line {
-    position: relative;
+/* Inputs (Estilo Línea) */
+.form-group {
     margin-bottom: var(--space-6);
+    text-align: left;
+    position: relative;
 }
 
-.input-group-line input {
+.form-label {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+}
+
+.form-input {
     width: 100%;
-    padding: 12px 0;
+    height: 48px;
+    padding: 12px 0; /* Padding vertical, sin horizontal para estilo línea */
     border: none;
     border-bottom: 1px solid var(--border-sutil);
+    border-radius: 0;
     font-family: var(--font-sans);
     font-size: 15px;
-    outline: none;
     background: transparent;
     transition: border-color var(--transition-fast);
+    outline: none;
 }
 
-.input-group-line input:focus { border-bottom-color: var(--border-fuerte); }
+.form-input:focus {
+    border-bottom-color: var(--border-fuerte); /* Negro al foco */
+}
 
+/* Icono "Ver Contraseña" */
 .show-pass-icon {
     position: absolute;
-    right: 0; top: 12px;
+    right: 0; top: 38px; /* Ajustado a la altura del input */
     color: var(--text-muted);
     cursor: pointer;
+    font-size: 14px;
 }
 
-.form-options {
+/* Enlace "Olvidé contraseña" */
+.auth-link {
+    display: block;
     text-align: right;
-    margin-bottom: var(--space-6);
-}
-
-.forgot-link {
+    font-size: 12px;
     color: var(--text-muted);
-    font-size: 13px;
     text-decoration: none;
+    margin-top: var(--space-2);
+    transition: color var(--transition-fast);
 }
-.forgot-link:hover { text-decoration: underline; }
 
+.auth-link:hover {
+    color: var(--text-primary);
+    text-decoration: underline;
+}
+
+/* MENSAJES DE ERROR / ÉXITO */
+.error-message {
+    color: var(--text-error);
+    font-size: 13px;
+    margin-bottom: 16px;
+    display: none; /* Oculto por defecto */
+    text-align: left;
+}
+
+.success-message {
+    color: var(--color-verde);
+    font-size: 13px;
+    margin-bottom: 16px;
+    display: none;
+    text-align: left;
+}
 
 /* ==========================================================================
-   4. MODAL BASE (Compartido: Olvidaste Contraseña + Exclusivo)
+   3. BOTONES
+   ========================================================================== */
+/* Botón Principal (Negro Sólido) */
+.btn-auth-primary {
+    width: 100%;
+    height: 50px;
+    background-color: var(--bg-inverse); /* Negro */
+    color: var(--text-inverse);          /* Blanco */
+    border: none;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: var(--weight-semibold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: var(--space-4);
+    transition: background var(--transition-fast);
+}
+
+.btn-auth-primary:hover {
+    background-color: var(--hover-negro);
+}
+
+.btn-auth-primary:disabled {
+    background-color: var(--text-muted);
+    cursor: not-allowed;
+}
+
+/* Botón Secundario (Outline Blanco - Para lado derecho) */
+.btn-auth-outline {
+    display: inline-block;
+    padding: 14px 40px;
+    border: 1px solid var(--text-inverse);
+    color: var(--text-inverse);
+    text-decoration: none;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: var(--weight-semibold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: var(--space-6);
+    transition: all var(--transition-fast);
+}
+
+.btn-auth-outline:hover {
+    background-color: var(--text-inverse);
+    color: var(--text-primary);
+}
+
+/* ==========================================================================
+   4. MODALES (Recuperación / Exclusivo)
    ========================================================================== */
 .modal-overlay {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    
     background-color: rgba(0, 0, 0, 0.5); 
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(4px);
     z-index: var(--z-modal-bg);
-    
     display: flex;
     justify-content: center;
     align-items: center;
-    
     opacity: 0; visibility: hidden;
     transition: opacity var(--transition-fast), visibility var(--transition-fast);
 }
@@ -217,20 +257,15 @@
 }
 .modal-close:hover { color: var(--text-primary); }
 
-
-/* ==========================================================================
-   5. MODAL EXCLUSIVO (Diseño Vértice - Recto y Elegante)
-   ========================================================================== */
+/* Estilo Modal Exclusivo (VÉRTICE) */
 .modal-content.modal-exclusive {
     max-width: 450px; 
     padding: 60px 40px; 
-    border-radius: 0; /* Recto */
+    border-radius: 0; 
 }
 
-/* Logo dentro del modal */
 .modal-header-logo img {
-    height: 50px; 
-    margin-bottom: var(--space-6);
+    height: 40px; 
     display: block; margin: 0 auto 24px auto;
 }
 
@@ -259,7 +294,6 @@
     gap: var(--space-4);
 }
 
-/* Botón Sólido (Negro) */
 .btn-modal-solid {
     display: flex; justify-content: center; align-items: center;
     width: 100%; padding: 16px 0;
@@ -278,10 +312,8 @@
 .btn-modal-solid:hover {
     background-color: var(--hover-negro);
     border-color: var(--hover-negro);
-    color: var(--text-inverse) !important;
 }
 
-/* Botón Outline (Borde) */
 .btn-modal-outline {
     display: flex; justify-content: center; align-items: center;
     width: 100%; padding: 16px 0;
@@ -299,98 +331,29 @@
 
 .btn-modal-outline:hover {
     background-color: var(--bg-secondary);
-    color: var(--text-primary);
 }
-
 
 /* ==========================================================================
-   6. SELECT PERSONALIZADO (Dropdown - Estilo Línea)
+   5. RESPONSIVE (MÓVIL)
    ========================================================================== */
-.custom-select-wrapper {
-    position: relative;
-    user-select: none;
-    margin-bottom: var(--space-6);
-    font-family: var(--font-sans);
-    text-align: left;
-}
-
-.custom-select-trigger {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 12px 0;
-    background: transparent;
-    border-bottom: 1px solid var(--border-sutil);
-    cursor: pointer;
-    font-size: 15px;
-    color: var(--text-muted);
-    transition: all var(--transition-fast);
-}
-
-.custom-select-trigger:hover,
-.custom-select-wrapper.open .custom-select-trigger {
-    border-bottom-color: var(--text-primary);
-    color: var(--text-primary); 
-}
-
-.custom-select-trigger.selected { color: var(--text-primary); }
-
-.select-arrow {
-    font-size: 12px;
-    color: var(--text-muted);
-    transition: transform var(--transition-fast);
-}
-
-.custom-select-wrapper.open .select-arrow {
-    transform: rotate(180deg);
-    color: var(--text-primary);
-}
-
-.custom-options {
-    position: absolute;
-    top: 100%; left: 0; right: 0;
-    background: var(--bg-surface);
-    border: 1px solid var(--border-sutil);
-    box-shadow: var(--shadow-md);
-    z-index: 100;
-    margin-top: 8px;
-    opacity: 0; visibility: hidden;
-    transform: translateY(-10px);
-    transition: all var(--transition-fast);
-}
-
-.custom-select-wrapper.open .custom-options {
-    opacity: 1; visibility: visible;
-    transform: translateY(0);
-}
-
-.custom-option {
-    display: block;
-    padding: 12px 16px;
-    font-size: 14px;
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: background var(--transition-fast);
-}
-
-.custom-option:hover {
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-}
-
-.custom-option.selected {
-    background-color: var(--bg-secondary);
-    font-weight: var(--weight-semibold);
-    color: var(--text-primary);
-}
-
-/* ERROR MESSAGE */
-.error-message {
-    color: var(--text-error);
-    font-size: 14px;
-    margin-bottom: 15px;
-    display: block;
-    min-height: 20px;
+@media (max-width: 900px) {
+    .auth-container {
+        flex-direction: column; /* Apilar verticalmente */
+    }
+    
+    .auth-form-side {
+        order: 2; /* Formulario abajo */
+        padding: 40px 20px;
+        min-height: 60vh;
+    }
+    
+    .auth-image-side {
+        order: 1; /* Imagen arriba */
+        min-height: 35vh;
+        flex: none; /* Altura fija relativa */
+    }
+    
+    .auth-image-content h2 {
+        font-size: 28px !important; /* Ajuste tamaño fuente */
+    }
 }

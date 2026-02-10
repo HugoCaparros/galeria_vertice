@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VÉRTICE | Colección Clásico</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Marcellus&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Marcellus&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <link rel="stylesheet" href="../../assets/css/base/variables.css">
     <link rel="stylesheet" href="../../assets/css/base/reset.css">
     <link rel="stylesheet" href="../../assets/css/base/typography.css">
@@ -18,40 +14,51 @@
     <link rel="stylesheet" href="../../assets/css/pages/category.css">
     <link rel="stylesheet" href="../../assets/css/pages/auth.css">
 </head>
-
 <body>
 
     <div id="navbar-placeholder"></div>
 
-<main class="category-container">
-    
-    <div class="category-nav-header">
+    <main class="category-container">
         
-        <a href="moderno.html" class="nav-control prev">
-            <span class="nav-context-label">Anterior</span>
-            <div class="nav-main-row">
-                <i class="fa-solid fa-arrow-left-long nav-icon"></i>
-                <span class="nav-title">MODERNO</span>
+        <div class="category-nav-header">
+            <a href="moderno.html" class="nav-control prev">
+                <span class="nav-context-label">Anterior</span>
+                <div class="nav-main-row">
+                    <i class="fa-solid fa-arrow-left-long nav-icon"></i>
+                    <span class="nav-title">MODERNO</span>
+                </div>
+            </a>
+            
+            <a href="abstracto.html" class="nav-control next">
+                <span class="nav-context-label">Siguiente</span>
+                <div class="nav-main-row">
+                    <span class="nav-title">ABSTRACTO</span>
+                    <i class="fa-solid fa-arrow-right-long nav-icon"></i>
+                </div>
+            </a>
+        </div>
+
+        <h1 class="category-title">CLÁSICO</h1>
+
+        <div class="toolbar-container">
+            <span class="toolbar-count" id="obras-count">Cargando...</span>
+            <div class="toolbar-actions">
+                <select id="sortSelect" class="sort-select">
+                    <option value="default">Relevancia</option>
+                    <option value="precio-asc">Precio: Menor a Mayor</option>
+                    <option value="precio-desc">Precio: Mayor a Menor</option>
+                    <option value="anio-desc">Más Recientes</option>
+                    <option value="anio-asc">Más Antiguos</option>
+                </select>
             </div>
-        </a>
-        
-        <a href="abstracto.html" class="nav-control next">
-            <span class="nav-context-label">Siguiente</span>
-            <div class="nav-main-row">
-                <span class="nav-title">ABSTRACTO</span>
-                <i class="fa-solid fa-arrow-right-long nav-icon"></i>
-            </div>
-        </a>
+        </div>
 
-    </div>
+        <div id="category-grid" class="art-grid-5-col"></div>
 
-    <h1 class="category-title">CLÁSICO</h1>
-    <div id="category-grid" class="art-grid-5-col"></div>
-
-</main>
+    </main>
 
     <div id="footer-placeholder"></div>
-
+    
     <div id="authRequiredModal" class="modal-overlay">
         <div class="modal-content modal-exclusive">
             <button class="modal-close" id="closeAuthModal">&times;</button>
@@ -65,13 +72,14 @@
         </div>
     </div>
 
-    <script src="../../assets/js/services/dataLoader.js"></script>
-    <script src="../../assets/js/main.js"></script>
+<script src="../../assets/js/services/dataLoader.js"></script>
+
+<script src="../../assets/js/components/layout.js"></script>
+<script src="../../assets/js/pages/catalog.js"></script>
+
+<script src="../../assets/js/main.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (window.initCategoryPage) window.initCategoryPage('clasico');
-        });
+        document.addEventListener('DOMContentLoaded', () => { if(window.initCategoryPage) window.initCategoryPage('clasico'); });
     </script>
 </body>
-
 </html>
