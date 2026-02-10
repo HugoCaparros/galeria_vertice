@@ -2,91 +2,49 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Categorías | VÉRTICE</title>
-    <link rel="stylesheet" href="../../assets/css/base/reset.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VÉRTICE | Categorías</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Marcellus&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <link rel="stylesheet" href="../../assets/css/base/variables.css">
+    <link rel="stylesheet" href="../../assets/css/base/reset.css">
     <link rel="stylesheet" href="../../assets/css/base/typography.css">
+    
     <link rel="stylesheet" href="../../assets/css/components/navbar.css">
     <link rel="stylesheet" href="../../assets/css/components/footer.css">
     
-    <style>
-        .categories-container {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            background: #fff;
-        }
-        .cat-title {
-            font-family: 'Marcellus', serif;
-            font-size: 1.5rem;
-            margin-bottom: 4rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-        }
-        .cat-menu {
-            display: flex;
-            gap: 5vw;
-            text-align: center;
-        }
-        .cat-item {
-            position: relative;
-            cursor: pointer;
-            group: 1;
-        }
-        .cat-name {
-            font-family: 'Marcellus', serif;
-            font-size: 3vw; /* Texto reactivo al ancho */
-            color: #ccc;
-            transition: color 0.4s ease;
-            text-transform: uppercase;
-            display: block;
-            margin-bottom: 1rem;
-        }
-        /* Hover: Se pone negro y muestra imagen de fondo (opcional) */
-        .cat-item:hover .cat-name { color: #000; }
-        
-        .cat-preview {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.4s ease;
-        }
-        .cat-item:hover .cat-preview {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+    <link rel="stylesheet" href="../../assets/css/pages/category.css">
 </head>
+
 <body>
-    <nav class="navbar">
-        <div class="nav-left"><a href="../../index.html">← Inicio</a></div>
-        <div class="nav-center"><a href="../../index.html" class="logo">VÉRTICE</a></div>
-        <div class="nav-right"></div>
-    </nav>
 
-    <main class="categories-container">
-        <h2 class="cat-title">Selecciona una Colección</h2>
+    <div id="navbar-placeholder"></div>
+
+    <main class="category-page">
         
-        <div class="cat-menu">
-            <a href="moderno.html" class="cat-item">
-                <span class="cat-name">Moderno</span>
-                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400" class="cat-preview" alt="Moderno">
-            </a>
+        <header class="page-header">
+            <h1 class="page-title">Disciplinas Artísticas</h1>
+            <p class="page-subtitle">Explora nuestra colección a través de las diferentes técnicas y medios.</p>
+        </header>
 
-            <a href="clasico.html" class="cat-item">
-                <span class="cat-name">Clásico</span>
-                <img src="https://images.unsplash.com/photo-1552083858-5847641bc6c0?w=400" class="cat-preview" alt="Clasico">
-            </a>
-
-            <a href="abstracto.html" class="cat-item">
-                <span class="cat-name">Abstracto</span>
-                <img src="https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=400" class="cat-preview" alt="Abstracto">
-            </a>
+        <div class="container">
+            <div id="category-grid-container" class="category-grid">
+                <div class="loader">Cargando categorías...</div>
+            </div>
         </div>
+
     </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../../assets/js/services/dataLoader.js"></script>
+    <script src="../../assets/js/components/layout.js"></script>
+    
+    <script src="../../assets/js/pages/category.js"></script>
+    
+    <script src="../../assets/js/main.js"></script>
+
 </body>
 </html>

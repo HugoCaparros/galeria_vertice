@@ -11,29 +11,46 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // 1. INICIALIZAR LAYOUT (Navbar, Footer)
+    // 1. INICIALIZAR LAYOUT (Navbar, Footer, Auth Guard)
     if (window.initLayout) await window.initLayout();
 
-    // 2. ENRUTAMIENTO SENCILLO
+    // 2. ENRUTAMIENTO Y LÓGICA DE PÁGINAS
     const path = window.location.pathname;
-    
-    // Home
-    if (document.getElementById('art-grid') || document.getElementById('viral-container')) {
+
+    // --- A. HOME ---
+    if (document.getElementById('viral-container')) {
         if (window.initHomePage) window.initHomePage();
     }
 
-    // Catálogo
-    if (document.getElementById('category-grid') || path.includes('obras.html')) {
-        if (window.initCatalogPage && !document.getElementById('category-grid')) {
-            window.initCatalogPage();
-        }
+    // --- B. CATEGORÍAS ÍNDICE (categorias.html) ---
+    // Busca el ID específico que pusimos en categorias.html
+    if (document.getElementById('category-grid-container')) {
+        // Nota: Asegúrate de que category.js esté importado en el HTML
+        if (window.initCatalogPage) window.initCatalogPage();
     }
 
-    // Detalles
+    // --- C. DETALLE DE CATEGORÍA (abstracto.html, moderno.html...) ---
+    // Busca la clase específica del CSS nuevo (.category-container)
+    if (document.querySelector('.category-container')) {
+        // Esta función viene de category_detail.js
+        if (window.initCategoryDetail) window.initCategoryDetail();
+    }
+
+    // --- D. CATÁLOGO GENERAL (obras.html) ---
+    // Solo se ejecuta si estamos en obras.html y NO es una categoría específica
+    if (path.includes('obras.html')) {
+        // Si tienes un script específico para el catálogo general (ej: catalog.js)
+        if (window.initGeneralCatalog) window.initGeneralCatalog();
+        // O si reúsas lógica anterior, asegúrate de que no choque con las anteriores
+    }
+
+    // --- E. DETALLES (Obra y Artista) ---
     if (path.includes('obra-detalle.html') && window.initObraDetalle) window.initObraDetalle();
     if (path.includes('artista-detalle.html') && window.initArtistaDetalle) window.initArtistaDetalle();
+    
+    // --- F. LISTA DE ARTISTAS ---
     if (path.includes('artistas.html') && window.initArtistsList) window.initArtistsList();
 
-    // Perfil (Nota: Auth se autoinicia en auth.js, no necesitamos llamarlo aquí)
+    // --- G. PERFIL DE USUARIO ---
     if (path.includes('perfil.html') && window.initUserProfile) window.initUserProfile();
 });

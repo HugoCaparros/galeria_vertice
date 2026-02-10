@@ -97,13 +97,47 @@ function updateUserInfo(usuario) {
 }
 
 // ... (Mantén authGuard, fixLayoutPaths e initNavbarEvents igual que antes) ...
+/* ==========================================================================
+   GUARDIA DE SEGURIDAD (Protección de Rutas)
+   ========================================================================== */
 function authGuard() {
     const usuario = JSON.parse(localStorage.getItem('usuario_logueado'));
     const path = window.location.pathname;
-    const protectedPages = ['perfil.html', 'mis-colecciones.html', 'ajustes.html']; 
+    
+    // LISTA NEGRA: Páginas que requieren estar logueado para verlas
+    const protectedPages = [
+        // 1. Áreas Personales
+        'perfil.html', 
+        'mis-colecciones.html', 
+        'ajustes.html', 
+        
+        // 2. Área de Artista
+        'dashboard.html', 
+        'subir-obra.html', 
+        'mis-obras.html',
+
+        // 3. CATÁLOGO (Club Privado)
+        // Si intentan entrar aquí, los mandamos al login
+        'artistas.html', 
+        'obras.html', 
+        'categorias.html',
+        'obra-detalle.html',
+        'artista-detalle.html' 
+    ];
+    
+    // LÓGICA: Si la URL actual incluye alguna página protegida Y no hay usuario...
     if (protectedPages.some(page => path.includes(page)) && !usuario) {
+        
+        // Calculamos la ruta hacia el login
         const basePath = DataLoader.getBasePath();
         let rootPath = basePath.replace('assets/data/', '');
+        
+        // Fallback de seguridad para la ruta
+        if (rootPath === basePath) {
+            rootPath = basePath.replace('data/', '').replace('assets/', '');
+        }
+        
+        // ¡EXPULSADO! Redirigir al Login
         window.location.href = rootPath + 'pages/auth/login.html';
     }
 }
