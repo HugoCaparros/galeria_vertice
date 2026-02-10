@@ -1,359 +1,495 @@
 /* ==========================================================================
-   VÉRTICE AUTH STYLES (Login & Register)
+   VÉRTICE AUTH - SLIDING PANEL (Tokenizado)
    Ubicación: assets/css/pages/auth.css
+   Dependencia: assets/css/base/variables.css
    ========================================================================== */
 
-/* 1. LAYOUT DIVIDIDO (Izquierda Blanco / Derecha Imagen) */
+/* 1. CONTENEDOR PRINCIPAL */
 .auth-container {
-    display: flex;            /* Activa Flexbox */
-    flex-direction: row;      /* Fuerza dirección horizontal */
-    min-height: 100vh;        /* Altura completa */
-    width: 100%;              /* Ancho completo */
-    overflow-x: hidden;       /* Evita scroll horizontal */
-    background-color: var(--bg-page);
+  background-color: var(--bg-page);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
 }
 
-/* PANEL IZQUIERDO (Formulario) */
-.auth-form-side {
-    flex: 1;                  /* Ocupa el 50% */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: var(--space-8);
-    background-color: var(--bg-surface);
-    position: relative;
-    z-index: 2;
+/* 2. PANELES DE FORMULARIO */
+.form-container {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  /* Mantenemos 0.6s para la física del slide, pero usamos la curva smooth */
+  transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  background-color: var(--bg-surface);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 40px;
+  text-align: center;
 }
 
+/* Wrapper interno */
 .auth-form-wrapper {
-    width: 100%;
-    max-width: 420px;         /* Ancho máximo para legibilidad */
-    text-align: center;
+  width: 100%;
+  max-width: 380px;
 }
 
-/* PANEL DERECHO (Imagen Promocional) */
-.auth-image-side {
-    flex: 1;                  /* Ocupa el otro 50% */
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: var(--space-8);
-    color: var(--text-inverse); /* Texto blanco */
-    
-    /* Imagen de fondo genérica (se puede sobreescribir inline si quieres cambiarla por página) */
-    background-image: url('../../images/auth-bg.jpg'); 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+/* --- LOGIN (Izquierda) --- */
+.sign-in-container {
+  left: 0;
+  width: 50%;
+  z-index: 2;
 }
 
-/* Capa oscura sobre la imagen */
-.auth-image-side::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.4); /* Oscurecimiento al 40% */
-    z-index: 1;
+/* --- REGISTER (Oculto Izquierda) --- */
+.sign-up-container {
+  left: 0;
+  width: 50%;
+  opacity: 0;
+  z-index: 1;
 }
 
-/* Contenido sobre la imagen */
-.auth-image-content {
-    position: relative;
-    z-index: 2;
-    max-width: 480px;
+/* 3. MOVIMIENTO ACTIVADO */
+.auth-container.right-panel-active .sign-in-container {
+  transform: translateX(100%);
+  opacity: 0;
 }
 
-/* ==========================================================================
-   2. ELEMENTOS DEL FORMULARIO
-   ========================================================================== */
-.auth-logo {
-    width: 120px; 
-    margin-bottom: var(--space-6);
-    opacity: 0.9;
-    display: inline-block;
+.auth-container.right-panel-active .sign-up-container {
+  transform: translateX(100%);
+  opacity: 1;
+  z-index: 5;
+  animation: show 0.6s;
 }
 
+/* 4. EL PANEL DE IMAGEN (OVERLAY) */
+.overlay-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  z-index: 100;
+}
+
+.auth-container.right-panel-active .overlay-container {
+  transform: translateX(-100%);
+}
+
+/* IMAGEN DE FONDO */
+.overlay {
+  background-image: url("../../img/LoginBackgroundPage2.png");
+  background-color: var(--color-negro); /* Fallback */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  color: var(--text-inverse); /* Blanco */
+  position: relative;
+  left: -100%;
+  height: 100%;
+  width: 200%;
+  transform: translateX(0);
+  transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* Capa oscura */
+.overlay::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45); /* Mantenemos rgba para transparencia */
+  z-index: 1;
+}
+
+.auth-container.right-panel-active .overlay {
+  transform: translateX(50%);
+}
+
+/* Paneles de Texto Overlay */
+.overlay-panel {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 40px;
+  text-align: center;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  transform: translateX(0);
+  transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  z-index: 2;
+}
+
+.overlay-panel h2 {
+  font-family: var(--font-serif);
+  font-size: 36px; /* Ajuste visual específico */
+  margin-bottom: var(--space-4);
+  color: var(--text-inverse);
+}
+
+.overlay-panel p {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  margin-bottom: var(--space-8);
+  color: var(--text-inverse);
+  opacity: 0.9;
+}
+
+.overlay-left {
+  transform: translateX(-20%);
+}
+.auth-container.right-panel-active .overlay-left {
+  transform: translateX(0);
+}
+
+.overlay-right {
+  right: 0;
+  transform: translateX(0);
+}
+.auth-container.right-panel-active .overlay-right {
+  transform: translateX(20%);
+}
+
+/* 5. UI COMPONENTES (Usando Tokens) */
+
+/* Logo */
+.auth-logo { 
+    width: 60px; 
+    display: block;          /* 1. Comportamiento de bloque */
+    margin: 0 auto;          /* 2. Centrado horizontal automático */
+    margin-bottom: var(--space-4); /* 3. Espacio inferior */
+    opacity: 0.9; 
+}
+
+/* Títulos */
 .auth-title {
-    font-family: var(--font-serif);
-    font-size: 32px;
-    margin-bottom: var(--space-2);
-    color: var(--text-primary);
+  font-family: var(--font-serif);
+  font-size: 32px;
+  margin-bottom: var(--space-2);
+  color: var(--text-primary);
 }
 
 .auth-subtitle {
-    font-family: var(--font-sans);
-    font-size: 14px;
-    color: var(--text-muted);
-    margin-bottom: var(--space-8);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: var(--space-8);
 }
 
-/* Inputs (Estilo Línea) */
+/* Inputs */
 .form-group {
-    margin-bottom: var(--space-6);
-    text-align: left;
-    position: relative;
-}
-
-.form-label {
-    display: block;
-    font-family: var(--font-sans);
-    font-size: 12px;
-    margin-bottom: 8px;
-    color: var(--text-secondary);
+  width: 100%;
+  margin-bottom: var(--space-6);
+  text-align: left;
+  position: relative;
 }
 
 .form-input {
-    width: 100%;
-    height: 48px;
-    padding: 12px 0; /* Padding vertical, sin horizontal para estilo línea */
-    border: none;
-    border-bottom: 1px solid var(--border-sutil);
-    border-radius: 0;
-    font-family: var(--font-sans);
-    font-size: 15px;
-    background: transparent;
-    transition: border-color var(--transition-fast);
-    outline: none;
+  width: 100%;
+  height: var(--input-height);
+  padding: 12px 0;
+  border: none;
+  border-bottom: 1px solid var(--border-sutil);
+  background: transparent;
+  outline: none;
+  transition: border-color var(--transition-fast);
+  font-family: var(--font-sans);
+  font-size: var(--size-body);
+  color: var(--text-primary);
+  border-radius: 0;
 }
 
 .form-input:focus {
-    border-bottom-color: var(--border-fuerte); /* Negro al foco */
+  border-bottom-color: var(--border-fuerte);
 }
 
-/* Icono "Ver Contraseña" */
+.form-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Iconos Input */
 .show-pass-icon {
-    position: absolute;
-    right: 0; top: 38px; /* Ajustado a la altura del input */
-    color: var(--text-muted);
-    cursor: pointer;
-    font-size: 14px;
+  position: absolute;
+  right: 0;
+  top: 12px;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 14px;
+  transition: color var(--transition-fast);
+}
+.show-pass-icon:hover {
+  color: var(--text-primary);
 }
 
-/* Enlace "Olvidé contraseña" */
-.auth-link {
-    display: block;
-    text-align: right;
-    font-size: 12px;
-    color: var(--text-muted);
-    text-decoration: none;
-    margin-top: var(--space-2);
-    transition: color var(--transition-fast);
-}
-
-.auth-link:hover {
-    color: var(--text-primary);
-    text-decoration: underline;
-}
-
-/* MENSAJES DE ERROR / ÉXITO */
-.error-message {
-    color: var(--text-error);
-    font-size: 13px;
-    margin-bottom: 16px;
-    display: none; /* Oculto por defecto */
-    text-align: left;
-}
-
-.success-message {
-    color: var(--color-verde);
-    font-size: 13px;
-    margin-bottom: 16px;
-    display: none;
-    text-align: left;
-}
-
-/* ==========================================================================
-   3. BOTONES
-   ========================================================================== */
-/* Botón Principal (Negro Sólido) */
+/* Botón Primario (Negro) */
 .btn-auth-primary {
-    width: 100%;
-    height: 50px;
-    background-color: var(--bg-inverse); /* Negro */
-    color: var(--text-inverse);          /* Blanco */
-    border: none;
-    font-family: var(--font-sans);
-    font-size: 13px;
-    font-weight: var(--weight-semibold);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    cursor: pointer;
-    margin-top: var(--space-4);
-    transition: background var(--transition-fast);
+  width: 100%;
+  height: var(--btn-height);
+  background-color: var(--bg-inverse);
+  color: var(--text-inverse);
+  border: none;
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  margin-top: var(--space-4);
+  transition: background var(--transition-fast);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .btn-auth-primary:hover {
-    background-color: var(--hover-negro);
+  background-color: var(--hover-negro);
 }
 
-.btn-auth-primary:disabled {
-    background-color: var(--text-muted);
-    cursor: not-allowed;
-}
-
-/* Botón Secundario (Outline Blanco - Para lado derecho) */
+/* Botón Secundario (Outline Blanco) */
 .btn-auth-outline {
-    display: inline-block;
-    padding: 14px 40px;
-    border: 1px solid var(--text-inverse);
-    color: var(--text-inverse);
-    text-decoration: none;
-    font-family: var(--font-sans);
-    font-size: 12px;
-    font-weight: var(--weight-semibold);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-top: var(--space-6);
-    transition: all var(--transition-fast);
+  padding: 12px 40px;
+  border: 1px solid var(--text-inverse);
+  color: var(--text-inverse);
+  background: transparent;
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: inline-block;
+  text-transform: uppercase;
 }
 
 .btn-auth-outline:hover {
-    background-color: var(--text-inverse);
-    color: var(--text-primary);
+  background-color: var(--text-inverse);
+  color: var(--text-primary); /* Se vuelve negro */
 }
 
+/* Enlaces */
+.auth-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: var(--size-small);
+  transition: color var(--transition-fast);
+}
+
+.auth-link:hover {
+  color: var(--hover-link);
+}
+
+/* Select Personalizado */
+.custom-select-wrapper {
+  position: relative;
+  user-select: none;
+  font-family: var(--font-sans);
+}
+
+.custom-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-sutil);
+  cursor: pointer;
+  font-size: var(--size-body);
+  color: var(--text-muted);
+  transition: all var(--transition-fast);
+}
+
+.custom-select-trigger:hover {
+  border-bottom-color: var(--text-secondary);
+}
+
+.custom-select-trigger.selected {
+  color: var(--text-primary);
+  border-bottom-color: var(--text-primary);
+}
+
+.custom-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-sutil);
+  box-shadow: var(--shadow-md);
+  z-index: 100;
+  margin-top: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-fast);
+}
+
+.custom-select-wrapper.open .custom-options {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.custom-option {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: block;
+  transition: background var(--transition-fast);
+}
+
+.custom-option:hover {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.custom-option.selected {
+  background-color: var(--bg-secondary);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+}
+
+/* Mensajes */
+.error-message {
+  color: var(--text-error);
+  font-size: 13px;
+  margin-top: var(--space-2);
+  display: none;
+}
+
+.success-message {
+  color: var(--color-verde);
+  font-size: 13px;
+  margin-top: var(--space-2);
+  display: none;
+}
+
+/* 6. RESPONSIVE */
+@media (max-width: 768px) {
+  .auth-container {
+    flex-direction: column;
+    overflow-y: auto;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .form-container {
+    width: 100%;
+    height: auto;
+    position: relative;
+    min-height: 500px;
+    padding: 40px 20px;
+  }
+
+  .sign-in-container,
+  .sign-up-container {
+    width: 100%;
+    left: 0;
+  }
+
+  .sign-up-container {
+    display: none;
+    opacity: 1;
+    z-index: 5;
+  }
+
+/* 3. MOVIMIENTO ACTIVADO (Cuando vamos a Registro) */
+
+/* El Login desaparece */
+.auth-container.right-panel-active .sign-in-container {
+    transform: translateX(100%);
+    opacity: 0;
+    z-index: 1; /* Lo enviamos al fondo */
+}
+
+/* El Registro aparece (CORREGIDO: Sin animación de espera) */
+.auth-container.right-panel-active .sign-up-container {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+    /* Eliminamos la línea: animation: show 0.6s; */
+}
+
+
+  .overlay-container {
+    display: none;
+  }
+}
+
+
 /* ==========================================================================
-   4. MODALES (Recuperación / Exclusivo)
+   7. MODAL / POPUP (Recuperar Contraseña)
    ========================================================================== */
+
+/* El fondo oscuro que cubre toda la pantalla */
 .modal-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); 
-    backdrop-filter: blur(4px);
-    z-index: var(--z-modal-bg);
+    position: fixed;        /* Se queda fijo aunque hagas scroll */
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo semitransparente oscuro */
+    backdrop-filter: blur(4px);           /* Efecto borroso elegante */
+    z-index: var(--z-modal, 2000);        /* Muy alto para estar encima de todo */
+    
+    /* Centrado Flexbox: pone la cajita blanca en el centro absoluto */
     display: flex;
     justify-content: center;
     align-items: center;
-    opacity: 0; visibility: hidden;
-    transition: opacity var(--transition-fast), visibility var(--transition-fast);
+    
+    /* Estado inicial: Oculto */
+    opacity: 0; 
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-.modal-overlay.active { opacity: 1; visibility: visible; }
+/* Estado Activo: Cuando JS añade la clase .active */
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
 
+/* La cajita blanca (Tarjeta) */
 .modal-content {
     background: var(--bg-surface);
-    width: 90%; max-width: 420px;
+    width: 90%; 
+    max-width: 420px;       /* Ancho máximo elegante */
     padding: 40px 30px;
     position: relative;
     box-shadow: var(--shadow-floating);
     text-align: center;
+    
+    /* Pequeña animación de entrada (sube un poco) */
     transform: translateY(20px);
-    transition: transform var(--transition-smooth);
+    transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.modal-overlay.active .modal-content { transform: translateY(0); }
+/* Cuando está activo, se coloca en su sitio */
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+}
 
+/* Botón de cerrar (X) */
 .modal-close {
     position: absolute;
-    top: 15px; right: 20px;
-    background: none; border: none;
-    font-size: 24px; color: var(--text-muted);
-    cursor: pointer;
-}
-.modal-close:hover { color: var(--text-primary); }
-
-/* Estilo Modal Exclusivo (VÉRTICE) */
-.modal-content.modal-exclusive {
-    max-width: 450px; 
-    padding: 60px 40px; 
-    border-radius: 0; 
-}
-
-.modal-header-logo img {
-    height: 40px; 
-    display: block; margin: 0 auto 24px auto;
-}
-
-.modal-title {
-    font-family: var(--font-sans);
-    font-size: 20px;
-    font-weight: var(--weight-semibold);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text-primary);
-    margin-bottom: var(--space-4);
-}
-
-.modal-description {
-    font-family: var(--font-sans);
-    font-size: 14px;
-    line-height: 1.6;
+    top: 15px; 
+    right: 20px;
+    background: none; 
+    border: none;
+    font-size: 24px; 
     color: var(--text-muted);
-    max-width: 320px;
-    margin: 0 auto var(--space-8) auto;
+    cursor: pointer;
+    transition: color 0.2s;
 }
 
-.modal-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-}
-
-.btn-modal-solid {
-    display: flex; justify-content: center; align-items: center;
-    width: 100%; padding: 16px 0;
-    background-color: var(--bg-inverse);
-    color: var(--text-inverse);
-    border: 1px solid var(--bg-inverse);
-    font-family: var(--font-sans);
-    font-size: 13px;
-    font-weight: var(--weight-semibold);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: all var(--transition-fast);
-}
-
-.btn-modal-solid:hover {
-    background-color: var(--hover-negro);
-    border-color: var(--hover-negro);
-}
-
-.btn-modal-outline {
-    display: flex; justify-content: center; align-items: center;
-    width: 100%; padding: 16px 0;
-    background-color: transparent;
-    color: var(--text-primary);
-    border: 1px solid var(--border-fuerte);
-    font-family: var(--font-sans);
-    font-size: 13px;
-    font-weight: var(--weight-semibold);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: all var(--transition-fast);
-}
-
-.btn-modal-outline:hover {
-    background-color: var(--bg-secondary);
-}
-
-/* ==========================================================================
-   5. RESPONSIVE (MÓVIL)
-   ========================================================================== */
-@media (max-width: 900px) {
-    .auth-container {
-        flex-direction: column; /* Apilar verticalmente */
-    }
-    
-    .auth-form-side {
-        order: 2; /* Formulario abajo */
-        padding: 40px 20px;
-        min-height: 60vh;
-    }
-    
-    .auth-image-side {
-        order: 1; /* Imagen arriba */
-        min-height: 35vh;
-        flex: none; /* Altura fija relativa */
-    }
-    
-    .auth-image-content h2 {
-        font-size: 28px !important; /* Ajuste tamaño fuente */
-    }
+.modal-close:hover { 
+    color: var(--text-primary); 
 }

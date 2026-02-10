@@ -1,7 +1,9 @@
-<header class="navbar navbar-light">
+<header class="navbar">
+    
     <nav class="nav-left">
-        <a href="#" class="nav-link">Mis Obras</a>
-        <a href="#" class="nav-link">Subastas</a>
+        <a href="pages/catalogo/obras.html" class="nav-link">Obras</a>
+        <span class="auth-separator"></span>
+        <a href="pages/user/mis-colecciones.html" class="nav-link">Mis Colecciones</a>
     </nav>
 
     <div class="nav-brand">
@@ -11,11 +13,18 @@
     </div>
 
     <div class="nav-right">
-        <div class="user-menu">
-            <span class="user-greeting">Hola, Juan</span>
-            <a href="perfil.html" class="user-avatar-circle">
-                JM
+        <div class="nav-auth">
+            
+            <a href="pages/user/perfil.html" class="nav-link" style="gap: 8px;">
+                <i class="fa-regular fa-user"></i> 
+                <span>MI PERFIL</span>
             </a>
+
+            <span class="auth-separator"></span>
+
+            <a href="#" class="nav-link" id="logoutBtn">SALIR</a>
+            
         </div>
     </div>
+
 </header>

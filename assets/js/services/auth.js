@@ -1,76 +1,176 @@
 /**
  * AUTH SERVICE
  * Ubicación: assets/js/services/auth.js
- * Misión: Gestionar Login, Registro y Logout interactuando con DataLoader.
+ * Misión: Gestionar Login, Registro, Panel Deslizante y Cambio de Contraseña.
  */
 
 const AuthService = {
 
-    // INICIALIZADOR: Se ejecuta al cargar la página
     init: () => {
-        // 1. Detectar Login
+        // 1. Detectar formularios principales
         const loginForm = document.getElementById('loginForm');
-        if (loginForm) {
-            loginForm.addEventListener('submit', AuthService.handleLogin);
-        }
+        if (loginForm) loginForm.addEventListener('submit', AuthService.handleLogin);
 
-        // 2. Detectar Registro
         const registerForm = document.getElementById('registerForm');
-        if (registerForm) {
-            registerForm.addEventListener('submit', AuthService.handleRegister);
-        }
+        if (registerForm) registerForm.addEventListener('submit', AuthService.handleRegister);
 
-        // 3. Activar los botones de "Ver contraseña" (ojitos)
+        // 2. UI Helpers
         AuthService.setupPasswordToggles();
-
-        // 4. ACTIVAR EL DESPLEGABLE PERSONALIZADO (NUEVO)
         AuthService.setupCustomSelect();
+        AuthService.setupSlidingPanel(); 
+        
+        // 3. Lógica del Popup de Cambio de Contraseña
+        AuthService.setupRecoveryModal();
     },
 
     // ========================================================================
-    // LÓGICA DEL DESPLEGABLE (TIPO DE USUARIO) - ¡NUEVO!
+    // A. LÓGICA DEL POPUP (CAMBIO DE CONTRASEÑA)
+    // ========================================================================
+    setupRecoveryModal: () => {
+        const modal = document.getElementById('forgotModal');
+        const openLink = document.getElementById('forgotLink');
+        const closeBtn = document.getElementById('closeModal');
+        const form = document.getElementById('recoveryForm');
+
+        if (!modal || !openLink) return;
+
+        const errorMsg = document.getElementById('resetError');
+        const successMsg = document.getElementById('resetSuccess');
+        const pass1 = document.getElementById('resetPass');
+        const pass2 = document.getElementById('resetConfirmPass');
+
+        // 1. Abrir Modal
+        openLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            modal.classList.add('active');
+            if(form) form.reset();
+            if(errorMsg) errorMsg.style.display = 'none';
+            if(successMsg) successMsg.style.display = 'none';
+        });
+
+        // 2. Cerrar Modal
+        const closeModal = () => modal.classList.remove('active');
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+        // 3. PROCESAR EL CAMBIO
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Validación básica
+                if (pass1.value !== pass2.value) {
+                    errorMsg.textContent = "❌ Las contraseñas no coinciden.";
+                    errorMsg.style.display = 'block';
+                    return;
+                }
+
+                if (pass1.value.length < 6) {
+                    errorMsg.textContent = "⚠️ La contraseña debe tener al menos 6 caracteres.";
+                    errorMsg.style.display = 'block';
+                    return;
+                }
+
+                // Si todo está bien:
+                errorMsg.style.display = 'none';
+                const btn = form.querySelector('button');
+                const originalText = btn.textContent;
+                
+                btn.textContent = "Actualizando...";
+                btn.disabled = true;
+
+                // SIMULACIÓN INSTANTÁNEA
+                setTimeout(() => {
+                    // Mostrar éxito
+                    successMsg.style.display = 'block';
+                    btn.style.backgroundColor = "var(--color-verde)";
+                    btn.textContent = "¡Hecho!";
+
+                    // Cerrar a los 1.5 segundos
+                    setTimeout(() => {
+                        closeModal();
+                        // Restaurar botón por si se vuelve a abrir
+                        btn.textContent = originalText;
+                        btn.disabled = false;
+                        btn.style.backgroundColor = ""; 
+                        successMsg.style.display = 'none';
+                    }, 1500);
+
+                }, 800); // Pequeño delay de 0.8s para dar sensación de proceso
+            });
+        }
+    },
+
+    // ========================================================================
+    // B. LÓGICA DEL PANEL DESLIZANTE
+    // ========================================================================
+    setupSlidingPanel: () => {
+        const container = document.getElementById('authContainer');
+        const signUpBtn = document.getElementById('signUpBtn');
+        const signInBtn = document.getElementById('signInBtn');
+
+        if (container && signUpBtn && signInBtn) {
+            signUpBtn.addEventListener('click', () => container.classList.add("right-panel-active"));
+            signInBtn.addEventListener('click', () => container.classList.remove("right-panel-active"));
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            if(urlParams.get('mode') === 'register') {
+                 container.classList.add("right-panel-active");
+            }
+        }
+    },
+
+    // ========================================================================
+    // C. UTILIDADES UI
     // ========================================================================
     setupCustomSelect: () => {
         const wrapper = document.querySelector('.custom-select-wrapper');
-        
         if (wrapper) {
             const trigger = wrapper.querySelector('.custom-select-trigger');
             const options = wrapper.querySelectorAll('.custom-option');
             const triggerText = trigger.querySelector('span');
 
-            // 1. Abrir / Cerrar al hacer clic
             trigger.addEventListener('click', (e) => {
                 wrapper.classList.toggle('open');
-                e.stopPropagation(); // Evita que el clic se propague al document
+                e.stopPropagation();
             });
 
-            // 2. Seleccionar una opción
             options.forEach(option => {
                 option.addEventListener('click', () => {
-                    // Cambiar el texto del botón
                     triggerText.textContent = option.textContent;
-                    trigger.classList.add('selected'); // Cambia color a negro
-                    
-                    // Marcar visualmente la opción elegida
+                    trigger.classList.add('selected');
                     options.forEach(opt => opt.classList.remove('selected'));
                     option.classList.add('selected');
-                    
-                    // Cerrar
                     wrapper.classList.remove('open');
                 });
             });
 
-            // 3. Cerrar si hago clic fuera
             document.addEventListener('click', (e) => {
-                if (!wrapper.contains(e.target)) {
-                    wrapper.classList.remove('open');
-                }
+                if (!wrapper.contains(e.target)) wrapper.classList.remove('open');
             });
         }
     },
 
+    setupPasswordToggles: () => {
+        // Usamos delegación de eventos o re-consultamos el DOM para pillar los del modal
+        // Lo más seguro es añadir el listener al document o ejecutarlo tras cargar el modal.
+        // Aquí lo ejecutamos sobre todos los existentes en el DOM al inicio.
+        const icons = document.querySelectorAll('.show-pass-icon');
+        icons.forEach(icon => {
+            icon.addEventListener('click', (e) => {
+                const input = e.target.previousElementSibling;
+                if (input && input.tagName === 'INPUT') {
+                    const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                    input.setAttribute('type', type);
+                    e.target.classList.toggle('fa-eye');
+                    e.target.classList.toggle('fa-eye-slash');
+                }
+            });
+        });
+    },
+
     // ========================================================================
-    // 1. LÓGICA DE LOGIN
+    // D. LOGIN
     // ========================================================================
     handleLogin: async (e) => {
         e.preventDefault();
@@ -82,9 +182,10 @@ const AuthService = {
         if (!errorMsg) {
             errorMsg = document.createElement('p');
             errorMsg.id = 'loginError';
-            errorMsg.style.color = "#d9534f"; errorMsg.style.textAlign = "center"; errorMsg.style.marginTop = "10px";
+            errorMsg.classList.add('error-message');
             e.target.appendChild(errorMsg);
         }
+        errorMsg.style.display = 'block';
 
         const originalText = btn.textContent;
         btn.textContent = "Verificando...";
@@ -102,7 +203,7 @@ const AuthService = {
 
             if (usuarioEncontrado) {
                 localStorage.setItem('usuario_logueado', JSON.stringify(usuarioEncontrado));
-                btn.style.backgroundColor = "#4CAF50"; 
+                btn.style.backgroundColor = "var(--color-verde)"; 
                 btn.textContent = "¡Bienvenido!";
                 setTimeout(() => { window.location.href = '../../index.html'; }, 1000);
             } else {
@@ -117,35 +218,28 @@ const AuthService = {
     },
 
     // ========================================================================
-    // 2. LÓGICA DE REGISTRO
+    // E. REGISTRO
     // ========================================================================
     handleRegister: async (e) => {
         e.preventDefault();
-        
         const nameInput = document.getElementById('nombre');
-        const emailInput = document.getElementById('email');
-        const passInput = document.getElementById('password');
-        const passConfirmInput = document.getElementById('confirmPassword');
+        const emailInput = document.getElementById('emailReg');
         const btn = e.target.querySelector('button[type="submit"]');
         
-        // Obtener el tipo de usuario del desplegable
         const userTypeWrapper = document.querySelector('.custom-select-trigger span');
         const userType = userTypeWrapper ? userTypeWrapper.textContent : 'Usuario';
 
-        let errorMsg = document.getElementById('registerError');
+        let errorMsg = document.getElementById('regError');
+        let successMsg = document.getElementById('regSuccess');
+
         if (!errorMsg) {
             errorMsg = document.createElement('p');
-            errorMsg.id = 'registerError';
-            errorMsg.style.color = "#d9534f"; errorMsg.style.textAlign = "center";
+            errorMsg.id = 'regError';
+            errorMsg.classList.add('error-message');
             e.target.appendChild(errorMsg);
         }
+        errorMsg.style.display = 'block';
 
-        if (passConfirmInput && passInput.value !== passConfirmInput.value) {
-            errorMsg.textContent = "⚠️ Las contraseñas no coinciden.";
-            return;
-        }
-
-        // Validar que haya seleccionado un tipo (Opcional)
         if (userType === "Tipo de Usuario") {
              errorMsg.textContent = "⚠️ Por favor selecciona un tipo de usuario.";
              return;
@@ -161,33 +255,18 @@ const AuthService = {
                 nombre: nameInput.value,
                 email: emailInput.value,
                 avatar: "../../assets/img/default-avatar.jpg",
-                rol: userType, // Guardamos el rol seleccionado
+                rol: userType,
                 handle: "@" + nameInput.value.replace(/\s+/g, '').toLowerCase()
             };
 
             localStorage.setItem('usuario_logueado', JSON.stringify(nuevoUsuario));
-            btn.style.backgroundColor = "#4CAF50";
+            
+            if(successMsg) successMsg.style.display = 'block';
+            btn.style.backgroundColor = "var(--color-verde)";
             btn.textContent = "¡Cuenta creada!";
+            
             setTimeout(() => { window.location.href = '../../index.html'; }, 1500);
         }, 1500);
-    },
-
-    // ========================================================================
-    // 3. UTILIDADES
-    // ========================================================================
-    setupPasswordToggles: () => {
-        const icons = document.querySelectorAll('.show-pass-icon');
-        icons.forEach(icon => {
-            icon.addEventListener('click', (e) => {
-                const input = e.target.previousElementSibling;
-                if (input && input.tagName === 'INPUT') {
-                    const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-                    input.setAttribute('type', type);
-                    e.target.classList.toggle('fa-eye');
-                    e.target.classList.toggle('fa-eye-slash');
-                }
-            });
-        });
     }
 };
 

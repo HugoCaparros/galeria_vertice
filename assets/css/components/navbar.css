@@ -1,5 +1,6 @@
 /* ==========================================================================
    NAVBAR GLOBAL
+   Ubicación: assets/css/components/navbar.css
    ========================================================================== */
 .navbar {
     position: fixed;
@@ -9,13 +10,14 @@
     height: 100px;
     background-color: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(10px);
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid transparent; /* Opcional: var(--border-sutil) si quieres línea */
     z-index: var(--z-navbar);
     
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 var(--container-padding);
+    transition: all 0.3s ease;
 }
 
 /* ==========================================================================
@@ -64,11 +66,11 @@
 .nav-auth {
     display: flex;
     align-items: center;
-    gap: var(--space-4);
+    gap: var(--space-6); /* Separación entre Login y Registro */
 }
 
 /* ==========================================================================
-   TIPOGRAFÍA Y ENLACES
+   TIPOGRAFÍA Y ENLACES GENERALES
    ========================================================================== */
 .nav-link, 
 .auth-link {
@@ -84,33 +86,67 @@
     
     display: inline-flex;
     align-items: center;
+    cursor: pointer;
 }
 
+/* Hover genérico (baja opacidad) */
 .nav-link:hover,
 .auth-link:hover {
     opacity: 0.5;
     color: var(--text-primary);
 }
 
-/* Clase auxiliar para cursor en elementos JS */
-.restricted-link {
+/* ==========================================================================
+   CORRECCIÓN ESPECÍFICA: BOTÓN INICIAR SESIÓN
+   (Solo Texto: Gris -> Negro. Sin fondos, sin opacidad reducida)
+   ========================================================================== */
+.nav-login-link {
+    /* 1. Reset completo */
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    
+    /* 2. Tipografía */
+    font-family: var(--font-sans);
+    font-size: var(--size-small);
+    font-weight: var(--weight-medium); /* Un poco más de peso para legibilidad */
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
     cursor: pointer;
+
+    /* 3. Color Inicial: Gris (Muted) */
+    color: var(--text-muted); 
+    
+    /* 4. Transición solo del color */
+    transition: color 0.3s ease;
+}
+
+/* HOVER: Solo cambia a Negro */
+.nav-login-link:hover {
+    color: var(--color-negro) !important; /* Negro puro */
+    
+    /* Aseguramos que no haya otros efectos indeseados */
+    background: transparent !important;
+    opacity: 1 !important; /* Mantiene la opacidad al 100% */
+    transform: none !important;
 }
 
 /* ==========================================================================
-   SEPARADOR VERTICAL
+   SEPARADOR VERTICAL (Opcional)
    ========================================================================== */
 .auth-separator {
     display: block;
     width: 1px;
     height: 14px;
-    background-color: var(--text-primary);
+    background-color: var(--text-muted);
     opacity: 0.3;
     margin: 0 var(--space-2);
 }
 
 /* ==========================================================================
-   BOTÓN REGISTRO (Opcional, estilo botón)
+   BOTÓN REGISTRO (Estilo Botón Bordeado)
    ========================================================================== */
 .btn-navbar-register {
     font-family: var(--font-sans);
@@ -121,15 +157,17 @@
     text-decoration: none;
     
     color: var(--text-primary);
-    padding: 8px 16px;
+    padding: 8px 20px;
     border: 1px solid var(--border-fuerte);
     border-radius: var(--btn-radius);
+    background: transparent;
     
     transition: all var(--transition-fast);
-    margin-left: var(--space-4);
+    margin-left: var(--space-2);
 }
 
 .btn-navbar-register:hover {
-    background-color: var(--bg-inverse);
-    color: var(--text-inverse);
+    background-color: var(--bg-inverse); /* Negro */
+    color: var(--text-inverse);          /* Blanco */
+    border-color: var(--bg-inverse);
 }
