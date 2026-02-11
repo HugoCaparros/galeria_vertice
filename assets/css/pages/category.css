@@ -359,3 +359,63 @@
     
     .card-like-btn { opacity: 1; transform: scale(1); }
 }
+
+/* ==========================================================================
+   ADICIONES PARA MÉTRICAS SOCIALES Y DESCRIPCIÓN 
+   ========================================================================== */
+
+/* Extracto de la descripción de la obra */
+.cat-card-excerpt {
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--text-secondary);
+    margin: 8px 0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limita a 2 líneas para mantener el grid alineado */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Contenedor de Likes y Comentarios */
+.cat-card-social {
+    display: flex;
+    gap: 15px;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.social-item {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.social-item i {
+    font-size: 10px;
+}
+
+/* Overlay que aparece sobre la imagen al pasar el ratón */
+.card-overlay-stats {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    color: white;
+    font-size: 10px;
+    display: flex;
+    gap: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* No interfiere con el clic en la imagen */
+}
+
+.cat-card:hover .card-overlay-stats {
+    opacity: 1;
+}
