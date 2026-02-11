@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="../../assets/css/components/modal.css">
     <link rel="stylesheet" href="../../assets/css/components/navbar.css">
     <link rel="stylesheet" href="../../assets/css/components/footer.css">
+    
     <link rel="stylesheet" href="../../assets/css/pages/category.css">
     <link rel="stylesheet" href="../../assets/css/pages/auth.css">
 </head>
@@ -32,7 +33,7 @@
 
             <div class="header-center">
                 <h1 class="category-title">CLÁSICO</h1>
-                <span class="collection-subtitle">Colección Permanente</span>
+                <span class="collection-subtitle">Colección Permanente y Maestros</span>
             </div>
 
             <a href="abstracto.html" class="nav-arrow next">
@@ -45,9 +46,11 @@
         <div class="toolbar-container">
             <div class="filter-capsules">
                 <button class="filter-pill active" data-sort="default">Todo</button>
+                <button class="filter-pill" data-sort="likes-desc">Populares</button>
+                <button class="filter-pill" data-sort="anio-desc">Nuevos</button>
+                <button class="filter-pill" data-sort="anio-asc">Antiguos</button>
                 <button class="filter-pill" data-sort="precio-asc">Precio −</button>
                 <button class="filter-pill" data-sort="precio-desc">Precio +</button>
-                <button class="filter-pill" data-sort="anio-desc">Nuevos</button>
             </div>
             
             <div class="toolbar-meta">
@@ -69,7 +72,7 @@
             <p class="modal-description">Únete a nuestra comunidad para acceder a la colección completa.</p>
             <div class="modal-buttons">
                 <a href="../auth/login.html" class="btn-modal-solid">INICIAR SESIÓN</a>
-                <a href="../auth/register.html" class="btn-modal-outline">REGISTRARSE</a>
+                <a href="../auth/login.html?mode=register" class="btn-modal-outline">REGISTRARSE</a>
             </div>
         </div>
     </div>
@@ -83,8 +86,10 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', () => { 
-            // Carga solo las obras de la categoría 'clasico'
-            if(window.initCatalogPage) window.initCatalogPage('clasico'); 
+            // Carga estrictamente las obras etiquetadas como 'clasico' en el JSON
+            if(window.initCatalogPage) {
+                window.initCatalogPage('clasico'); 
+            }
         });
     </script>
 </body>
