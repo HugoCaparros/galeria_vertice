@@ -1,110 +1,119 @@
 /* ==========================================================================
-   CATEGORY PAGE LOGIC (CORREGIDO Y BLINDADO)
+   CATEGORY PAGE LOGIC (INTERCONEXIÓN TOTAL)
    Ubicación: assets/js/pages/category.js
+   Misión: Cargar metadatos del catálogo, filtrar obras por categoría y
+           cruzar datos con Artistas y Comentarios dinámicamente.
    ========================================================================== */
 
 let currentData = [];
 
 /**
  * Función Principal de Inicialización
- * @param {string} categoryFilter - Debe coincidir con 'categoria' en el JSON (ej: 'moderno')
+ * @param {string} categorySlug - El identificador (slug) de la categoría (ej: 'clasico')
  */
-window.initCatalogPage = async function(categoryFilter) {
+window.initCatalogPage = async function(categorySlug) {
     
-    // 1. BLOQUEO DE SEGURIDAD:
-    // Si main.js llama a esta función sin filtro, la ignoramos silenciosamente
-    // para que no borre el grid ni lance errores.
-    if (!categoryFilter) {
-        return; 
-    }
+    // 1. BLOQUEO DE SEGURIDAD
+    if (!categorySlug) return; 
 
     const gridContainer = document.getElementById('category-grid-container');
     const targetContainer = gridContainer || document.querySelector('.art-grid-5-col');
-
-    // Inicializar botones de filtro visual
-    initFilters(targetContainer); 
-
     if (!targetContainer) return;
 
-    try {
-        console.log(`🚀 Cargando colección exclusiva: "${categoryFilter}"`);
+    // Inicializar filtros visuales
+    initFilters(targetContainer); 
 
-        // 2. VERIFICACIÓN DE DATALOADER
-        if (typeof DataLoader === 'undefined' || !DataLoader.getObras) {
-            console.error("DataLoader no está cargado.");
+    try {
+        console.log(`🚀 Iniciando catálogo interconectado: "${categorySlug}"`);
+
+        // 2. VERIFICACIÓN DE DATALOADER Y CARGA DE DATOS CRUZADOS
+        if (typeof DataLoader === 'undefined') {
+            console.error("⛔ DataLoader no encontrado.");
             return;
         }
+
+        // Cargamos la información de la categoría y sus obras con artistas ya vinculados
+        // Utilizamos el nuevo método relacional del DataLoader
+        const data = await DataLoader.getObrasPorCategoria(categorySlug);
         
-        // 3. OBTENER OBRAS
-        const todasLasObras = await DataLoader.getObras();
-        
-        // 4. FILTRADO ESTRICTO (Basado en tu JSON)
-        // Normalizamos para evitar errores de mayúsculas
-        const target = categoryFilter.toLowerCase().trim();
+        if (!data.info) {
+            console.warn(`⚠️ No se encontró información para la categoría: ${categorySlug}`);
+            return;
+        }
 
-        const obrasFiltradas = todasLasObras.filter(obra => {
-            // Tu JSON tiene la propiedad "categoria": "moderno", "clasico", etc.
-            const catObra = (obra.categoria || '').toLowerCase();
-            return catObra === target;
-        });
+        // 3. INYECCIÓN DINÁMICA DE METADATOS (Desde categorias.json)
+        // Llenamos el título, curador y descripción directamente del JSON
+        const titleEl = document.getElementById('cat-title');
+        const descEl = document.getElementById('cat-description');
+        const curatorEl = document.getElementById('cat-curator');
 
-        currentData = obrasFiltradas;
-        console.log(`✅ Se encontraron ${currentData.length} obras para la categoría "${target}"`);
+        if (titleEl) titleEl.textContent = data.info.nombre;
+        if (descEl) descEl.textContent = data.info.descripcion;
+        if (curatorEl) curatorEl.textContent = `Curador: ${data.info.curador}`;
 
-        // 5. ACTUALIZAR UI
+        // 4. ACTUALIZAR CONTADOR
+        currentData = data.obras;
         const countEl = document.getElementById('obraCount');
-        if (countEl) countEl.textContent = `${currentData.length} OBRAS EN COLECCIÓN`;
+        if (countEl) countEl.textContent = `${currentData.length} OBRAS EN EXHIBICIÓN`;
 
-        // 6. RENDERIZAR
+        // 5. RENDERIZAR GRID EDITORIAL
         renderGrid(targetContainer, currentData);
 
     } catch (error) {
-        console.error("🔥 Error cargando catálogo:", error);
+        console.error("🔥 Error cargando catálogo interconectado:", error);
     }
 };
 
 /**
- * Renderiza las tarjetas
+ * Renderiza las tarjetas con métricas sociales y descripciones extensas
  */
 function renderGrid(container, items) {
     container.innerHTML = '';
 
     if (!items || items.length === 0) {
-        container.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding:50px; color:#888;">No hay obras disponibles en esta categoría.</div>';
+        container.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding:50px; color:var(--text-muted);">No hay obras disponibles en esta categoría.</div>';
         return;
     }
 
-    items.forEach((item, index) => {
-        const card = document.createElement('article');
-        card.className = 'cat-card cat-card-animated'; 
-        card.style.animationDelay = `${index * 0.05}s`;
+    items.forEach((obra, index) => {
+        const stats = obra.stats || { vistas: 0, likes: 0, compartidos: 0 };
+        const delay = index * 0.05;
 
-        // --- CORRECCIÓN DE RUTAS DE IMAGEN PARA TU JSON ---
-        // Tu JSON dice: "assets/img/obras/clasico-1.webp"
-        // Nosotros estamos en: "pages/catalogo/"
-        // Necesitamos subir dos niveles: "../../" + ruta del JSON
-        
-        let rutaImg = item.imagen; 
-        
-        // Si la ruta no empieza con http y no tiene ya el ../../ se lo ponemos
+        // Ajuste de ruta de imagen para subcarpetas
+        let rutaImg = obra.imagen || '';
         if (!rutaImg.startsWith('http') && !rutaImg.startsWith('../../')) {
-             rutaImg = '../../' + rutaImg;
+            rutaImg = '../../' + rutaImg;
         }
 
+        const card = document.createElement('article');
+        card.className = 'cat-card cat-card-animated'; 
+        card.style.animationDelay = `${delay}s`;
+
+        // Renderizado con descripción extensa y métricas aleatorias/orgánicas
         card.innerHTML = `
-            <a href="obra-detalle.html?id=${item.id}" style="text-decoration:none; color:inherit; display:block; height:100%;">
+            <a href="obra-detalle.html?id=${obra.id}" style="text-decoration:none; color:inherit; display:block;">
                 <div class="cat-card-img-wrapper">
-                    <img src="${rutaImg}" alt="${item.titulo}" class="cat-card-img" loading="lazy">
-                    ${item.badge ? `<span class="cat-card-badge">${item.badge}</span>` : ''}
-                    <button class="card-like-btn" onclick="event.preventDefault(); this.classList.toggle('liked');">
+                    <img src="${rutaImg}" alt="${obra.titulo}" class="cat-card-img" loading="lazy">
+                    ${obra.badge ? `<span class="cat-card-badge">${obra.badge}</span>` : ''}
+                    
+                    <div class="card-overlay-stats">
+                        <span><i class="fa-solid fa-eye"></i> ${stats.vistas.toLocaleString()}</span>
+                        <span><i class="fa-solid fa-share-nodes"></i> ${stats.compartidos.toLocaleString()}</span>
+                    </div>
+
+                    <button class="card-like-btn" onclick="toggleLike(event, '${obra.id}')">
                         <i class="fa-regular fa-heart"></i>
                     </button>
                 </div>
                 <div class="cat-card-info">
-                    <h3 class="cat-card-title">${item.titulo}</h3>
-                    <p class="cat-card-artist">${item.artista_nombre || item.artista}</p>
-                    <div class="info-secondary">
-                        <span class="info-price">${item.precio ? item.precio.toLocaleString('es-ES') + '€' : 'Consultar'}</span>
+                    <span class="cat-card-artist">${obra.artista_data?.nombre || 'Artista Vértice'}</span>
+                    <h3 class="cat-card-title">${obra.titulo}</h3>
+                    
+                    <p class="cat-card-excerpt">${obra.descripcion ? obra.descripcion.substring(0, 80) + '...' : ''}</p>
+                    
+                    <div class="cat-card-social">
+                        <span class="social-item"><i class="fa-solid fa-heart"></i> ${stats.likes.toLocaleString()}</span>
+                        <span class="social-item"><i class="fa-solid fa-comment"></i> ${obra.comentarios?.length || Math.floor(Math.random() * 15)}</span>
                     </div>
                 </div>
             </a>
@@ -114,7 +123,7 @@ function renderGrid(container, items) {
 }
 
 /**
- * Filtros (Cápsulas)
+ * Inicializa los botones de filtrado
  */
 function initFilters(container) {
     const buttons = document.querySelectorAll('.filter-pill');
@@ -128,10 +137,7 @@ function initFilters(container) {
 }
 
 /**
- * Ordenación
- */
-/**
- * Lógica de Ordenación (Actualizada con Populares y Antiguos)
+ * Lógica de Ordenación
  */
 function applySorting(criteria, container) {
     if (!currentData.length) return;
@@ -145,26 +151,50 @@ function applySorting(criteria, container) {
             sorted.sort((a, b) => (b.precio||0) - (a.precio||0)); 
             break;
         case 'anio-desc': 
-            // Más recientes primero
-            sorted.sort((a, b) => new Date(b.fecha_publicacion) - new Date(a.fecha_publicacion)); 
+            sorted.sort((a, b) => new Date(b.fecha_publicacion || b.anio) - new Date(a.fecha_publicacion || a.anio)); 
             break;
         case 'anio-asc': 
-            // Más antiguos primero (NUEVO)
-            sorted.sort((a, b) => new Date(a.fecha_publicacion) - new Date(b.fecha_publicacion)); 
+            sorted.sort((a, b) => new Date(a.fecha_publicacion || a.anio) - new Date(b.fecha_publicacion || b.anio)); 
             break;
         case 'likes-desc':
-            // Más likes primero (Populares - NUEVO)
-            // Asume que tu JSON tiene: "stats": { "likes": 120 }
-            sorted.sort((a, b) => {
-                const likesA = a.stats && a.stats.likes ? a.stats.likes : 0;
-                const likesB = b.stats && b.stats.likes ? b.stats.likes : 0;
-                return likesB - likesA;
-            });
+            sorted.sort((a, b) => (b.stats?.likes || 0) - (a.stats?.likes || 0));
             break;
         default: 
-            // Relevancia (ID original)
             sorted.sort((a, b) => a.id - b.id); 
             break;
     }
     renderGrid(container, sorted);
 }
+
+/**
+ * Gestión de Likes con Verificación de Usuario
+ */
+window.toggleLike = function (event, id) {
+    event.preventDefault(); 
+    event.stopPropagation(); 
+
+    // Verificamos si hay una sesión activa para permitir la interacción
+    const usuario = localStorage.getItem("usuario_logueado");
+
+    if (!usuario) {
+        const modal = document.getElementById("authRequiredModal");
+        if (modal) {
+            modal.classList.add("active");
+            const closeBtn = document.getElementById("closeAuthModal");
+            if (closeBtn) closeBtn.onclick = () => modal.classList.remove("active");
+        } else {
+            window.location.href = "../auth/login.html";
+        }
+        return;
+    }
+
+    const btn = event.currentTarget;
+    const icon = btn.querySelector("i");
+    btn.classList.toggle('liked');
+
+    if (btn.classList.contains('liked')) {
+        icon.className = "fa-solid fa-heart";
+    } else {
+        icon.className = "fa-regular fa-heart";
+    }
+};

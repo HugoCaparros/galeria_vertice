@@ -1,22 +1,16 @@
 /**
- * DATA LOADER SERVICE
+ * DATA LOADER SERVICE (VÉRTICE MASTER ENGINE)
  * Ubicación: assets/js/services/dataLoader.js
  */
 
 const DataLoader = {
     
-    // 1. GESTIÓN DE RUTAS (CORREGIDO PARA TU ESTRUCTURA REAL)
+    // 1. GESTIÓN DE RUTAS
     getBasePath: () => {
         const path = window.location.pathname;
-        
-        // Si estamos en una subpágina (ej: /pages/catalogo/obras.html)
-        // La carpeta 'data' está dos niveles arriba (../../data/)
         if (path.includes('/pages/')) {
             return '../../data/';
         }
-        
-        // Si estamos en la raíz (index.html)
-        // La carpeta 'data' está al lado (data/)
         return 'data/';
     },
 
@@ -34,7 +28,7 @@ const DataLoader = {
         }
     },
 
-    // 3. GETTERS
+    // 3. GETTERS BÁSICOS
     async getArtistas() { return await this.loadJSON('artistas.json'); },
     async getObras() { return await this.loadJSON('obras.json'); },
     async getUsuarios() { return await this.loadJSON('usuarios.json'); },
@@ -45,47 +39,82 @@ const DataLoader = {
     async getNotificaciones() { return await this.loadJSON('notificaciones.json'); },
     async getCategorias() { return await this.loadJSON('categorias.json'); },
 
-    // 4. FUNCIONES RELACIONALES
+    // 4. FUNCIONES RELACIONALES (INTERCONEXIÓN TOTAL)
+
+    // Obtener una obra con TODO su contexto: Artista, Categoría y Comentarios
+    async getObraCompleta(id) {
+        const obraId = parseInt(id);
+        const [obras, artistas, categorias, comentarios] = await Promise.all([
+            this.getObras(),
+            this.getArtistas(),
+            this.getCategorias(),
+            this.getComentarios()
+        ]);
+
+        const obra = obras.find(o => o.id === obraId);
+        if (!obra) return null;
+
+        // Unir con Artista
+        obra.artista_data = artistas.find(a => a.id === obra.artista_id);
+        
+        // Unir con Categoría (Metadatos editoriales)
+        obra.categoria_data = categorias.find(c => c.id === obra.categoria_id);
+
+        // Unir con Comentarios
+        obra.lista_comentarios = comentarios.filter(c => c.obra_id === obraId);
+
+        return obra;
+    },
+
+    // Obtener todas las obras de una categoría con datos de artista incluidos
+    async getObrasPorCategoria(slug) {
+        const [obras, artistas, categorias] = await Promise.all([
+            this.getObras(),
+            this.getArtistas(),
+            this.getCategorias()
+        ]);
+
+        const categoria = categorias.find(c => c.slug === slug);
+        if (!categoria) return { info: null, obras: [] };
+
+        const filtradas = obras.filter(o => o.categoria_id === categoria.id).map(obra => {
+            return {
+                ...obra,
+                artista_data: artistas.find(a => a.id === obra.artista_id)
+            };
+        });
+
+        return {
+            info: categoria,
+            obras: filtradas
+        };
+    },
+
     async getArtistaCompleto(id) {
         const artistaId = parseInt(id);
-        const artistas = await this.getArtistas();
+        const [artistas, obras, colecciones] = await Promise.all([
+            this.getArtistas(),
+            this.getObras(),
+            this.getColecciones()
+        ]);
+
         const artista = artistas.find(a => a.id === artistaId);
         if (!artista) return null;
 
-        const obras = await this.getObras();
         artista.lista_obras = obras.filter(o => o.artista_id === artistaId);
 
-        const colecciones = await this.getColecciones();
         if (artista.colecciones_ids) {
             artista.lista_colecciones = colecciones.filter(c => artista.colecciones_ids.includes(c.id));
         }
         return artista;
     },
 
-    async getObraCompleta(id) {
-        const obraId = parseInt(id);
-        const obras = await this.getObras();
-        const obra = obras.find(o => o.id === obraId);
-        if (!obra) return null;
-
-        const artistas = await this.getArtistas();
-        obra.artista_data = artistas.find(a => a.id === obra.artista_id);
-
-        const comentarios = await this.getComentarios();
-        obra.lista_comentarios = comentarios.filter(c => c.obra_id === obraId);
-
-        return obra;
-    },
-
     async getUsuarioActual() {
-        const userId = 1; 
+        const uLogueado = localStorage.getItem('usuario_logueado');
+        if (uLogueado) return JSON.parse(uLogueado);
+        
         const usuarios = await this.getUsuarios();
-        return usuarios.find(u => u.id === userId);
-    },
-
-    async getObrasDestacadas() {
-        const obras = await this.getObras();
-        return obras.filter(o => o.badge === 'Viral' || o.badge === 'Trending' || o.badge === 'Nuevo').slice(0, 4);
+        return usuarios[0]; // Fallback al primer usuario si no hay login
     }
 };
 
