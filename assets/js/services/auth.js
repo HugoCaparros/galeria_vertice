@@ -96,13 +96,13 @@ const AuthService = {
                         successMsg.style.display = 'none';
                     }, 1500);
 
-                }, 800); // Pequeño delay de 0.8s para dar sensación de proceso
+                }, 800); 
             });
         }
     },
 
     // ========================================================================
-    // B. LÓGICA DEL PANEL DESLIZANTE
+    // B. LÓGICA DEL PANEL DESLIZANTE (LOGIN / REGISTRO)
     // ========================================================================
     setupSlidingPanel: () => {
         const container = document.getElementById('authContainer');
@@ -110,9 +110,11 @@ const AuthService = {
         const signInBtn = document.getElementById('signInBtn');
 
         if (container && signUpBtn && signInBtn) {
+            // Click manual en los botones del panel
             signUpBtn.addEventListener('click', () => container.classList.add("right-panel-active"));
             signInBtn.addEventListener('click', () => container.classList.remove("right-panel-active"));
             
+            // DETECCIÓN POR URL: Si vienes desde el navbar con ?mode=register
             const urlParams = new URLSearchParams(window.location.search);
             if(urlParams.get('mode') === 'register') {
                  container.classList.add("right-panel-active");
@@ -152,9 +154,6 @@ const AuthService = {
     },
 
     setupPasswordToggles: () => {
-        // Usamos delegación de eventos o re-consultamos el DOM para pillar los del modal
-        // Lo más seguro es añadir el listener al document o ejecutarlo tras cargar el modal.
-        // Aquí lo ejecutamos sobre todos los existentes en el DOM al inicio.
         const icons = document.querySelectorAll('.show-pass-icon');
         icons.forEach(icon => {
             icon.addEventListener('click', (e) => {
@@ -240,7 +239,7 @@ const AuthService = {
         }
         errorMsg.style.display = 'block';
 
-        if (userType === "Tipo de Usuario") {
+        if (userType === "Tipo de Usuario" || userType === "") {
              errorMsg.textContent = "⚠️ Por favor selecciona un tipo de usuario.";
              return;
         }
@@ -270,4 +269,5 @@ const AuthService = {
     }
 };
 
+// Inicialización
 document.addEventListener('DOMContentLoaded', AuthService.init);

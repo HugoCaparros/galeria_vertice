@@ -23,38 +23,35 @@
 
     <main class="category-container">
         
-        <div class="category-nav-header">
-            <a href="moderno.html" class="nav-control prev">
-                <span class="nav-context-label">Anterior</span>
-                <div class="nav-main-row">
-                    <i class="fa-solid fa-arrow-left-long nav-icon"></i>
-                    <span class="nav-title">MODERNO</span>
-                </div>
-            </a>
+        <header class="category-header-block">
             
-            <a href="abstracto.html" class="nav-control next">
-                <span class="nav-context-label">Siguiente</span>
-                <div class="nav-main-row">
-                    <span class="nav-title">ABSTRACTO</span>
-                    <i class="fa-solid fa-arrow-right-long nav-icon"></i>
-                </div>
+            <a href="moderno.html" class="nav-arrow prev">
+                <i class="fa-solid fa-arrow-left-long"></i>
+                <span class="tooltip">Moderno</span>
             </a>
-        </div>
 
-        <h1 class="category-title">CLÁSICO</h1>
+            <div class="header-center">
+                <h1 class="category-title">CLÁSICO</h1>
+                <span class="collection-subtitle">Colección Permanente</span>
+            </div>
+
+            <a href="abstracto.html" class="nav-arrow next">
+                <span class="tooltip">Abstracto</span>
+                <i class="fa-solid fa-arrow-right-long"></i>
+            </a>
+
+        </header>
 
         <div class="toolbar-container">
-            <div class="toolbar-left">
-                <span class="toolbar-count" id="obraCount">Cargando colección...</span>
+            <div class="filter-capsules">
+                <button class="filter-pill active" data-sort="default">Todo</button>
+                <button class="filter-pill" data-sort="precio-asc">Precio −</button>
+                <button class="filter-pill" data-sort="precio-desc">Precio +</button>
+                <button class="filter-pill" data-sort="anio-desc">Nuevos</button>
             </div>
-            <div class="toolbar-right">
-                <span class="filter-label">ORDENAR POR:</span>
-                <div class="filter-capsules">
-                    <button class="filter-pill active" data-sort="default">Relevancia</button>
-                    <button class="filter-pill" data-sort="precio-asc">Precio Menor</button>
-                    <button class="filter-pill" data-sort="precio-desc">Precio Mayor</button>
-                    <button class="filter-pill" data-sort="anio-desc">Recientes</button>
-                </div>
+            
+            <div class="toolbar-meta">
+                <span id="obraCount" class="meta-count">Explorando colección</span>
             </div>
         </div>
 

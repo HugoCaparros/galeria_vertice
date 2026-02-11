@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VÉRTICE | Colección Abstracto</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Marcellus&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Marcellus&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <link rel="stylesheet" href="../../assets/css/base/variables.css">
@@ -17,44 +19,44 @@
     <link rel="stylesheet" href="../../assets/css/pages/category.css">
     <link rel="stylesheet" href="../../assets/css/pages/auth.css">
 </head>
+
 <body>
 
     <div id="navbar-placeholder"></div>
 
     <main class="category-container">
-        
-        <div class="category-nav-header">
-            <a href="clasico.html" class="nav-control prev">
-                <span class="nav-context-label">Anterior</span>
-                <div class="nav-main-row">
-                    <i class="fa-solid fa-arrow-left-long nav-icon"></i>
-                    <span class="nav-title">CLÁSICO</span>
-                </div>
-            </a>
-            
-            <a href="moderno.html" class="nav-control next">
-                <span class="nav-context-label">Siguiente</span>
-                <div class="nav-main-row">
-                    <span class="nav-title">MODERNO</span>
-                    <i class="fa-solid fa-arrow-right-long nav-icon"></i>
-                </div>
-            </a>
-        </div>
 
-        <h1 class="category-title">ABSTRACTO</h1>
+        <header class="category-header-block">
+
+            <a href="clasico.html" class="nav-arrow prev">
+                <i class="fa-solid fa-arrow-left-long"></i>
+                <span class="tooltip">Clásico</span>
+            </a>
+
+            <div class="header-center">
+                <h1 class="category-title">ABSTRACTO</h1>
+                <span class="collection-subtitle">Forma, Color y Concepto</span>
+            </div>
+
+            <a href="moderno.html" class="nav-arrow next">
+                <span class="tooltip">Moderno</span>
+                <i class="fa-solid fa-arrow-right-long"></i>
+            </a>
+
+        </header>
 
         <div class="toolbar-container">
-            <div class="toolbar-left">
-                <span class="toolbar-count" id="obraCount">Cargando colección...</span>
+            <div class="filter-capsules">
+                <button class="filter-pill active" data-sort="default">Todo</button>
+                <button class="filter-pill" data-sort="likes-desc">Populares</button> <button class="filter-pill"
+                    data-sort="anio-desc">Nuevos</button>
+                <button class="filter-pill" data-sort="anio-asc">Antiguos</button> <button class="filter-pill"
+                    data-sort="precio-asc">Precio −</button>
+                <button class="filter-pill" data-sort="precio-desc">Precio +</button>
             </div>
-            <div class="toolbar-right">
-                <span class="filter-label">ORDENAR POR:</span>
-                <div class="filter-capsules">
-                    <button class="filter-pill active" data-sort="default">Relevancia</button>
-                    <button class="filter-pill" data-sort="precio-asc">Precio Menor</button>
-                    <button class="filter-pill" data-sort="precio-desc">Precio Mayor</button>
-                    <button class="filter-pill" data-sort="anio-desc">Recientes</button>
-                </div>
+
+            <div class="toolbar-meta">
+                <span id="obraCount" class="meta-count">Explorando colección</span>
             </div>
         </div>
 
@@ -63,7 +65,7 @@
     </main>
 
     <div id="footer-placeholder"></div>
-    
+
     <div id="authRequiredModal" class="modal-overlay">
         <div class="modal-content modal-exclusive">
             <button class="modal-close" id="closeAuthModal">&times;</button>
@@ -79,16 +81,14 @@
 
     <script src="../../assets/js/services/dataLoader.js"></script>
     <script src="../../assets/js/components/layout.js"></script>
-    
     <script src="../../assets/js/pages/category.js"></script>
-
     <script src="../../assets/js/main.js"></script>
-    
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => { 
-            // Carga solo las obras de la categoría 'abstracto'
-            if(window.initCatalogPage) window.initCatalogPage('abstracto'); 
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.initCatalogPage) window.initCatalogPage('abstracto');
         });
     </script>
 </body>
+
 </html>

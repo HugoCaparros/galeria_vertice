@@ -23,38 +23,35 @@
 
     <main class="category-container">
         
-        <div class="category-nav-header">
-            <a href="abstracto.html" class="nav-control prev">
-                <span class="nav-context-label">Anterior</span>
-                <div class="nav-main-row">
-                    <i class="fa-solid fa-arrow-left-long nav-icon"></i>
-                    <span class="nav-title">ABSTRACTO</span>
-                </div>
-            </a>
+        <header class="category-header-block">
             
-            <a href="clasico.html" class="nav-control next">
-                <span class="nav-context-label">Siguiente</span>
-                <div class="nav-main-row">
-                    <span class="nav-title">CLÁSICO</span>
-                    <i class="fa-solid fa-arrow-right-long nav-icon"></i>
-                </div>
+            <a href="abstracto.html" class="nav-arrow prev">
+                <i class="fa-solid fa-arrow-left-long"></i>
+                <span class="tooltip">Abstracto</span>
             </a>
-        </div>
 
-        <h1 class="category-title">MODERNO</h1>
+            <div class="header-center">
+                <h1 class="category-title">MODERNO</h1>
+                <span class="collection-subtitle">Vanguardia y Nuevos Medios</span>
+            </div>
+
+            <a href="clasico.html" class="nav-arrow next">
+                <span class="tooltip">Clásico</span>
+                <i class="fa-solid fa-arrow-right-long"></i>
+            </a>
+
+        </header>
 
         <div class="toolbar-container">
-            <div class="toolbar-left">
-                <span class="toolbar-count" id="obraCount">Cargando...</span>
+            <div class="filter-capsules">
+                <button class="filter-pill active" data-sort="default">Todo</button>
+                <button class="filter-pill" data-sort="likes-desc">Populares</button> <button class="filter-pill" data-sort="anio-desc">Nuevos</button>
+                <button class="filter-pill" data-sort="anio-asc">Antiguos</button>   <button class="filter-pill" data-sort="precio-asc">Precio −</button>
+                <button class="filter-pill" data-sort="precio-desc">Precio +</button>
             </div>
-            <div class="toolbar-right">
-                <span class="filter-label">ORDENAR POR:</span>
-                <div class="filter-capsules">
-                    <button class="filter-pill active" data-sort="default">Relevancia</button>
-                    <button class="filter-pill" data-sort="precio-asc">Precio Menor</button>
-                    <button class="filter-pill" data-sort="precio-desc">Precio Mayor</button>
-                    <button class="filter-pill" data-sort="anio-desc">Recientes</button>
-                </div>
+            
+            <div class="toolbar-meta">
+                <span id="obraCount" class="meta-count">Explorando colección</span>
             </div>
         </div>
 
@@ -79,11 +76,11 @@
 
     <script src="../../assets/js/services/dataLoader.js"></script>
     <script src="../../assets/js/components/layout.js"></script>
-    <script src="../../assets/js/pages/category.js"></script> <script src="../../assets/js/main.js"></script>
+    <script src="../../assets/js/pages/category.js"></script>
+    <script src="../../assets/js/main.js"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', () => { 
-            // Llamada específica para esta página
             if(window.initCatalogPage) window.initCatalogPage('moderno'); 
         });
     </script>

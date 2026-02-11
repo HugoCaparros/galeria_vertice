@@ -130,18 +130,41 @@ function initFilters(container) {
 /**
  * Ordenación
  */
+/**
+ * Lógica de Ordenación (Actualizada con Populares y Antiguos)
+ */
 function applySorting(criteria, container) {
     if (!currentData.length) return;
     let sorted = [...currentData];
 
     switch (criteria) {
-        case 'precio-asc': sorted.sort((a, b) => (a.precio||0) - (b.precio||0)); break;
-        case 'precio-desc': sorted.sort((a, b) => (b.precio||0) - (a.precio||0)); break;
+        case 'precio-asc': 
+            sorted.sort((a, b) => (a.precio||0) - (b.precio||0)); 
+            break;
+        case 'precio-desc': 
+            sorted.sort((a, b) => (b.precio||0) - (a.precio||0)); 
+            break;
         case 'anio-desc': 
-            // Ordenar por fecha_publicacion (String ISO)
+            // Más recientes primero
             sorted.sort((a, b) => new Date(b.fecha_publicacion) - new Date(a.fecha_publicacion)); 
             break;
-        default: sorted.sort((a, b) => a.id - b.id); break;
+        case 'anio-asc': 
+            // Más antiguos primero (NUEVO)
+            sorted.sort((a, b) => new Date(a.fecha_publicacion) - new Date(b.fecha_publicacion)); 
+            break;
+        case 'likes-desc':
+            // Más likes primero (Populares - NUEVO)
+            // Asume que tu JSON tiene: "stats": { "likes": 120 }
+            sorted.sort((a, b) => {
+                const likesA = a.stats && a.stats.likes ? a.stats.likes : 0;
+                const likesB = b.stats && b.stats.likes ? b.stats.likes : 0;
+                return likesB - likesA;
+            });
+            break;
+        default: 
+            // Relevancia (ID original)
+            sorted.sort((a, b) => a.id - b.id); 
+            break;
     }
     renderGrid(container, sorted);
 }

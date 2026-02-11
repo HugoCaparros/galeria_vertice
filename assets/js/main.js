@@ -14,6 +14,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 1. INICIALIZAR LAYOUT (Navbar, Footer, Auth Guard)
     if (window.initLayout) await window.initLayout();
 
+    // 1.1 INICIALIZAR AUTH SERVICE (Añadido para procesar ?mode=register)
+    // Esto permite que el enlace del navbar funcione correctamente.
+    if (typeof AuthService !== 'undefined' && AuthService.init) {
+        AuthService.init();
+    }
+
     // 2. ENRUTAMIENTO Y LÓGICA DE PÁGINAS
     const path = window.location.pathname;
 
@@ -23,29 +29,35 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // --- B. CATEGORÍAS ÍNDICE (categorias.html) ---
-    // Busca el ID específico que pusimos en categorias.html
+    // CORRECCIÓN: Se añade validación para evitar llamadas sin filtro 'undefined'
     if (document.getElementById('category-grid-container')) {
-        // Nota: Asegúrate de que category.js esté importado en el HTML
-        if (window.initCatalogPage) window.initCatalogPage();
+        // Solo llamamos si el HTML no tiene su propia inicialización específica
+        // para evitar el error de "filtro undefined" detectado en consola.
+        const urlParams = new URLSearchParams(window.location.search);
+        const catParam = urlParams.get('categoria');
+        
+        if (window.initCatalogPage && catParam) {
+            window.initCatalogPage(catParam);
+        }
     }
 
     // --- C. DETALLE DE CATEGORÍA (abstracto.html, moderno.html...) ---
-    // Busca la clase específica del CSS nuevo (.category-container)
     if (document.querySelector('.category-container')) {
-        // Esta función viene de category_detail.js
         if (window.initCategoryDetail) window.initCategoryDetail();
     }
 
     // --- D. CATÁLOGO GENERAL (obras.html) ---
-    // Solo se ejecuta si estamos en obras.html y NO es una categoría específica
     if (path.includes('obras.html')) {
-        // Si tienes un script específico para el catálogo general (ej: catalog.js)
         if (window.initGeneralCatalog) window.initGeneralCatalog();
-        // O si reúsas lógica anterior, asegúrate de que no choque con las anteriores
     }
 
     // --- E. DETALLES (Obra y Artista) ---
-    if (path.includes('obra-detalle.html') && window.initObraDetalle) window.initObraDetalle();
+    if (path.includes('obra-detalle.html')) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const obraId = urlParams.get('id');
+        if (obraId && window.initObraDetalle) window.initObraDetalle(obraId);
+    }
+    
     if (path.includes('artista-detalle.html') && window.initArtistaDetalle) window.initArtistaDetalle();
     
     // --- F. LISTA DE ARTISTAS ---
