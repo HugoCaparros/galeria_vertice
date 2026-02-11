@@ -1,11 +1,13 @@
 /* ==========================================================================
-   ESTILOS DE PÁGINA DE CATEGORÍA (Moderno, Clásico, Abstracto)
+   ESTILOS DE PÁGINA DE CATEGORÍA
+   Adaptado al ADN de Marca (Tokens :root)
    Ubicación: assets/css/pages/category.css
    ========================================================================== */
 
+/* --- LAYOUT PRINCIPAL --- */
 .category-container {
-    /* Usamos --space-header (160px) + un ajuste fino */
-    padding-top: calc(var(--space-header) - var(--space-8)); /* ~128px */
+    /* Cálculo dinámico: Header (160px) - Ajuste visual (32px) = ~128px top */
+    padding-top: calc(var(--space-header) - var(--space-8));
     padding-bottom: var(--space-16);
     padding-left: var(--container-padding);
     padding-right: var(--container-padding);
@@ -14,12 +16,12 @@
 }
 
 /* ==========================================================================
-   1. NAVEGACIÓN SUPERIOR "EDITORIAL"
+   1. NAVEGACIÓN SUPERIOR (Anterior / Siguiente)
    ========================================================================== */
 .category-nav-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     border-bottom: 1px solid var(--border-sutil);
     padding-bottom: var(--space-4);
     margin-bottom: var(--space-8);
@@ -30,46 +32,45 @@
     flex-direction: column;
     text-decoration: none;
     cursor: pointer;
-    group: nav-hover;
+    min-width: 80px; 
+    opacity: 0.6;
+    transition: opacity var(--transition-fast);
 }
 
+.nav-control:hover { opacity: 1; }
 .nav-control.prev { align-items: flex-start; text-align: left; }
 .nav-control.next { align-items: flex-end; text-align: right; }
 
 .nav-context-label {
     font-family: var(--font-sans);
-    font-size: 10px; /* Valor fijo pequeño permitido */
+    font-size: 10px; /* Valor micro, menor a --size-small */
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-bottom: var(--space-1);
-    transition: color var(--transition-fast);
 }
 
 .nav-main-row {
     display: flex;
     align-items: center;
     gap: var(--space-2);
-    color: var(--text-secondary);
-    transition: color var(--transition-fast);
+    color: var(--text-primary);
 }
 
 .nav-title {
     font-family: var(--font-sans);
-    font-size: 13px; /* Valor específico para navegación */
+    font-size: var(--size-small);
     font-weight: var(--weight-semibold);
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
 
-.nav-icon {
-    font-size: 14px;
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+.nav-icon { 
+    font-size: var(--size-small); 
+    transition: transform var(--transition-fast); 
 }
 
-/* Hover Effects */
-.nav-control:hover .nav-context-label { color: var(--text-primary); }
-.nav-control:hover .nav-main-row { color: var(--text-primary); }
+/* Hover interacciones */
 .nav-control.prev:hover .nav-icon { transform: translateX(-4px); }
 .nav-control.next:hover .nav-icon { transform: translateX(4px); }
 
@@ -78,18 +79,18 @@
    ========================================================================== */
 .category-title {
     font-family: var(--font-serif);
-    font-size: var(--size-h1); /* 48px */
+    /* Clamp responsivo basado en --size-h1 (48px) */
+    font-size: clamp(32px, 5vw, var(--size-h1)); 
     font-weight: var(--weight-regular);
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--text-primary);
-    margin-bottom: var(--space-8);
-    margin-top: var(--space-4);
+    margin: var(--space-8) 0;
 }
 
 /* ==========================================================================
-   3. BARRA DE HERRAMIENTAS (Filtros y Contador)
+   3. BARRA DE HERRAMIENTAS (DISEÑO CAPSULE / EDITORIAL)
    ========================================================================== */
 .toolbar-container {
     display: flex;
@@ -98,31 +99,79 @@
     margin-bottom: var(--space-8);
     padding-bottom: var(--space-4);
     border-bottom: 1px solid var(--border-sutil);
+    flex-wrap: wrap;
+    gap: var(--space-4);
 }
+
+/* --- IZQUIERDA: Contador --- */
+.toolbar-left { display: flex; align-items: center; }
 
 .toolbar-count {
     font-family: var(--font-sans);
-    font-size: var(--size-small); /* 12px */
+    font-size: 11px;
     color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
+    font-weight: var(--weight-semibold);
 }
 
-.sort-select {
-    border: none;
-    background: transparent;
+/* --- DERECHA: Filtros --- */
+.toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.filter-label {
+    font-family: var(--font-serif);
+    font-size: var(--size-small);
+    font-style: italic;
+    color: var(--text-muted);
+    margin-right: var(--space-1);
+}
+
+.filter-capsules {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+}
+
+/* ESTILO CÁPSULA (BOTÓN) */
+.filter-pill {
+    background-color: transparent;
+    border: 1px solid var(--border-sutil);
+    border-radius: 100px; /* Pill shape */
+    padding: 8px 18px;
+    
     font-family: var(--font-sans);
-    font-size: 13px;
-    color: var(--text-primary);
+    font-size: 10px;
     font-weight: var(--weight-medium);
-    cursor: pointer;
-    outline: none;
+    color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+/* Hover */
+.filter-pill:hover {
+    border-color: var(--text-primary); /* --border-fuerte */
+    color: var(--text-primary);
+}
+
+/* ACTIVO (Negro Sólido) */
+.filter-pill.active {
+    background-color: var(--bg-inverse); /* Negro */
+    border-color: var(--bg-inverse);
+    color: var(--text-inverse); /* Blanco */
+    font-weight: var(--weight-semibold);
+    box-shadow: var(--shadow-sm);
 }
 
 /* ==========================================================================
-   4. GRID DE OBRAS Y TARJETAS AVANZADAS
+   4. GRID DE OBRAS
    ========================================================================== */
 .art-grid-5-col {
     display: grid;
@@ -133,35 +182,33 @@
     margin: 0 auto;
 }
 
-/* Animación de entrada */
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.cat-card-animated {
-    animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-}
-
-/* Tarjeta */
+/* TARJETA DE OBRA */
 .cat-card {
     display: flex;
     flex-direction: column;
     text-decoration: none;
     cursor: pointer;
-    transition: transform var(--transition-fast);
+    transition: transform 0.4s ease; /* Mantenemos un poco más lento que fast */
 }
 
-.cat-card:hover {
-    transform: translateY(-4px);
+.cat-card:hover { transform: translateY(-4px); }
+
+/* Animación de entrada */
+.cat-card-animated {
+    animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Imagen Wrapper */
 .cat-card-img-wrapper {
     position: relative;
     width: 100%;
-    aspect-ratio: 4 / 5;
-    background-color: var(--bg-secondary);
+    aspect-ratio: 4 / 5; /* Formato retrato */
+    background-color: var(--bg-secondary); /* Placeholder gris claro */
     overflow: hidden;
     margin-bottom: var(--space-3);
 }
@@ -171,32 +218,33 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform var(--transition-smooth);
 }
 
 .cat-card:hover .cat-card-img { transform: scale(1.05); }
 
-/* Badge (Etiqueta flotante) */
+/* Badge (Nuevo / Vendido) */
 .cat-card-badge {
     position: absolute;
     top: 10px; left: 10px;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95); /* Semi-transparente sobre imagen */
     color: var(--text-primary);
-    font-size: 10px;
+    font-size: 9px;
     font-weight: var(--weight-semibold);
     text-transform: uppercase;
     padding: 4px 8px;
     letter-spacing: 0.1em;
     pointer-events: none;
+    z-index: 2;
 }
 
-/* BOTÓN DE FAVORITOS (Wishlist) */
+/* Botón Like (Corazón) */
 .card-like-btn {
     position: absolute;
     top: 10px; right: 10px;
     width: 32px; height: 32px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.9);
     border: none;
     display: flex;
     align-items: center;
@@ -204,41 +252,21 @@
     cursor: pointer;
     z-index: 10;
     opacity: 0;
-    transform: translateY(-5px);
+    transform: translateY(5px);
     transition: all var(--transition-fast);
     box-shadow: var(--shadow-sm);
 }
 
-.cat-card:hover .card-like-btn {
-    opacity: 1;
-    transform: translateY(0);
+.cat-card:hover .card-like-btn { opacity: 1; transform: translateY(0); }
+.card-like-btn:hover { background: var(--bg-surface); transform: scale(1.1) translateY(0); }
+
+/* Estado Liked (Usando el rojo de marca) */
+.card-like-btn.liked i { 
+    color: var(--color-rojo); 
+    font-weight: 900; 
 }
 
-.card-like-btn i {
-    font-size: 14px;
-    color: var(--text-muted);
-    transition: color 0.2s;
-}
-
-.card-like-btn:hover { transform: scale(1.1); }
-
-/* Estado Liked */
-.card-like-btn.liked i {
-    color: var(--color-rojo);
-    font-weight: 900;
-}
-
-.card-like-btn.liked {
-    animation: heartBeat 0.4s;
-}
-
-@keyframes heartBeat {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
-
-/* Info de la Tarjeta */
+/* Información Texto */
 .cat-card-info {
     text-align: left;
     display: flex;
@@ -248,34 +276,24 @@
 
 .cat-card-title {
     font-family: var(--font-serif);
-    font-size: var(--size-body); /* 16px */
+    font-size: 15px; /* Ligeramente menor a body para densidad */
     color: var(--text-primary);
     line-height: 1.3;
+    font-weight: var(--weight-regular);
 }
 
 .cat-card-artist {
     font-family: var(--font-sans);
-    font-size: var(--size-small); /* 12px */
+    font-size: 11px;
     font-weight: var(--weight-semibold);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--text-primary);
-    margin-bottom: 2px;
-}
-
-.info-secondary {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-family: var(--font-sans);
-    font-size: 11px;
-    color: var(--text-muted);
+    color: var(--text-secondary);
 }
 
 .info-price {
     font-family: var(--font-sans);
     font-size: var(--size-small);
-    font-weight: var(--weight-medium);
     color: var(--text-primary);
     margin-top: 2px;
 }
@@ -283,14 +301,47 @@
 /* ==========================================================================
    RESPONSIVE
    ========================================================================== */
-@media (max-width: 1400px) { .art-grid-5-col { grid-template-columns: repeat(4, 1fr); } }
-@media (max-width: 1100px) { .art-grid-5-col { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 768px) {
-    .art-grid-5-col { grid-template-columns: repeat(2, 1fr); gap: var(--space-8) var(--space-4); }
-    .category-container { padding-top: 120px; }
-    .category-title { font-size: var(--size-h2); margin-bottom: var(--space-8); }
-    
-    /* En móvil mostramos el botón de like siempre */
-    .card-like-btn { opacity: 1; transform: translateY(0); background: rgba(255,255,255,0.8); }
+@media (max-width: 1400px) { 
+    .art-grid-5-col { grid-template-columns: repeat(4, 1fr); } 
 }
-@media (max-width: 480px) { .art-grid-5-col { grid-template-columns: 1fr; } }
+
+@media (max-width: 1024px) { 
+    .art-grid-5-col { grid-template-columns: repeat(3, 1fr); } 
+}
+
+@media (max-width: 768px) {
+    .category-container { 
+        padding-top: 100px; /* Ajuste manual móvil */
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    
+    .art-grid-5-col { 
+        grid-template-columns: repeat(2, 1fr); 
+        gap: var(--space-6) var(--space-3); 
+    }
+    
+    /* Toolbar Móvil */
+    .toolbar-container { 
+        flex-direction: column; 
+        align-items: flex-start; 
+        gap: var(--space-3); 
+    }
+    
+    .toolbar-right { 
+        width: 100%; 
+        overflow-x: auto; /* Scroll horizontal */
+        padding-bottom: 5px;
+        -webkit-overflow-scrolling: touch; 
+        /* Máscara de desvanecimiento para indicar scroll */
+        mask-image: linear-gradient(to right, black 90%, transparent 100%);
+    }
+    
+    .filter-label { display: none; }
+    
+    .card-like-btn { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 480px) { 
+    .art-grid-5-col { grid-template-columns: 1fr; } 
+}

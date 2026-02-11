@@ -44,19 +44,21 @@
         <h1 class="category-title">MODERNO</h1>
 
         <div class="toolbar-container">
-            <span class="toolbar-count" id="obras-count">Cargando...</span>
-            <div class="toolbar-actions">
-                <select id="sortSelect" class="sort-select">
-                    <option value="default">Relevancia</option>
-                    <option value="precio-asc">Precio: Menor a Mayor</option>
-                    <option value="precio-desc">Precio: Mayor a Menor</option>
-                    <option value="anio-desc">Más Recientes</option>
-                    <option value="anio-asc">Más Antiguos</option>
-                </select>
+            <div class="toolbar-left">
+                <span class="toolbar-count" id="obraCount">Cargando...</span>
+            </div>
+            <div class="toolbar-right">
+                <span class="filter-label">ORDENAR POR:</span>
+                <div class="filter-capsules">
+                    <button class="filter-pill active" data-sort="default">Relevancia</button>
+                    <button class="filter-pill" data-sort="precio-asc">Precio Menor</button>
+                    <button class="filter-pill" data-sort="precio-desc">Precio Mayor</button>
+                    <button class="filter-pill" data-sort="anio-desc">Recientes</button>
+                </div>
             </div>
         </div>
 
-        <div id="category-grid" class="art-grid-5-col"></div>
+        <div id="category-grid-container" class="art-grid-5-col"></div>
 
     </main>
 
@@ -75,14 +77,15 @@
         </div>
     </div>
 
-<script src="../../assets/js/services/dataLoader.js"></script>
-
-<script src="../../assets/js/components/layout.js"></script>
-<script src="../../assets/js/pages/catalog.js"></script>
-
-<script src="../../assets/js/main.js"></script>
+    <script src="../../assets/js/services/dataLoader.js"></script>
+    <script src="../../assets/js/components/layout.js"></script>
+    <script src="../../assets/js/pages/category.js"></script> <script src="../../assets/js/main.js"></script>
+    
     <script>
-        document.addEventListener('DOMContentLoaded', () => { if(window.initCategoryPage) window.initCategoryPage('moderno'); });
+        document.addEventListener('DOMContentLoaded', () => { 
+            // Llamada específica para esta página
+            if(window.initCatalogPage) window.initCatalogPage('moderno'); 
+        });
     </script>
 </body>
 </html>
