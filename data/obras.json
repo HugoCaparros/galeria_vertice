@@ -1,5 +1,22 @@
 [
   {
+    "id": 101,
+    "titulo": "Equilibrio",
+    "artista_id": 19,
+    "categoria_id": "abstracto",
+    "tecnica": "Acrílico sobre lienzo",
+    "precio": 3200,
+    "anio": 2023,
+    "descripcion": "Una exploración minimalista de la armonía y el peso visual en el espacio vacío.",
+    "imagen": "assets/img/obras/Equilibrio.png",
+    "stats": {
+      "likes": 1250,
+      "vistas": 5600,
+      "compartidos": 240,
+      "guardados": 450
+    }
+  },
+  {
     "id": 102,
     "titulo": "Venus Glitch",
     "artista_id": 2,
@@ -17,6 +34,23 @@
     }
   },
   {
+    "id": 103,
+    "titulo": "Fragmentos",
+    "artista_id": 16,
+    "categoria_id": "moderno",
+    "tecnica": "Collage Mixto",
+    "precio": 1850,
+    "anio": 2023,
+    "descripcion": "Reinterpretación de la cultura pop a través de recortes vintage y texturas contemporáneas.",
+    "imagen": "assets/img/obras/Fragmentos.png",
+    "stats": {
+      "likes": 890,
+      "vistas": 3200,
+      "compartidos": 120,
+      "guardados": 310
+    }
+  },
+  {
     "id": 104,
     "titulo": "Sueño Algorítmico #404",
     "artista_id": 11,
@@ -31,6 +65,193 @@
       "vistas": 80433,
       "compartidos": 6347,
       "guardados": 12108
+    }
+  },
+  {
+    "id": 105,
+    "titulo": "Geometría Viva",
+    "artista_id": 9,
+    "categoria_id": "abstracto",
+    "tecnica": "Escultura Digital",
+    "precio": 4100,
+    "anio": 2024,
+    "descripcion": "Intersección de formas puras que desafían la percepción espacial del espectador.",
+    "imagen": "assets/img/obras/Geometria_Viva.png",
+    "stats": {
+      "likes": 2100,
+      "vistas": 7800,
+      "compartidos": 430,
+      "guardados": 980
+    }
+  },
+  {
+    "id": 107,
+    "titulo": "Horizonte Urbano",
+    "artista_id": 1,
+    "categoria_id": "clasico",
+    "tecnica": "Fotografía Analógica",
+    "precio": 1200,
+    "anio": 2023,
+    "descripcion": "Captura melancólica de la silueta de la ciudad durante el crepúsculo, procesada químicamente.",
+    "imagen": "assets/img/obras/Horizonte_Urbano.png",
+    "stats": {
+      "likes": 3400,
+      "vistas": 12000,
+      "compartidos": 560,
+      "guardados": 1200
+    }
+  },
+  {
+    "id": 109,
+    "titulo": "Intersección",
+    "artista_id": 6,
+    "categoria_id": "abstracto",
+    "tecnica": "Instalación de Luz",
+    "precio": 5500,
+    "anio": 2023,
+    "descripcion": "Obra conceptual que explora el punto de encuentro entre la luz artificial y la sombra natural.",
+    "imagen": "assets/img/obras/Interseccion.png",
+    "stats": {
+      "likes": 4500,
+      "vistas": 15000,
+      "compartidos": 890,
+      "guardados": 2100
+    }
+  },
+  {
+    "id": 111,
+    "titulo": "Nostalgia Urbana",
+    "artista_id": 1,
+    "categoria_id": "clasico",
+    "tecnica": "Fotografía en Blanco y Negro",
+    "precio": 950,
+    "anio": 2022,
+    "descripcion": "Una mirada íntima a los rincones olvidados de la metrópolis moderna.",
+    "imagen": "assets/img/obras/Nostalgia_Urbana.png",
+    "stats": {
+      "likes": 1800,
+      "vistas": 6700,
+      "compartidos": 210,
+      "guardados": 540
+    }
+  },
+  {
+    "id": 113,
+    "titulo": "Perfil Urbano",
+    "artista_id": 20,
+    "categoria_id": "moderno",
+    "tecnica": "Muralismo sobre panel",
+    "precio": 3800,
+    "anio": 2024,
+    "descripcion": "La fuerza de la ciudad representada a través de trazos monumentales y colores vibrantes.",
+    "imagen": "assets/img/obras/Perfil_Urbano.png",
+    "stats": {
+      "likes": 2900,
+      "vistas": 11000,
+      "compartidos": 670,
+      "guardados": 1100
+    }
+  },
+  {
+    "id": 115,
+    "titulo": "Pulso Digital",
+    "artista_id": 4,
+    "categoria_id": "moderno",
+    "tecnica": "Arte Generativo",
+    "precio": 2700,
+    "anio": 2024,
+    "descripcion": "Visualización de datos en tiempo real convertida en una experiencia estética vibrante.",
+    "imagen": "assets/img/obras/Pulso_Digital.png",
+    "stats": {
+      "likes": 5600,
+      "vistas": 21000,
+      "compartidos": 1200,
+      "guardados": 3400
+    }
+  },
+  {
+    "id": 117,
+    "titulo": "Rojo Profundo",
+    "artista_id": 19,
+    "categoria_id": "abstracto",
+    "tecnica": "Óleo sobre lienzo",
+    "precio": 4800,
+    "anio": 2023,
+    "descripcion": "Estudio cromático sobre la intensidad de la emoción pura a través del color rojo.",
+    "imagen": "assets/img/obras/Rojo_Profundo.png",
+    "stats": {
+      "likes": 3100,
+      "vistas": 9800,
+      "compartidos": 450,
+      "guardados": 890
+    }
+  },
+  {
+    "id": 119,
+    "titulo": "Silencio Urbano",
+    "artista_id": 19,
+    "categoria_id": "abstracto",
+    "tecnica": "Mixta sobre madera",
+    "precio": 3400,
+    "anio": 2024,
+    "descripcion": "La calma que precede a la tormenta en el corazón de la gran ciudad.",
+    "imagen": "assets/img/obras/Silencio_Urbano.png",
+    "stats": {
+      "likes": 1500,
+      "vistas": 5200,
+      "compartidos": 180,
+      "guardados": 420
+    }
+  },
+  {
+    "id": 121,
+    "titulo": "Trama Urbana",
+    "artista_id": 11,
+    "categoria_id": "moderno",
+    "tecnica": "Graffiti sobre lienzo",
+    "precio": 1900,
+    "anio": 2023,
+    "descripcion": "Un entramado de tags y colores que capturan la energía caótica de las calles de Tokio.",
+    "imagen": "assets/img/obras/Trama_Urbana.png",
+    "stats": {
+      "likes": 4200,
+      "vistas": 16000,
+      "compartidos": 780,
+      "guardados": 1500
+    }
+  },
+  {
+    "id": 123,
+    "titulo": "Clásico I",
+    "artista_id": 2,
+    "categoria_id": "clasico",
+    "tecnica": "Óleo sobre lienzo",
+    "precio": 6200,
+    "anio": 2021,
+    "descripcion": "Estudio académico sobre la figura humana y la luz natural en interiores.",
+    "imagen": "assets/img/obras/clasico-1.webp",
+    "stats": {
+      "likes": 2100,
+      "vistas": 8500,
+      "compartidos": 310,
+      "guardados": 670
+    }
+  },
+  {
+    "id": 125,
+    "titulo": "Moderno I",
+    "artista_id": 11,
+    "categoria_id": "moderno",
+    "tecnica": "Aerosol y Acrílico",
+    "precio": 1500,
+    "anio": 2022,
+    "descripcion": "Abstracción urbana que rompe con las formas tradicionales del arte callejero.",
+    "imagen": "assets/img/obras/moderno-1.webp",
+    "stats": {
+      "likes": 3800,
+      "vistas": 14000,
+      "compartidos": 620,
+      "guardados": 1100
     }
   }
 ]
