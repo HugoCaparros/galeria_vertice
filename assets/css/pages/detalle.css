@@ -1,0 +1,217 @@
+/* ==========================================================================
+   DETALLE DE OBRA - ESTILO RED SOCIAL (FEED)
+   Basado estrictamente en Tokens Semánticos
+   ========================================================================== */
+
+.detalle-page-container {
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--bg-page);
+    padding-top: var(--space-header);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrado tipo Feed */
+}
+
+/* 1. Contenedor del Post (Instagram Style) */
+.instagram-post {
+    width: 100%;
+    max-width: 650px; /* Ancho estándar de post de escritorio */
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-sutil);
+    margin-bottom: var(--space-8);
+    display: flex;
+    flex-direction: column;
+}
+
+/* 2. Cabecera del Post */
+.post-header {
+    display: flex;
+    align-items: center;
+    padding: var(--space-3) var(--space-4);
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    background-color: var(--bg-secondary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: var(--font-small);
+    font-weight: var(--weight-semibold);
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.user-info {
+    margin-left: var(--space-3);
+    flex: 1;
+}
+
+.username {
+    display: block;
+    font: var(--font-small);
+    font-weight: var(--weight-semibold);
+    color: var(--text-primary);
+}
+
+.location {
+    display: block;
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.more-options {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+/* 3. Área de Media (Imagen) */
+.post-media {
+    width: 100%;
+    background-color: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.post-media img {
+    width: 100%;
+    height: auto;
+    max-height: 80vh;
+    object-fit: contain;
+}
+
+/* 4. Barra de Acciones Social */
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-3) var(--space-4);
+}
+
+.main-actions {
+    display: flex;
+    gap: var(--space-4);
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 0;
+    transition: transform var(--transition-fast);
+}
+
+.action-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Único uso del rojo: Corazón activo */
+.action-btn i.fa-solid.fa-heart {
+    color: #ed4956; /* Rojo Instagram, para ADN de marca usar var(--color-rojo) */
+}
+
+/* 5. Contenido y Texto */
+.post-content {
+    padding: 0 var(--space-4) var(--space-4);
+}
+
+.likes-count {
+    font: var(--font-small);
+    font-weight: var(--weight-semibold);
+    margin-bottom: var(--space-2);
+}
+
+.post-caption {
+    font: var(--font-body);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.post-caption strong {
+    font-weight: var(--weight-semibold);
+    margin-right: var(--space-1);
+}
+
+.social-title {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--text-secondary);
+}
+
+.description-text {
+    display: block;
+    margin-top: var(--space-2);
+    color: var(--text-primary);
+}
+
+.post-tech-specs {
+    margin-top: var(--space-3);
+    font: var(--font-small);
+    color: #00376b; /* Azul link clásico de red social */
+    display: flex;
+    gap: var(--space-2);
+}
+
+/* 6. Sección de Comentarios (Debajo del post) */
+.detalle-social-section {
+    width: 100%;
+    max-width: 650px;
+    padding: 0 var(--space-4);
+}
+
+.comment-input-block-social {
+    display: flex;
+    align-items: center;
+    padding: var(--space-4) 0;
+    border-top: 1px solid var(--border-sutil);
+    gap: var(--space-3);
+}
+
+.comment-input-block-social i {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+}
+
+.comment-input-block-social input {
+    flex: 1;
+    border: none;
+    background: none;
+    font: var(--font-body);
+    outline: none;
+}
+
+.post-comment-btn {
+    background: none;
+    border: none;
+    color: #0095f6; /* Azul acción social */
+    font-weight: var(--weight-semibold);
+    cursor: pointer;
+}
+
+/* 7. Estado de Error (Único uso del rojo para avisos) */
+.error-toast {
+    background-color: var(--color-rojo);
+    color: var(--text-inverse);
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--input-radius);
+    font: var(--font-small);
+    margin-top: var(--space-4);
+    text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .instagram-post {
+        border-left: none;
+        border-right: none;
+    }
+}
