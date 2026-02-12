@@ -97,6 +97,40 @@
 }
 
 /* ==========================================================================
+   ANIMACIÓN DE LÍNEA (FINA Y RÁPIDA) - HOVER EDITORIAL
+   ========================================================================== */
+
+/* 1. Preparamos el enlace */
+.nav-left .nav-link {
+    position: relative;
+    opacity: 1;
+}
+
+/* 2. Definimos la línea: 1px de grosor y 0.35s de duración */
+.nav-left .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px; /* Línea fina */
+    background-color: var(--text-primary);
+    /* Transición rápida (0.35s) */
+    transition: width 0.35s ease-out;
+}
+
+/* 3. Expansión al 100% en Hover */
+.nav-left .nav-link:hover::after {
+    width: 100%;
+}
+
+/* 4. Mantenemos el color nítido */
+.nav-left .nav-link:hover {
+    opacity: 1;
+    color: var(--text-primary);
+}
+
+/* ==========================================================================
    CORRECCIÓN ESPECÍFICA: BOTÓN INICIAR SESIÓN
    (Solo Texto: Gris -> Negro. Sin fondos, sin opacidad reducida)
    ========================================================================== */
@@ -146,7 +180,7 @@
 }
 
 /* ==========================================================================
-   BOTÓN REGISTRO (Estilo Botón Bordeado)
+   BOTÓN REGISTRO (RECTANGULAR Y SIN RADIUS)
    ========================================================================== */
 .btn-navbar-register {
     font-family: var(--font-sans);
@@ -159,7 +193,9 @@
     color: var(--text-primary);
     padding: 8px 20px;
     border: 1px solid var(--border-fuerte);
-    border-radius: var(--btn-radius);
+    
+    /* ELIMINACIÓN DE RADIUS */
+    border-radius: 0 !important; 
     background: transparent;
     
     transition: all var(--transition-fast);
