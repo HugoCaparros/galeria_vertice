@@ -4,7 +4,7 @@
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', async () => {
-    
+
     // 0. VERIFICACIÓN CRÍTICA
     if (typeof DataLoader === 'undefined') {
         console.error("⛔ DataLoader no encontrado.");
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // para evitar el error de "filtro undefined" detectado en consola.
         const urlParams = new URLSearchParams(window.location.search);
         const catParam = urlParams.get('categoria');
-        
+
         if (window.initCatalogPage && catParam) {
             window.initCatalogPage(catParam);
         }
@@ -57,11 +57,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         const obraId = urlParams.get('id');
         if (obraId && window.initObraDetalle) window.initObraDetalle(obraId);
     }
-    
+
     if (path.includes('artista-detalle.html') && window.initArtistaDetalle) window.initArtistaDetalle();
-    
+
     // --- F. LISTA DE ARTISTAS ---
-    if (path.includes('artistas.html') && window.initArtistsList) window.initArtistsList();
+    if (path.includes('artistas.html') && window.initArtistsPage) window.initArtistsPage();
 
     // --- G. PERFIL DE USUARIO ---
     if (path.includes('perfil.html') && window.initUserProfile) window.initUserProfile();
