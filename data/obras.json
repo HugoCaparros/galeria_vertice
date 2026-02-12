@@ -263,7 +263,7 @@
   "precio": 7200,
   "anio": 2024,
   "descripcion": "Escultura que captura el instante previo al colapso estructural, congelando tensión y movimiento.",
-  "imagen": "assets/img/obras/Gravedad_Suspendida.png",
+  "imagen": "assets/img/obras/gravedad_suspendida.webp",
   "stats": { "likes": 5200, "vistas": 18000, "compartidos": 980, "guardados": 2300 }
 },
 {
@@ -275,7 +275,7 @@
   "precio": 1400,
   "anio": 2023,
   "descripcion": "Composición minimalista donde el vacío dialoga con trazos espontáneos de inspiración zen.",
-  "imagen": "assets/img/obras/Meditacion_Tinta.png",
+  "imagen": "assets/img/obras/meditacion_tinta.webp",
   "stats": { "likes": 950, "vistas": 4100, "compartidos": 150, "guardados": 380 }
 },
 {
@@ -287,7 +287,7 @@
   "precio": 1100,
   "anio": 2024,
   "descripcion": "Exploración gráfica donde la letra se convierte en grito visual.",
-  "imagen": "assets/img/obras/Tipografia_Brutal.png",
+  "imagen": "assets/img/obras/tipografia_brutal.webp",
   "stats": { "likes": 1300, "vistas": 5000, "compartidos": 240, "guardados": 600 }
 },
 {
@@ -299,7 +299,7 @@
   "precio": 1600,
   "anio": 2023,
   "descripcion": "Pieza orgánica inspirada en patrones neolíticos reinterpretados para el presente.",
-  "imagen": "assets/img/obras/Arcilla_Ancestral.png",
+  "imagen": "assets/img/obras/arcilla_ancestral.webp",
   "stats": { "likes": 870, "vistas": 3500, "compartidos": 120, "guardados": 290 }
 },
 {
