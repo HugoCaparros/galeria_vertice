@@ -5,19 +5,31 @@
 
 const DataLoader = {
     
-    // 1. GESTIÓN DE RUTAS
+    // 1. GESTIÓN DE RUTAS UNIVERSAL
+    // Corregido para separar la raíz de la carpeta data
     getBasePath: () => {
         const path = window.location.pathname;
+        // Detecta si estamos en una subcarpeta para subir niveles
         if (path.includes('/pages/')) {
-            return '../../data/';
+            return '../../'; 
         }
-        return 'data/';
+        return './'; 
+    },
+
+    // Nueva función para obtener específicamente la ruta de los JSON
+    getDataPath: function() {
+        return this.getBasePath() + 'data/';
+    },
+
+    // Nueva función para obtener la raíz de assets (Imágenes)
+    getAssetPath: function() {
+        return this.getBasePath();
     },
 
     // 2. CARGADOR GENÉRICO
     async loadJSON(filename) {
-        const basePath = this.getBasePath();
-        const url = `${basePath}${filename}`;
+        // Ahora usa getDataPath() para asegurar que siempre encuentre los JSON
+        const url = `${this.getDataPath()}${filename}`;
         try {
             const response = await fetch(url);
             if (!response.ok) throw new Error(`Status: ${response.status}`);
@@ -41,7 +53,6 @@ const DataLoader = {
 
     // 4. FUNCIONES RELACIONALES (INTERCONEXIÓN TOTAL)
 
-    // Obtener una obra con TODO su contexto: Artista, Categoría y Comentarios
     async getObraCompleta(id) {
         const obraId = parseInt(id);
         const [obras, artistas, categorias, comentarios] = await Promise.all([
@@ -54,19 +65,13 @@ const DataLoader = {
         const obra = obras.find(o => o.id === obraId);
         if (!obra) return null;
 
-        // Unir con Artista
         obra.artista_data = artistas.find(a => a.id === obra.artista_id);
-        
-        // Unir con Categoría (Metadatos editoriales)
         obra.categoria_data = categorias.find(c => c.id === obra.categoria_id);
-
-        // Unir con Comentarios
         obra.lista_comentarios = comentarios.filter(c => c.obra_id === obraId);
 
         return obra;
     },
 
-    // Obtener todas las obras de una categoría con datos de artista incluidos
     async getObrasPorCategoria(slug) {
         const [obras, artistas, categorias] = await Promise.all([
             this.getObras(),
@@ -114,7 +119,7 @@ const DataLoader = {
         if (uLogueado) return JSON.parse(uLogueado);
         
         const usuarios = await this.getUsuarios();
-        return usuarios[0]; // Fallback al primer usuario si no hay login
+        return usuarios[0]; 
     }
 };
 
