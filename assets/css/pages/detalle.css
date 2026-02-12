@@ -1,0 +1,177 @@
+/* ==========================================================================
+   OBRA DETALLE - MODO POPUP (VÉRTICE)
+   ========================================================================== */
+
+/* 1. Overlay del Modal (El fondo oscuro) */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px); /* Efecto premium de desenfoque */
+    z-index: var(--z-modal-bg);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-overlay.active { display: flex; }
+
+/* 2. Contenedor del Popup */
+.modal-detalle-exclusivo {
+    background-color: var(--bg-page);
+    width: 90%;
+    max-width: 1100px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    border: 1px solid var(--border-sutil);
+    animation: modalSlideIn 0.4s var(--transition-smooth);
+}
+
+/* 3. Grid de Información (Basado en tu imagen) */
+.modal-view {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 0;
+}
+
+/* Ajuste para la imagen en el modal */
+.modal-view .obra-media {
+    height: 100%;
+    min-height: 500px;
+    background-color: var(--bg-secondary);
+}
+
+.modal-view .main-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que la imagen llene su espacio editorial */
+    display: block;
+}
+
+.obra-info-panel {
+    padding: var(--space-12);
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-page);
+}
+
+/* 4. Tipografía y Colores */
+.obra-titulo {
+    font: var(--font-h1);
+    color: var(--text-primary);
+    margin-bottom: var(--space-2);
+    text-transform: uppercase; /* Estilo Marcellus editorial */
+}
+
+.obra-artista {
+    font: var(--font-h3);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-4);
+}
+
+.obra-artista strong {
+    color: var(--color-rojo); /* Nombre en rojo según captura */
+    font-weight: var(--weight-semibold);
+}
+
+.obra-precio {
+    font: var(--font-h2);
+    color: var(--color-rojo);
+    margin-top: auto; /* Empuja el precio al final */
+    padding-top: var(--space-8);
+    font-family: var(--font-serif); /* Marcellus para el precio */
+}
+
+/* 5. Pestañas */
+.tab-header {
+    display: flex;
+    gap: var(--space-6);
+    border-bottom: 1px solid var(--border-sutil);
+    margin: var(--space-8) 0 var(--space-4);
+}
+
+.tab-btn {
+    background: none; border: none;
+    padding-bottom: var(--space-2);
+    font: var(--font-small);
+    color: var(--text-muted);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: color var(--transition-fast);
+}
+
+.tab-btn.active {
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--color-rojo);
+    font-weight: var(--weight-semibold);
+}
+
+/* 6. Bloque de Acciones y Metadata */
+.obra-meta p {
+    font: var(--font-small);
+    margin-bottom: var(--space-2);
+    color: var(--text-muted);
+}
+
+.obra-meta p strong {
+    color: var(--text-primary);
+}
+
+.obra-descripcion {
+    font: var(--font-body);
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.price-action-block {
+    margin-top: auto;
+}
+
+.obra-actions {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+}
+
+/* Botón de cierre específico del modal */
+#close-obra-modal {
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    background: white;
+    border: 1px solid var(--border-sutil);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all var(--transition-fast);
+    border-radius: 50%;
+}
+
+#close-obra-modal:hover {
+    background: var(--bg-secondary);
+    transform: rotate(90deg);
+}
+
+@keyframes modalSlideIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Adaptación para pantallas pequeñas */
+@media (max-width: 1024px) {
+    .modal-view {
+        grid-template-columns: 1fr;
+    }
+    .modal-detalle-exclusivo {
+        width: 100%;
+        height: 100%;
+        max-height: 100vh;
+    }
+}

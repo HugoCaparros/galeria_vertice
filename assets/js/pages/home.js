@@ -54,17 +54,27 @@ window.initHomePage = async function() {
                 slot.style.backgroundColor = '#f4f4f4'; 
 
                 if (obra) {
-                    // --- CORRECCIÓN DE RUTA INTEGRADA ---
-                    // Eliminamos barras iniciales y retrocesos para normalizar la ruta del JSON
-                    let cleanPath = obra.imagen.replace(/^(\/|\.\.\/)+/, '');
+                    // --- CORRECCIÓN DE RUTA INTEGRADA PARA EVITAR ERROR ---
+                    // Limpiamos cualquier prefijo relativo previo para evitar duplicidad de puntos
+                    let cleanPath = obra.imagen.replace(/^(\.\/|\/|\.\.\/)+/, '');
                     
                     // Concatenamos el prefijo inteligente (./ o ../../)
                     let imagePath = assetRoot + cleanPath;
 
                     // Construcción del enlace
                     const link = document.createElement('a');
-                    // Ajuste de ruta para el enlace de detalle según la ubicación
-                    link.href = `${assetRoot}pages/catalogo/obra-detalle.html?id=${obra.id}`;
+                    
+                    // MODIFICACIÓN PARA POPUP:
+                    // En lugar de navegar a una página nueva, abrimos el modal
+                    link.href = "#"; 
+                    link.onclick = (e) => {
+                        e.preventDefault();
+                        // Llamamos a la función global definida en detalle.js
+                        if (typeof window.openObraModal === 'function') {
+                            window.openObraModal(obra.id);
+                        }
+                    };
+
                     link.className = 'art-grid-link';
                     link.style.display = 'block';
                     link.style.width = '100%';
@@ -84,6 +94,7 @@ window.initHomePage = async function() {
                     // Eventos de carga de imagen
                     img.onload = () => { img.style.opacity = '1'; };
                     img.onerror = () => { 
+                        // Muestra el error de ruta si el archivo no existe
                         console.error("No se pudo cargar la imagen en:", imagePath);
                         slot.style.backgroundColor = '#e0e0e0'; 
                     };
