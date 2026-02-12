@@ -3,7 +3,7 @@
    Ubicación: assets/js/components/layout.js
    ========================================================================== */
 
-window.initLayout = async function() {
+window.initLayout = async function () {
     // 1. SEGURIDAD
     if (typeof authGuard === 'function') authGuard();
 
@@ -12,27 +12,38 @@ window.initLayout = async function() {
     const footerPlaceholder = document.getElementById('footer-placeholder');
 
     // Corrección de ruta raíz
-    const basePath = DataLoader.getBasePath(); 
+    const basePath = DataLoader.getBasePath();
     let rootPath = basePath.replace('assets/data/', '');
     if (rootPath === basePath) rootPath = basePath.replace('data/', '').replace('assets/', '');
 
     // --- CARGAR NAVBAR ---
     if (navPlaceholder) {
         const usuario = JSON.parse(localStorage.getItem('usuario_logueado'));
-        
+
         // LÓGICA SIMPLIFICADA: Solo existen dos estados (Logueado o No Logueado)
-        const archivoMenu = usuario ? 'sesion_iniciada.html' : 'iniciar_sesion.html'; 
-        
+        const archivoMenu = usuario ? 'sesion_iniciada.html' : 'iniciar_sesion.html';
+
         const fullUrl = rootPath + 'pages/partials/' + archivoMenu;
 
         try {
             const resp = await fetch(fullUrl);
             if (resp.ok) {
                 navPlaceholder.innerHTML = await resp.text();
-                
+
                 // Inicializar eventos (Logout)
                 if (typeof initNavbarEvents === 'function') initNavbarEvents(rootPath);
-                
+
+                // RESALTAR PÁGINA ACTUAL
+                const currentPath = window.location.pathname;
+                const navLinks = document.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    // Check if the link's href (resolved) matches the current path
+                    if (link.href && currentPath.includes(link.getAttribute('href').split('/').pop())) {
+                        link.style.fontWeight = '600';
+                        link.classList.add('active'); // Por si acaso hay CSS para esto
+                    }
+                });
+
                 // PERSONALIZAR EL MENÚ SEGÚN EL ROL
                 if (usuario) updateUserInfo(usuario);
             } else {
@@ -67,13 +78,13 @@ function updateUserInfo(usuario) {
     // 2. Lógica de Roles (Artista vs Usuario)
     const roleEl = document.querySelector('.user-role-badge');
     const artistLinks = document.querySelectorAll('.artist-only-link');
-    
+
     if (roleEl) {
         const rol = usuario.rol || 'Usuario';
         roleEl.textContent = rol;
 
         if (rol === 'Artista') {
-            roleEl.classList.add('is-artist'); 
+            roleEl.classList.add('is-artist');
             artistLinks.forEach(link => { link.style.display = 'inline-flex'; });
         } else {
             roleEl.classList.remove('is-artist');
@@ -108,14 +119,14 @@ function initNavbarEvents(rootPath) {
     // 2. BLOQUEO DE ENLACES (Para Artistas, Obras, Categorías)
     // Seleccionamos todos los enlaces con la clase 'auth-trigger'
     const triggers = document.querySelectorAll('.auth-trigger');
-    
+
     triggers.forEach(link => {
         link.addEventListener('click', (e) => {
             // ¡STOP! Evitamos que el navegador vaya a la página
             e.preventDefault();
-            
+
             console.log("🔒 Acceso restringido: Abriendo modal...");
-            
+
             // Abrimos el Popup
             // (Si showAuthModal no está definida aquí, asegúrate de que esté en layout.js)
             if (typeof showAuthModal === 'function') {
@@ -135,25 +146,25 @@ function initNavbarEvents(rootPath) {
 function authGuard() {
     const usuario = JSON.parse(localStorage.getItem('usuario_logueado'));
     const path = window.location.pathname;
-    
+
     // LISTA NEGRA: Páginas que requieren estar logueado
     const protectedPages = [
-        'perfil.html', 
-        'mis-colecciones.html', 
-        'ajustes.html', 
-        'dashboard.html', 
-        'subir-obra.html', 
+        'perfil.html',
+        'mis-colecciones.html',
+        'ajustes.html',
+        'dashboard.html',
+        'subir-obra.html',
         'mis-obras.html',
-        'artistas.html', 
-        'obras.html', 
+        'artistas.html',
+        'obras.html',
         'categorias.html',
         'obra-detalle.html',
         'artista-detalle.html',
     ];
-    
+
     // LÓGICA: Si es protegida y NO hay usuario...
     if (protectedPages.some(page => path.includes(page)) && !usuario) {
-        
+
         // Calculamos la ruta raíz para cargar imágenes/links correctamente
         const basePath = DataLoader.getBasePath();
         let rootPath = basePath.replace('assets/data/', '');
@@ -163,7 +174,7 @@ function authGuard() {
 
         // CAMBIO PRINCIPAL: En lugar de redirigir, mostramos el MODAL
         showAuthModal(rootPath);
-        
+
         // Bloqueamos el scroll para que no bajen a ver el contenido borroso
         document.body.style.overflow = 'hidden';
     }
@@ -178,8 +189,8 @@ function showAuthModal(rootPath) {
     if (!modal) {
         modal = document.createElement('div');
         modal.id = 'authRequiredModal';
-        modal.className = 'modal-overlay'; 
-        
+        modal.className = 'modal-overlay';
+
         modal.innerHTML = `
             <div class="modal-content modal-exclusive">
                 <button class="modal-close" id="closeAuthModal">
@@ -207,20 +218,20 @@ function showAuthModal(rootPath) {
 
     // 2. LÓGICA DE CIERRE (LA "X")
     const closeBtn = document.getElementById('closeAuthModal');
-    
+
     // Definimos qué pasa al cerrar
     const closeModalAction = () => {
         // A. Restaurar el scroll de la página
-        document.body.style.overflow = ''; 
+        document.body.style.overflow = '';
 
         // B. Detectar si estamos en una página prohibida
         const path = window.location.pathname;
         const restrictedPages = [
-            'obras.html', 'artistas.html', 'categorias.html', 
-            'perfil.html', 'dashboard.html', 
+            'obras.html', 'artistas.html', 'categorias.html',
+            'perfil.html', 'dashboard.html',
             'obra-detalle.html', 'abstracto.html', 'moderno.html', 'clasico.html'
         ];
-        
+
         const isRestricted = restrictedPages.some(page => path.includes(page));
 
         if (isRestricted) {
@@ -242,8 +253,8 @@ function showAuthModal(rootPath) {
 
     // 3. MOSTRAR EL MODAL
     // Bloqueamos el scroll del fondo
-    document.body.style.overflow = 'hidden'; 
-    
+    document.body.style.overflow = 'hidden';
+
     // Pequeño retardo para que la animación CSS funcione
     setTimeout(() => {
         modal.classList.add('active');

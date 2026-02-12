@@ -34,7 +34,7 @@ const AuthService = {
         console.log("1. Buscando el wrapper del select...");
         const wrapper = document.querySelector('.custom-select-wrapper');
         if (!wrapper) {
-            console.error("❌ ERROR CRÍTICO: JS no encuentra '.custom-select-wrapper' en el HTML. Revisa que el script cargue DESPUÉS del HTML.");
+            // No estamos en la página de registro/login o no hay select personalizado.
             return;
         }
 
