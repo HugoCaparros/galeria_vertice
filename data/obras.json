@@ -311,7 +311,7 @@
   "precio": 950,
   "anio": 2024,
   "descripcion": "Ilustración científica de una especie ártica en peligro de extinción.",
-  "imagen": "assets/img/obras/Flora_Boreal.png",
+  "imagen": "assets/img/obras/flora_boreal.webp",
   "stats": { "likes": 1200, "vistas": 4200, "compartidos": 180, "guardados": 500 }
 },
 {
@@ -323,7 +323,7 @@
   "precio": 3800,
   "anio": 2024,
   "descripcion": "Registro audiovisual de una intervención corporal sobre memoria y territorio.",
-  "imagen": "assets/img/obras/Resistencia.png",
+  "imagen": "assets/img/obras/resistencia.webp",
   "stats": { "likes": 4200, "vistas": 16000, "compartidos": 760, "guardados": 2100 }
 },
 {
