@@ -335,7 +335,7 @@
   "precio": 5400,
   "anio": 2023,
   "descripcion": "Proceso documentado de recuperación cromática en obra del siglo XIX.",
-  "imagen": "assets/img/obras/Restauratio.png",
+  "imagen": "assets/img/obras/restauratio.webp",
   "stats": { "likes": 2500, "vistas": 9000, "compartidos": 320, "guardados": 780 }
 },
 {
@@ -347,7 +347,7 @@
   "precio": 1350,
   "anio": 2023,
   "descripcion": "Escena simbólica inspirada en mitología eslava y horror cósmico.",
-  "imagen": "assets/img/obras/Bosque_Nocturno.png",
+  "imagen": "assets/img/obras/bosque_nocturno.webp",
   "stats": { "likes": 780, "vistas": 2900, "compartidos": 100, "guardados": 260 }
 },
 {
@@ -359,7 +359,7 @@
   "precio": 4600,
   "anio": 2024,
   "descripcion": "Instalación audiovisual que explora la repetición como forma de narrativa temporal.",
-  "imagen": "assets/img/obras/Loop_Infinito.png",
+  "imagen": "assets/img/obras/loop_infinito.webp",
   "stats": { "likes": 5100, "vistas": 19000, "compartidos": 950, "guardados": 2400 }
 },
 {
