@@ -55,8 +55,8 @@
             display: flex;
             flex-direction: column;
             background-color: var(--bg-surface);
-            border: 1px solid var(--border-sutil);
-            border-radius: 8px;
+            /* border: 1px solid var(--border-sutil);  Eliminado para look rectangular */
+            /* border-radius: 8px; Eliminado para look rectangular */
             overflow: hidden;
             /* Para que la imagen respete el borde */
             transition: transform 0.4s ease, box-shadow 0.4s ease;
@@ -99,8 +99,7 @@
             /* Espacio interno para el texto */
             text-align: left;
             background-color: var(--bg-surface);
-            border-top: 1px solid var(--border-sutil);
-            /* Separador sutil opcional */
+            /* border-top: 1px solid var(--border-sutil);  Eliminado para look rectangular */
         }
 
         .artist-info h3 {
@@ -149,6 +148,57 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Skeleton Loading */
+        .skeleton {
+            background: #f0f0f0;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        .artist-card-skeleton {
+            pointer-events: none;
+        }
+
+        .skeleton-img {
+            width: 100%;
+            aspect-ratio: 4/5;
+        }
+
+        .skeleton-text {
+            height: 20px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .skeleton-text.short {
+            width: 60%;
+        }
+
+        /* Animación de Entrada */
+        .fade-in-entry {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 
@@ -162,7 +212,63 @@
         </header>
 
         <section class="artists-grid" id="artists-grid-container">
-            <!-- El contenido se carga dinámicamente desde details.js -->
+            <!-- Skeleton Loaders (Se reemplazarán por JS) -->
+            <article class="artist-card artist-card-skeleton">
+                <div class="skeleton skeleton-img"></div>
+                <div class="artist-info">
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text short"></div>
+                </div>
+            </article>
+            <article class="artist-card artist-card-skeleton">
+                <div class="skeleton skeleton-img"></div>
+                <div class="artist-info">
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text short"></div>
+                </div>
+            </article>
+            <article class="artist-card artist-card-skeleton">
+                <div class="skeleton skeleton-img"></div>
+                <div class="artist-info">
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text short"></div>
+                </div>
+            </article>
+            <article class="artist-card artist-card-skeleton">
+                <div class="skeleton skeleton-img"></div>
+                <div class="artist-info">
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text short"></div>
+                </div>
+            </article>
+            <article class="artist-card artist-card-skeleton">
+                <div class="skeleton skeleton-img"></div>
+                <div class="artist-info">
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text short"></div>
+                </div>
+            </article>
+            <article class="artist-card artist-card-skeleton">
+                <div class="skeleton skeleton-img"></div>
+                <div class="artist-info">
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text short"></div>
+                </div>
+            </article>
+            <article class="artist-card artist-card-skeleton">
+                <div class="skeleton skeleton-img"></div>
+                <div class="artist-info">
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text short"></div>
+                </div>
+            </article>
+            <article class="artist-card artist-card-skeleton">
+                <div class="skeleton skeleton-img"></div>
+                <div class="artist-info">
+                    <div class="skeleton skeleton-text"></div>
+                    <div class="skeleton skeleton-text short"></div>
+                </div>
+            </article>
         </section>
     </main>
 

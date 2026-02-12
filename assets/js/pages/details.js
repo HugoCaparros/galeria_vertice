@@ -75,15 +75,18 @@ window.initArtistsPage = async function () {
     const isSubPage = window.location.pathname.includes('/pages/');
     const pathPrefix = isSubPage ? '../../' : '';
 
-    container.innerHTML = artistas.map(a => {
+    container.innerHTML = artistas.map((a, index) => {
         // Ajuste específico para Sofia (o cualquier lógica futura)
         const imgStyle = (a.nombre === "Sofia Klein") ? 'style="object-position: top;"' : '';
 
         // Corregir ruta de imagen
         const imagePath = `${pathPrefix}${a.imagen}`;
 
+        // Cálculo del retardo de animación (stagger)
+        const delay = index * 0.1; // 100ms entre cada carta
+
         return `
-        <article class="artist-card" onclick="window.location.href='artista-detalle.html?id=${a.id}'">
+        <article class="artist-card fade-in-entry" onclick="window.location.href='artista-detalle.html?id=${a.id}'" style="animation-delay: ${delay}s">
             <div class="artist-image">
                 <img src="${imagePath}" alt="${a.nombre}" loading="lazy" ${imgStyle}>
             </div>
