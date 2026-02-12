@@ -253,5 +253,137 @@
       "compartidos": 620,
       "guardados": 1100
     }
-  }
+  },
+{
+  "id": 126,
+  "titulo": "Gravedad Suspendida",
+  "artista_id": 3,
+  "categoria_id": "abstracto",
+  "tecnica": "Bronce y Acero",
+  "precio": 7200,
+  "anio": 2024,
+  "descripcion": "Escultura que captura el instante previo al colapso estructural, congelando tensión y movimiento.",
+  "imagen": "assets/img/obras/Gravedad_Suspendida.png",
+  "stats": { "likes": 5200, "vistas": 18000, "compartidos": 980, "guardados": 2300 }
+},
+{
+  "id": 127,
+  "titulo": "Meditación en Tinta",
+  "artista_id": 5,
+  "categoria_id": "abstracto",
+  "tecnica": "Tinta sobre papel de arroz",
+  "precio": 1400,
+  "anio": 2023,
+  "descripcion": "Composición minimalista donde el vacío dialoga con trazos espontáneos de inspiración zen.",
+  "imagen": "assets/img/obras/Meditacion_Tinta.png",
+  "stats": { "likes": 950, "vistas": 4100, "compartidos": 150, "guardados": 380 }
+},
+{
+  "id": 128,
+  "titulo": "Tipografía Brutal",
+  "artista_id": 7,
+  "categoria_id": "moderno",
+  "tecnica": "Serigrafía",
+  "precio": 1100,
+  "anio": 2024,
+  "descripcion": "Exploración gráfica donde la letra se convierte en grito visual.",
+  "imagen": "assets/img/obras/Tipografia_Brutal.png",
+  "stats": { "likes": 1300, "vistas": 5000, "compartidos": 240, "guardados": 600 }
+},
+{
+  "id": 129,
+  "titulo": "Arcilla Ancestral",
+  "artista_id": 8,
+  "categoria_id": "abstracto",
+  "tecnica": "Cerámica esmaltada",
+  "precio": 1600,
+  "anio": 2023,
+  "descripcion": "Pieza orgánica inspirada en patrones neolíticos reinterpretados para el presente.",
+  "imagen": "assets/img/obras/Arcilla_Ancestral.png",
+  "stats": { "likes": 870, "vistas": 3500, "compartidos": 120, "guardados": 290 }
+},
+{
+  "id": 130,
+  "titulo": "Flora Boreal",
+  "artista_id": 10,
+  "categoria_id": "clasico",
+  "tecnica": "Acuarela botánica",
+  "precio": 950,
+  "anio": 2024,
+  "descripcion": "Ilustración científica de una especie ártica en peligro de extinción.",
+  "imagen": "assets/img/obras/Flora_Boreal.png",
+  "stats": { "likes": 1200, "vistas": 4200, "compartidos": 180, "guardados": 500 }
+},
+{
+  "id": 131,
+  "titulo": "Resistencia",
+  "artista_id": 12,
+  "categoria_id": "moderno",
+  "tecnica": "Performance documentada",
+  "precio": 3800,
+  "anio": 2024,
+  "descripcion": "Registro audiovisual de una intervención corporal sobre memoria y territorio.",
+  "imagen": "assets/img/obras/Resistencia.png",
+  "stats": { "likes": 4200, "vistas": 16000, "compartidos": 760, "guardados": 2100 }
+},
+{
+  "id": 132,
+  "titulo": "Restauratio",
+  "artista_id": 13,
+  "categoria_id": "clasico",
+  "tecnica": "Óleo restaurado",
+  "precio": 5400,
+  "anio": 2023,
+  "descripcion": "Proceso documentado de recuperación cromática en obra del siglo XIX.",
+  "imagen": "assets/img/obras/Restauratio.png",
+  "stats": { "likes": 2500, "vistas": 9000, "compartidos": 320, "guardados": 780 }
+},
+{
+  "id": 133,
+  "titulo": "Bosque Nocturno",
+  "artista_id": 14,
+  "categoria_id": "abstracto",
+  "tecnica": "Grabado en linóleo",
+  "precio": 1350,
+  "anio": 2023,
+  "descripcion": "Escena simbólica inspirada en mitología eslava y horror cósmico.",
+  "imagen": "assets/img/obras/Bosque_Nocturno.png",
+  "stats": { "likes": 780, "vistas": 2900, "compartidos": 100, "guardados": 260 }
+},
+{
+  "id": 134,
+  "titulo": "Loop Infinito",
+  "artista_id": 15,
+  "categoria_id": "moderno",
+  "tecnica": "Videoarte 4K",
+  "precio": 4600,
+  "anio": 2024,
+  "descripcion": "Instalación audiovisual que explora la repetición como forma de narrativa temporal.",
+  "imagen": "assets/img/obras/Loop_Infinito.png",
+  "stats": { "likes": 5100, "vistas": 19000, "compartidos": 950, "guardados": 2400 }
+},
+{
+  "id": 135,
+  "titulo": "Arquitectura Textil",
+  "artista_id": 17,
+  "categoria_id": "abstracto",
+  "tecnica": "Fibra orgánica tejida",
+  "precio": 1700,
+  "anio": 2024,
+  "descripcion": "Estructura blanda que cuestiona los límites entre moda y escultura.",
+  "imagen": "assets/img/obras/Arquitectura_Textil.png",
+  "stats": { "likes": 950, "vistas": 3600, "compartidos": 140, "guardados": 320 }
+},
+{
+  "id": 136,
+  "titulo": "Código Orgánico",
+  "artista_id": 18,
+  "categoria_id": "moderno",
+  "tecnica": "Plotter generativo",
+  "precio": 2300,
+  "anio": 2024,
+  "descripcion": "Algoritmo inspirado en crecimiento vegetal traducido a líneas geométricas.",
+  "imagen": "assets/img/obras/Codigo_Organico.png",
+  "stats": { "likes": 1600, "vistas": 6000, "compartidos": 300, "guardados": 720 }
+}
 ]
