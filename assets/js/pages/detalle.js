@@ -1,71 +1,152 @@
 /**
- * Abre la obra seleccionada en el popup del index
+ * DETALLE DE OBRA - CONTROLADOR SOCIAL (Feed Style)
+ * Transforma la vista en una publicación de red social.
  */
-window.openObraModal = async function(obraId) {
-    const modal = document.getElementById('obra-modal');
-    const content = document.getElementById('modal-body-content');
-    
-    if (!modal || !content) return;
 
-    modal.classList.add('active');
-    content.innerHTML = `<div class="loader-v">Abriendo Galería...</div>`;
+document.addEventListener('DOMContentLoaded', async () => {
+    const params = new URLSearchParams(window.location.search);
+    const obraId = params.get('id');
+
+    if (obraId) {
+        initObraDetalle(obraId);
+    } else {
+        console.error("No se encontró el ID de la obra en la URL");
+    }
+});
+
+/**
+ * Inicializa la carga de la obra con estructura de Post de Red Social
+ */
+async function initObraDetalle(obraId) {
+    const content = document.getElementById('detalle-content');
+    if (!content) return;
+
+    content.innerHTML = `<div class="loader-v">Cargando publicación...</div>`;
 
     try {
-        // Obtenemos la obra completa (datos cruzados con artista)
         const obra = await DataLoader.getObraCompleta(obraId);
         const root = DataLoader.getAssetPath();
-
-        // Limpiamos la ruta de imagen para evitar errores de consola
         const cleanPath = obra.imagen.replace(/^(\.\/|\/|\.\.\/)+/, '');
         const finalImgUrl = root + cleanPath;
 
-        // Inyectamos el contenido basado en tu referencia
+        // Renderizado estilo Instagram (Post)
         content.innerHTML = `
-            <section class="obra-view modal-view">
-                <div class="obra-media">
-                    <img src="${finalImgUrl}" class="main-img" alt="${obra.titulo}">
+            <article class="instagram-post">
+                <header class="post-header">
+                    <div class="user-avatar">${obra.artista_data?.nombre.charAt(0) || 'V'}</div>
+                    <div class="user-info">
+                        <span class="username">${obra.artista_data?.nombre || 'Artista Vértice'}</span>
+                        <span class="location">Galería Vértice • ${obra.categoria_id.toUpperCase()}</span>
+                    </div>
+                    <button class="more-options"><i class="fa-solid fa-ellipsis"></i></button>
+                </header>
+
+                <div class="post-media" ondblclick="toggleLike('${obra.id}')">
+                    <img src="${finalImgUrl}" alt="${obra.titulo}" class="main-featured-img">
                 </div>
-                <div class="obra-info-panel">
-                    <header class="info-header">
-                        <span class="categoria-label">${obra.categoria_id.toUpperCase()}</span>
-                        <h1 class="obra-titulo">${obra.titulo}</h1>
-                        <p class="obra-artista">Por: <strong>${obra.artista_data?.nombre || 'Artista Vértice'}</strong></p>
-                    </header>
+
+                <div class="post-actions">
+                    <div class="main-actions">
+                        <button onclick="toggleLike('${obra.id}')" class="action-btn">
+                            <i id="like-icon-${obra.id}" class="fa-regular fa-heart"></i>
+                        </button>
+                        <button class="action-btn" onclick="focusComment()">
+                            <i class="fa-regular fa-comment"></i>
+                        </button>
+                        <button class="action-btn" onclick="shareSocial()">
+                            <i class="fa-regular fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <button class="action-btn save-btn" onclick="saveToCollection('${obra.id}')">
+                        <i id="save-icon-${obra.id}" class="fa-regular fa-bookmark"></i>
+                    </button>
+                </div>
+
+                <div class="post-content">
+                    <p class="likes-count">Les gusta a <strong>vertice_gallery</strong> y <strong>otros</strong></p>
                     
-                    <div class="tab-header">
-                        <button class="tab-btn active" onclick="switchTab(event, 'desc')">DESCRIPCIÓN</button>
-                        <button class="tab-btn" onclick="switchTab(event, 'tech')">FICHA TÉCNICA</button>
+                    <div class="post-caption">
+                        <strong>${(obra.artista_data?.nombre || 'artista').toLowerCase().replace(/\s/g, '_')}</strong> 
+                        <span class="social-title">${obra.titulo}</span>
+                        <p class="description-text">${obra.descripcion}</p>
                     </div>
 
-                    <div id="desc" class="tab-content" style="display:block">
-                        <p class="obra-descripcion">${obra.descripcion}</p>
-                    </div>
-                    <div id="tech" class="tab-content" style="display:none">
-                        <p><strong>Técnica:</strong> ${obra.tecnica}</p>
-                        <p><strong>Año:</strong> ${obra.anio}</p>
-                    </div>
-
-                    <p class="obra-precio">${obra.precio.toLocaleString()} €</p>
-                    <div class="obra-actions">
-                        <button class="btn-primary">SOLICITAR ADQUISICIÓN</button>
+                    <div class="post-tech-specs">
+                        <span>#${obra.tecnica.replace(/\s/g, '')}</span> 
+                        <span>#${obra.anio}</span> 
+                        <span>#VérticeExhibition</span>
                     </div>
                 </div>
-            </section>
+            </article>
         `;
+
+        // Cargar componentes adicionales (Comentarios estilo feed y relacionados)
+        if (typeof renderComments === "function") renderComments(obraId);
+        if (typeof loadRelated === "function") loadRelated(obra.categoria_id, obra.id);
+
     } catch (e) {
-        console.error("Error cargando obra:", e);
+        console.error("Error cargando post:", e);
+        content.innerHTML = `<div class="error-toast">Error: No se pudo cargar la publicación.</div>`;
+    }
+}
+
+/**
+ * Interacción de Like (Cambia a rojo solo el corazón relleno)
+ */
+window.toggleLike = (id) => {
+    const icon = document.getElementById(`like-icon-${id}`);
+    if (!icon) return;
+
+    const isLiked = icon.classList.contains('fa-regular');
+    
+    if (isLiked) {
+        icon.classList.replace('fa-regular', 'fa-solid');
+        icon.style.color = '#ed4956'; // Rojo Instagram (solo para el corazón activo)
+        // Podrías añadir una pequeña animación de escala aquí
+        icon.style.transform = 'scale(1.2)';
+        setTimeout(() => icon.style.transform = 'scale(1)', 150);
+    } else {
+        icon.classList.replace('fa-solid', 'fa-regular');
+        icon.style.color = 'inherit';
     }
 };
 
-// Función para cambiar pestañas dentro del modal
-window.switchTab = (e, tabId) => {
-    document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(tabId).style.display = 'block';
-    e.target.classList.add('active');
+/**
+ * Guardar en colección (Bookmark)
+ */
+window.saveToCollection = (id) => {
+    const icon = document.getElementById(`save-icon-${id}`);
+    if (!icon) return;
+    icon.classList.toggle('fa-regular');
+    icon.classList.toggle('fa-solid');
 };
 
-// Cerrar modal
-document.getElementById('close-obra-modal')?.addEventListener('click', () => {
-    document.getElementById('obra-modal').classList.remove('active');
-});
+/**
+ * Foco en el input de comentarios
+ */
+window.focusComment = () => {
+    const input = document.getElementById('user-comment');
+    if (input) input.focus();
+};
+
+/**
+ * Compartir Publicación
+ */
+window.shareSocial = () => {
+    if (navigator.share) {
+        navigator.share({
+            title: 'VÉRTICE | Arte Digital',
+            url: window.location.href
+        });
+    } else {
+        navigator.clipboard.writeText(window.location.href);
+        alert("Enlace copiado al portapapeles");
+    }
+};
+
+/**
+ * Copiar enlace (Función de utilidad)
+ */
+window.copyLink = () => {
+    navigator.clipboard.writeText(window.location.href);
+};

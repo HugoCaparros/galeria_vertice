@@ -1,177 +1,217 @@
 /* ==========================================================================
-   OBRA DETALLE - MODO POPUP (VÉRTICE)
+   DETALLE DE OBRA - ESTILO RED SOCIAL (FEED)
+   Basado estrictamente en Tokens Semánticos
    ========================================================================== */
 
-/* 1. Overlay del Modal (El fondo oscuro) */
-.modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(8px); /* Efecto premium de desenfoque */
-    z-index: var(--z-modal-bg);
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-overlay.active { display: flex; }
-
-/* 2. Contenedor del Popup */
-.modal-detalle-exclusivo {
-    background-color: var(--bg-page);
-    width: 90%;
-    max-width: 1100px;
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-    border: 1px solid var(--border-sutil);
-    animation: modalSlideIn 0.4s var(--transition-smooth);
-}
-
-/* 3. Grid de Información (Basado en tu imagen) */
-.modal-view {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 0;
-}
-
-/* Ajuste para la imagen en el modal */
-.modal-view .obra-media {
-    height: 100%;
-    min-height: 500px;
-    background-color: var(--bg-secondary);
-}
-
-.modal-view .main-img {
+.detalle-page-container {
     width: 100%;
-    height: 100%;
-    object-fit: cover; /* Asegura que la imagen llene su espacio editorial */
-    display: block;
-}
-
-.obra-info-panel {
-    padding: var(--space-12);
+    min-height: 100vh;
+    background-color: var(--bg-page);
+    padding-top: var(--space-header);
     display: flex;
     flex-direction: column;
-    background-color: var(--bg-page);
+    align-items: center; /* Centrado tipo Feed */
 }
 
-/* 4. Tipografía y Colores */
-.obra-titulo {
-    font: var(--font-h1);
-    color: var(--text-primary);
-    margin-bottom: var(--space-2);
-    text-transform: uppercase; /* Estilo Marcellus editorial */
-}
-
-.obra-artista {
-    font: var(--font-h3);
-    color: var(--text-secondary);
-    margin-bottom: var(--space-4);
-}
-
-.obra-artista strong {
-    color: var(--color-rojo); /* Nombre en rojo según captura */
-    font-weight: var(--weight-semibold);
-}
-
-.obra-precio {
-    font: var(--font-h2);
-    color: var(--color-rojo);
-    margin-top: auto; /* Empuja el precio al final */
-    padding-top: var(--space-8);
-    font-family: var(--font-serif); /* Marcellus para el precio */
-}
-
-/* 5. Pestañas */
-.tab-header {
-    display: flex;
-    gap: var(--space-6);
-    border-bottom: 1px solid var(--border-sutil);
-    margin: var(--space-8) 0 var(--space-4);
-}
-
-.tab-btn {
-    background: none; border: none;
-    padding-bottom: var(--space-2);
-    font: var(--font-small);
-    color: var(--text-muted);
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    transition: color var(--transition-fast);
-}
-
-.tab-btn.active {
-    color: var(--text-primary);
-    border-bottom: 2px solid var(--color-rojo);
-    font-weight: var(--weight-semibold);
-}
-
-/* 6. Bloque de Acciones y Metadata */
-.obra-meta p {
-    font: var(--font-small);
-    margin-bottom: var(--space-2);
-    color: var(--text-muted);
-}
-
-.obra-meta p strong {
-    color: var(--text-primary);
-}
-
-.obra-descripcion {
-    font: var(--font-body);
-    line-height: 1.6;
-    color: var(--text-secondary);
-}
-
-.price-action-block {
-    margin-top: auto;
-}
-
-.obra-actions {
-    display: flex;
-    gap: var(--space-4);
-    margin-top: var(--space-6);
-}
-
-/* Botón de cierre específico del modal */
-#close-obra-modal {
-    position: absolute;
-    top: var(--space-4);
-    right: var(--space-4);
-    background: white;
+/* 1. Contenedor del Post (Instagram Style) */
+.instagram-post {
+    width: 100%;
+    max-width: 650px; /* Ancho estándar de post de escritorio */
+    background-color: var(--bg-surface);
     border: 1px solid var(--border-sutil);
-    width: 40px;
-    height: 40px;
+    margin-bottom: var(--space-8);
+    display: flex;
+    flex-direction: column;
+}
+
+/* 2. Cabecera del Post */
+.post-header {
+    display: flex;
+    align-items: center;
+    padding: var(--space-3) var(--space-4);
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    background-color: var(--bg-secondary);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    font: var(--font-small);
+    font-weight: var(--weight-semibold);
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.user-info {
+    margin-left: var(--space-3);
+    flex: 1;
+}
+
+.username {
+    display: block;
+    font: var(--font-small);
+    font-weight: var(--weight-semibold);
+    color: var(--text-primary);
+}
+
+.location {
+    display: block;
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.more-options {
+    background: none;
+    border: none;
+    color: var(--text-primary);
     cursor: pointer;
-    z-index: 10;
-    transition: all var(--transition-fast);
-    border-radius: 50%;
 }
 
-#close-obra-modal:hover {
-    background: var(--bg-secondary);
-    transform: rotate(90deg);
+/* 3. Área de Media (Imagen) */
+.post-media {
+    width: 100%;
+    background-color: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
 }
 
-@keyframes modalSlideIn {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+.post-media img {
+    width: 100%;
+    height: auto;
+    max-height: 80vh;
+    object-fit: contain;
 }
 
-/* Adaptación para pantallas pequeñas */
-@media (max-width: 1024px) {
-    .modal-view {
-        grid-template-columns: 1fr;
-    }
-    .modal-detalle-exclusivo {
-        width: 100%;
-        height: 100%;
-        max-height: 100vh;
+/* 4. Barra de Acciones Social */
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-3) var(--space-4);
+}
+
+.main-actions {
+    display: flex;
+    gap: var(--space-4);
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 0;
+    transition: transform var(--transition-fast);
+}
+
+.action-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Único uso del rojo: Corazón activo */
+.action-btn i.fa-solid.fa-heart {
+    color: #ed4956; /* Rojo Instagram, para ADN de marca usar var(--color-rojo) */
+}
+
+/* 5. Contenido y Texto */
+.post-content {
+    padding: 0 var(--space-4) var(--space-4);
+}
+
+.likes-count {
+    font: var(--font-small);
+    font-weight: var(--weight-semibold);
+    margin-bottom: var(--space-2);
+}
+
+.post-caption {
+    font: var(--font-body);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.post-caption strong {
+    font-weight: var(--weight-semibold);
+    margin-right: var(--space-1);
+}
+
+.social-title {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--text-secondary);
+}
+
+.description-text {
+    display: block;
+    margin-top: var(--space-2);
+    color: var(--text-primary);
+}
+
+.post-tech-specs {
+    margin-top: var(--space-3);
+    font: var(--font-small);
+    color: #00376b; /* Azul link clásico de red social */
+    display: flex;
+    gap: var(--space-2);
+}
+
+/* 6. Sección de Comentarios (Debajo del post) */
+.detalle-social-section {
+    width: 100%;
+    max-width: 650px;
+    padding: 0 var(--space-4);
+}
+
+.comment-input-block-social {
+    display: flex;
+    align-items: center;
+    padding: var(--space-4) 0;
+    border-top: 1px solid var(--border-sutil);
+    gap: var(--space-3);
+}
+
+.comment-input-block-social i {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+}
+
+.comment-input-block-social input {
+    flex: 1;
+    border: none;
+    background: none;
+    font: var(--font-body);
+    outline: none;
+}
+
+.post-comment-btn {
+    background: none;
+    border: none;
+    color: #0095f6; /* Azul acción social */
+    font-weight: var(--weight-semibold);
+    cursor: pointer;
+}
+
+/* 7. Estado de Error (Único uso del rojo para avisos) */
+.error-toast {
+    background-color: var(--color-rojo);
+    color: var(--text-inverse);
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--input-radius);
+    font: var(--font-small);
+    margin-top: var(--space-4);
+    text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .instagram-post {
+        border-left: none;
+        border-right: none;
     }
 }

@@ -11,39 +11,79 @@
     <link rel="stylesheet" href="../../assets/css/base/variables.css">
     <link rel="stylesheet" href="../../assets/css/base/reset.css">
     <link rel="stylesheet" href="../../assets/css/base/typography.css">
-
+    
     <link rel="stylesheet" href="../../assets/css/components/navbar.css">
     <link rel="stylesheet" href="../../assets/css/components/footer.css">
     
     <link rel="stylesheet" href="../../assets/css/pages/detalle.css">
 </head>
 <body>
+
     <div id="navbar-placeholder"></div>
 
-    <main class="detalle-container" id="obra-detalle-content">
-        <div class="loader-v">Preparando exhibición...</div>
+    <main class="detalle-page-container">
+        <div id="detalle-content">
+            <div class="loader-v">Cargando Obra...</div>
+        </div>
+
+        <section class="detalle-social-section">
+            <div class="interaction-tabs">
+                <button class="social-tab active" data-target="comments-list">COMENTARIOS</button>
+                <button class="social-tab" data-target="related-works">OBRAS RELACIONADAS</button>
+            </div>
+
+            <div id="comments-list" class="interaction-pane active">
+                <div id="dynamic-comments"></div>
+                
+                <div class="comment-input-block">
+                    <input type="text" id="user-comment" placeholder="Añade un comentario sobre esta obra...">
+                    <button id="send-comment"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </div>
+
+            <div id="related-works" class="interaction-pane">
+                <div id="dynamic-related-grid" class="mini-grid"></div>
+            </div>
+        </section>
     </main>
 
     <div id="footer-placeholder"></div>
 
     <script src="../../assets/js/services/dataLoader.js"></script>
     <script src="../../assets/js/components/layout.js"></script>
-    
     <script src="../../assets/js/pages/detalle.js"></script>
     
     <script>
-        // Lógica para cuando se usa como página independiente (con ?id=X)
         document.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
-            const id = params.get('id');
-            if (id && window.openObraModal) {
-                // Reutilizamos la función del popup pero inyectamos en el contenedor de página
-                // Redefinimos temporalmente los IDs para que detalle.js encuentre los elementos
-                const container = document.getElementById('obra-detalle-content');
-                window.openObraModal(id);
-                
-                // Ajuste visual: al no ser un modal, quitamos clases de overlay si detalle.js las pone
-                document.getElementById('obra-modal')?.classList.remove('modal-overlay');
+            const obraId = params.get('id');
+            
+            if (obraId) {
+                // 1. Cargamos la obra principal
+                if (typeof initObraDetalle === 'function') {
+                    initObraDetalle(obraId);
+                }
+
+                // 2. Activamos manualmente el evento del botón de comentar 
+                // ya que ahora existe estáticamente en el HTML
+                const sendBtn = document.getElementById('send-comment');
+                if (sendBtn) {
+                    sendBtn.onclick = () => {
+                        if (typeof saveComment === 'function') saveComment(obraId);
+                    };
+                }
+
+                // 3. Inicializamos los tabs sociales
+                if (typeof initSocialTabs === 'function') {
+                    initSocialTabs();
+                }
+            } else {
+                document.getElementById('detalle-content').innerHTML = `
+                    <div class="error-page">
+                        <h2>Obra no encontrada</h2>
+                        <a href="../../index.html" class="btn-action-black">Volver a la Galería</a>
+                    </div>
+                `;
             }
         });
     </script>
