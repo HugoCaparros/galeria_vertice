@@ -1,230 +1,333 @@
 /* ========================================================================
-    ESTILOS PÁGINA: DETALLE DE OBRA (SIMETRÍA Y EQUILIBRIO GALERÍA)
+   1. LAYOUT PRINCIPAL Y RESPONSIVIDAD
    ======================================================================== */
-
-/* 1. CONTENEDOR Y LAYOUT PRINCIPAL */
 .detalle-container {
-    max-width: var(--container-width);
-    margin: var(--space-header) auto var(--space-16);
-    padding: 0 var(--container-padding);
+  max-width: var(--container-width);
+  margin: var(--space-header) auto var(--space-16);
+  padding: 0 var(--container-padding);
 }
 
 .obra-header-grid {
-    display: grid;
-    /* Prioridad a la imagen (1.4fr) para que sea notablemente más grande */
-    grid-template-columns: 1.4fr 1fr; 
-    gap: var(--space-16);
-    align-items: start;
-    margin-bottom: var(--space-20);
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--space-16);
+  align-items: start;
+  margin-bottom: var(--space-20);
 }
 
-/* Animaciones de entrada refinadas */
-.autor-label, .obra-titulo, .obra-tecnica, .obra-narrativa, 
+@media (max-width: 992px) {
+  .obra-header-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+  }
+  .detalle-container {
+    margin-top: calc(var(--space-header) / 1.5);
+  }
+}
+
+/* Animaciones */
+.autor-label, .obra-titulo, .badges-tecnicos, .obra-narrativa, 
 .ficha-tecnica, .acciones-galeria, .obra-stats-social {
-    opacity: 0;
-    animation: revealUp 0.8s var(--transition-smooth) forwards;
+  opacity: 0;
+  animation: revealUp 0.8s var(--transition-smooth) forwards;
 }
 
 .autor-label { animation-delay: 0.1s; }
 .obra-titulo { animation-delay: 0.2s; }
-.obra-tecnica { animation-delay: 0.3s; }
-.obra-narrativa { animation-delay: 0.4s; }
-.ficha-tecnica { animation-delay: 0.5s; }
-.acciones-galeria { animation-delay: 0.6s; }
+.badges-tecnicos { animation-delay: 0.25s; }
+.obra-narrativa { animation-delay: 0.3s; }
+.ficha-tecnica { animation-delay: 0.35s; }
+.acciones-galeria { animation-delay: 0.4s; }
 
 @keyframes revealUp {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
 }
 
-/* 2. TIPOGRAFÍA E INFORMACIÓN PRINCIPAL */
+/* ========================================================================
+   2. REFINAMIENTO DE TEXTOS (JERARQUÍA EDITORIAL)
+   ======================================================================== */
 .autor-label {
-    font: var(--font-h3);
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 5px;
-    margin-bottom: var(--space-1);
+  font: var(--font-h3);
+  color: var(--color-gris-medio);
+  text-transform: uppercase;
+  letter-spacing: 0.25em; /* */
+  margin-bottom: var(--space-2);
+  line-height: 1;
+  font-size: 0.9rem;
 }
 
 .obra-titulo {
-    font: var(--font-h1);
-    font-size: clamp(2rem, 4vw, var(--size-h1)); 
-    line-height: 1.1;
-    margin-bottom: var(--space-6);
-    color: var(--text-primary);
-    font-weight: 300;
+  font: var(--font-h1);
+  font-family: var(--font-serif); /* Marcellus */
+  font-size: clamp(2.5rem, 5vw, var(--size-h1));
+  line-height: 1.1;
+  margin-bottom: var(--space-6);
+  color: var(--text-primary);
+  font-weight: 400;
 }
 
-.obra-tecnica {
-    font: var(--font-small);
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: var(--space-8);
+.badges-tecnicos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
+}
+
+.badges-tecnicos span {
+  font: var(--font-small);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 4px 12px;
+  background: transparent;
+  border: 1px solid var(--color-gris-claro);
+  color: var(--text-muted);
+  border-radius: 2px;
 }
 
 .obra-narrativa h3 {
-    font: var(--font-small);
-    font-weight: var(--weight-semibold);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: var(--space-3);
-    color: var(--text-primary);
+  font: var(--font-small);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-negro);
+  margin-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border-sutil);
+  display: inline-block;
+  padding-bottom: 4px;
 }
 
 .obra-descripcion-texto {
-    font: var(--font-body);
-    color: var(--text-secondary);
-    line-height: 1.7;
-    margin-bottom: var(--space-12);
+  font: var(--font-body);
+  color: var(--text-secondary);
+  line-height: 1.85; /* */
+  max-width: 60ch;
+  margin-bottom: var(--space-6);
 }
 
-/* 3. FICHA TÉCNICA (LIMPIEZA TOTAL) */
+#obra-curaduria {
+  font-family: var(--font-sans);
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  padding-left: var(--space-4);
+  border-left: 2px solid var(--color-gris-claro); /* */
+  margin-top: var(--space-4);
+}
+
+/* ========================================================================
+   3. FICHA TÉCNICA Y BOTÓN (UX MEJORADA)
+   ======================================================================== */
 .ficha-tecnica {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-10) var(--space-4);
-    margin-bottom: var(--space-12);
-    border: none !important;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6) var(--space-8);
+  margin-bottom: var(--space-12);
+  margin-top: var(--space-8);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--border-sutil);
 }
 
 .dato-ficha span {
-    color: var(--text-muted);
-    font-size: 0.65rem;
-    font-weight: var(--weight-semibold);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    display: block;
-    margin-bottom: 4px;
+  font: var(--font-small);
+  font-size: 0.7rem; /* */
+  color: var(--color-gris-medio);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 4px;
 }
 
 .dato-ficha p {
-    font: var(--font-body);
-    font-size: 0.9rem;
-    color: var(--text-primary);
-    font-weight: var(--weight-medium);
-}
-
-/* 4. BOTÓN DE ACCIÓN (UNA SOLA LÍNEA SIN ICONOS) */
-.acciones-galeria {
-    margin-top: var(--space-12);
+  font: var(--font-body);
+  font-weight: var(--weight-semibold); /* Destacado */
+  color: var(--text-primary);
+  margin: 0;
 }
 
 .btn-negro {
-    height: var(--btn-height);
-    width: 100%; 
-    background-color: var(--bg-inverse) !important;
-    color: var(--text-inverse) !important;
-    font: var(--font-button);
-    font-size: 0.8rem;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    border: none;
-    white-space: nowrap; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background-color var(--transition-fast);
+  height: var(--btn-height);
+  width: 100%;
+  background-color: var(--bg-inverse) !important;
+  color: var(--text-inverse) !important;
+  font: var(--font-button);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform var(--transition-fast), background-color var(--transition-fast);
 }
 
-/* Asegurar que no salgan iconos inyectados por JS */
-.btn-negro i {
-    display: none !important;
-}
+.btn-negro:active { transform: scale(0.98); }
+.btn-negro:hover { background-color: var(--hover-negro) !important; }
+.btn-negro i { display: none !important; } /* Limpieza visual */
 
-.btn-negro:hover {
-    background-color: var(--hover-negro) !important;
-}
-
-/* 5. ESTADÍSTICAS PEGADAS A LA FOTO */
-.obra-stats-social {
-    display: flex;
-    gap: var(--space-8);
-    margin-top: var(--space-4); /* Pegado a la base de la imagen */
-    padding: 0;
-    border: none !important;
-    color: var(--text-muted);
-}
-
-.obra-stats-social span {
-    font: var(--font-small);
-    font-size: 0.8rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-/* 6. PRESENTACIÓN DE LA IMAGEN (SIN FONDO NI ZOOM) */
+/* ========================================================================
+   4. IMAGEN Y ESTADÍSTICAS
+   ======================================================================== */
 .frame-museo {
-    position: relative;
-    padding: 0; 
-    background: transparent; 
-    box-shadow: none;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    overflow: hidden;
-    cursor: default;
+  padding: 0;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .frame-museo img {
-    width: 100%; 
-    height: auto;
-    background: none;
-    padding: 0;
-    box-shadow: var(--shadow-md); 
-    border: none;
-    transition: none;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.6s var(--transition-smooth);
 }
 
-/* Eliminar elementos de museo innecesarios */
-.zoom-indicator, .shadow-floor, .frame-museo::after {
-    display: none !important;
+.frame-museo:hover img { transform: scale(1.02); }
+
+.obra-stats-social {
+  display: flex;
+  gap: var(--space-8);
+  margin-top: var(--space-4);
+  color: var(--text-muted);
 }
 
-/* 7. OBRAS RELACIONADAS (LIMPIO) */
+.obra-stats-social span {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font: var(--font-small);
+}
+
+/* ========================================================================
+   5. RELACIONADAS (LAYOUT ADAPTATIVO CON UNIFORMIDAD)
+   ======================================================================== */
 .relacionadas-section {
-    margin-top: var(--space-20);
-    padding-top: var(--space-16);
-    border: none !important;
+  margin-top: var(--space-20);
+  padding-top: var(--space-16);
+  border: none !important;
+}
+
+/* Mejora: Título de sección con jerarquía clara */
+.section-title {
+  font: var(--font-h2);
+  font-size: 1.8rem;
+  margin-bottom: var(--space-8);
+  color: var(--text-primary);
 }
 
 .category-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); 
-    gap: var(--space-12); 
+  display: grid;
+  /* Mejora: Rejilla adaptativa con 4 columnas en escritorio */
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-8);
+}
+
+@media (max-width: 992px) {
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
 }
 
 .artist-card {
-    cursor: pointer;
-    text-align: left;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
 }
 
+/* Mejora: Contenedor con proporción fija para uniformidad total */
 .artist-image {
-    width: 100%;
-    aspect-ratio: 1 / 1; 
-    overflow: hidden;
-    margin-bottom: var(--space-5);
+  width: 100%;
+  aspect-ratio: 3 / 2; /* Formato paisaje uniforme para todas las fotos */
+  overflow: hidden;
+  background: var(--bg-secondary);
+  margin-bottom: var(--space-4);
 }
 
 .artist-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Asegura que la imagen llene el espacio sin deformarse */
+  filter: none !important;
+  transition: transform 0.6s var(--transition-smooth);
 }
 
+.artist-card:hover {
+  transform: translateY(-5px); /* Micro-interacción de elevación */
+}
+
+.artist-card:hover .artist-image img {
+  transform: scale(1.08); /* Efecto de zoom suave al pasar el cursor */
+}
+
+/* Mejora: Estilizado de información de la obra relacionada */
 .artist-info h3 {
-    font-size: 0.85rem;
-    font-weight: var(--weight-semibold);
-    margin-bottom: 4px;
-    letter-spacing: 1px;
-    color: var(--text-primary);
+  font: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: 2px;
+  text-transform: none; /* Nombre del cuadro en formato natural */
 }
 
 .artist-info p {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
+  font: var(--font-small);
+  font-size: 0.75rem;
+  color: var(--color-gris-medio);
+  text-transform: uppercase;
+  letter-spacing: 1px; /* Nombre del artista sutil */
+}
+
+/* ========================================================================
+   6. TOASTS (DISEÑO PREMIUM)
+   ======================================================================== */
+.toast-container {
+  position: fixed;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  z-index: var(--z-modal);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.toast-mensaje {
+  background-color: var(--bg-inverse);
+  color: var(--text-inverse);
+  padding: 14px 24px;
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font: var(--font-small);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-floating);
+  border-left: 4px solid var(--color-gris-medio);
+  animation: slideInToast 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.toast-mensaje.success { border-left-color: var(--color-verde); }
+.toast-mensaje.info { border-left-color: var(--color-rojo); }
+
+@keyframes slideInToast {
+  from { transform: translateX(120%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 }

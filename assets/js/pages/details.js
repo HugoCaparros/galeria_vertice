@@ -62,14 +62,15 @@ window.initObraDetalle = async function() {
         safeText('obra-tecnica', obra.tecnica);
         safeText('obra-anio', obra.anio || 's/f');
 
-        // 2. Narrativa y Contexto (Nota del Curador integrada)
+        // 2. Narrativa y Contexto (Jerarquía Editorial: Nota del Curador diferenciada)
         safeText('obra-descripcion-texto', obra.descripcion);
         safeText('obra-curaduria', obra.curaduria || "Esta obra es una pieza central de nuestra colección actual.");
 
-        // 3. Ficha Técnica Enriquecida
+        // 3. Ficha Técnica Enriquecida (Valores destacados frente a etiquetas)
         safeText('obra-soporte', obra.tecnica_detalle || obra.tecnica || 'No especificado');
         const dims = obra.dimensiones && obra.dimensiones.trim() !== "" ? obra.dimensiones : 'Dimensiones no disponibles';
         safeText('obra-dimensiones', dims);
+        // Formato de referencia estandarizado VRT-0000
         safeText('obra-id-ref', `VRT-${obra.id.toString().padStart(4, '0')}`);
 
         // 4. Manejo de la Imagen Principal (Efecto suave y micro-perspectiva)
@@ -89,7 +90,7 @@ window.initObraDetalle = async function() {
             safeText('stat-guardados', formatNum(obra.stats.guardados));
         }
 
-        // 6. LÓGICA DE COLECCIÓN (Añadir / Eliminar con feedback visual)
+        // 6. LÓGICA DE COLECCIÓN (Diseño sólido en una sola línea)
         const btnColeccion = document.getElementById('btn-coleccion');
         if (btnColeccion) {
             let estaEnColeccion = false; 
@@ -97,12 +98,12 @@ window.initObraDetalle = async function() {
             btnColeccion.onclick = () => {
                 if (!estaEnColeccion) {
                     estaEnColeccion = true;
-                    btnColeccion.innerHTML = '<i class="fas fa-bookmark"></i> ELIMINAR DE MI COLECCIÓN';
+                    btnColeccion.textContent = 'ELIMINAR DE MI COLECCIÓN';
                     btnColeccion.classList.add('active');
                     mostrarNotificacion('Obra añadida a tu colección privada', 'success');
                 } else {
                     estaEnColeccion = false;
-                    btnColeccion.innerHTML = '<i class="far fa-bookmark"></i> AÑADIR A MI COLECCIÓN PRIVADA';
+                    btnColeccion.textContent = 'AÑADIR A MI COLECCIÓN PRIVADA';
                     btnColeccion.classList.remove('active');
                     mostrarNotificacion('Obra eliminada de tu colección', 'info');
                 }
@@ -129,7 +130,7 @@ window.initObraDetalle = async function() {
 };
 
 /**
- * CARGA DE OBRAS RELACIONADAS (Color real y estilo limpio)
+ * CARGA DE OBRAS RELACIONADAS (Uniformidad visual y metadatos completos)
  */
 async function cargarRelacionadas(categoriaId, actualId) {
     const container = document.getElementById('contenedor-relacionadas');
@@ -146,11 +147,13 @@ async function cargarRelacionadas(categoriaId, actualId) {
         container.innerHTML = filtradas.map(o => `
             <article class="artist-card" onclick="window.location.href='obra-detalle.html?id=${o.id}'">
                 <div class="artist-image">
-                    <img src="${base}${o.imagen}" alt="${o.titulo}" style="filter: none;">
+                    <img src="${base}${o.imagen}" alt="${o.titulo}" style="filter: none; width: 100%; height: 100%; object-fit: cover;">
                 </div>
-                <div class="artist-info">
-                    <h3>${o.titulo}</h3>
-                    <p>${o.artista_data ? o.artista_data.nombre : 'Vértice Art'}</p>
+                <div class="artist-info" style="margin-top: var(--space-4);">
+                    <h3 style="font-weight: var(--weight-semibold); margin-bottom: 2px;">${o.titulo}</h3>
+                    <p style="font-size: 0.75rem; color: var(--color-gris-medio); text-transform: uppercase; letter-spacing: 1px;">
+                        ${o.artista_data ? o.artista_data.nombre : 'Vértice Art'}
+                    </p>
                 </div>
             </article>
         `).join('');
