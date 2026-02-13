@@ -1,0 +1,230 @@
+/* ========================================================================
+    ESTILOS PÁGINA: DETALLE DE OBRA (SIMETRÍA Y EQUILIBRIO GALERÍA)
+   ======================================================================== */
+
+/* 1. CONTENEDOR Y LAYOUT PRINCIPAL */
+.detalle-container {
+    max-width: var(--container-width);
+    margin: var(--space-header) auto var(--space-16);
+    padding: 0 var(--container-padding);
+}
+
+.obra-header-grid {
+    display: grid;
+    /* Prioridad a la imagen (1.4fr) para que sea notablemente más grande */
+    grid-template-columns: 1.4fr 1fr; 
+    gap: var(--space-16);
+    align-items: start;
+    margin-bottom: var(--space-20);
+}
+
+/* Animaciones de entrada refinadas */
+.autor-label, .obra-titulo, .obra-tecnica, .obra-narrativa, 
+.ficha-tecnica, .acciones-galeria, .obra-stats-social {
+    opacity: 0;
+    animation: revealUp 0.8s var(--transition-smooth) forwards;
+}
+
+.autor-label { animation-delay: 0.1s; }
+.obra-titulo { animation-delay: 0.2s; }
+.obra-tecnica { animation-delay: 0.3s; }
+.obra-narrativa { animation-delay: 0.4s; }
+.ficha-tecnica { animation-delay: 0.5s; }
+.acciones-galeria { animation-delay: 0.6s; }
+
+@keyframes revealUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 2. TIPOGRAFÍA E INFORMACIÓN PRINCIPAL */
+.autor-label {
+    font: var(--font-h3);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    margin-bottom: var(--space-1);
+}
+
+.obra-titulo {
+    font: var(--font-h1);
+    font-size: clamp(2rem, 4vw, var(--size-h1)); 
+    line-height: 1.1;
+    margin-bottom: var(--space-6);
+    color: var(--text-primary);
+    font-weight: 300;
+}
+
+.obra-tecnica {
+    font: var(--font-small);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--space-8);
+}
+
+.obra-narrativa h3 {
+    font: var(--font-small);
+    font-weight: var(--weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: var(--space-3);
+    color: var(--text-primary);
+}
+
+.obra-descripcion-texto {
+    font: var(--font-body);
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: var(--space-12);
+}
+
+/* 3. FICHA TÉCNICA (LIMPIEZA TOTAL) */
+.ficha-tecnica {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-10) var(--space-4);
+    margin-bottom: var(--space-12);
+    border: none !important;
+}
+
+.dato-ficha span {
+    color: var(--text-muted);
+    font-size: 0.65rem;
+    font-weight: var(--weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.dato-ficha p {
+    font: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-weight: var(--weight-medium);
+}
+
+/* 4. BOTÓN DE ACCIÓN (UNA SOLA LÍNEA SIN ICONOS) */
+.acciones-galeria {
+    margin-top: var(--space-12);
+}
+
+.btn-negro {
+    height: var(--btn-height);
+    width: 100%; 
+    background-color: var(--bg-inverse) !important;
+    color: var(--text-inverse) !important;
+    font: var(--font-button);
+    font-size: 0.8rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    border: none;
+    white-space: nowrap; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+
+/* Asegurar que no salgan iconos inyectados por JS */
+.btn-negro i {
+    display: none !important;
+}
+
+.btn-negro:hover {
+    background-color: var(--hover-negro) !important;
+}
+
+/* 5. ESTADÍSTICAS PEGADAS A LA FOTO */
+.obra-stats-social {
+    display: flex;
+    gap: var(--space-8);
+    margin-top: var(--space-4); /* Pegado a la base de la imagen */
+    padding: 0;
+    border: none !important;
+    color: var(--text-muted);
+}
+
+.obra-stats-social span {
+    font: var(--font-small);
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 6. PRESENTACIÓN DE LA IMAGEN (SIN FONDO NI ZOOM) */
+.frame-museo {
+    position: relative;
+    padding: 0; 
+    background: transparent; 
+    box-shadow: none;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: hidden;
+    cursor: default;
+}
+
+.frame-museo img {
+    width: 100%; 
+    height: auto;
+    background: none;
+    padding: 0;
+    box-shadow: var(--shadow-md); 
+    border: none;
+    transition: none;
+}
+
+/* Eliminar elementos de museo innecesarios */
+.zoom-indicator, .shadow-floor, .frame-museo::after {
+    display: none !important;
+}
+
+/* 7. OBRAS RELACIONADAS (LIMPIO) */
+.relacionadas-section {
+    margin-top: var(--space-20);
+    padding-top: var(--space-16);
+    border: none !important;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: var(--space-12); 
+}
+
+.artist-card {
+    cursor: pointer;
+    text-align: left;
+}
+
+.artist-image {
+    width: 100%;
+    aspect-ratio: 1 / 1; 
+    overflow: hidden;
+    margin-bottom: var(--space-5);
+}
+
+.artist-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: none;
+}
+
+.artist-info h3 {
+    font-size: 0.85rem;
+    font-weight: var(--weight-semibold);
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+    color: var(--text-primary);
+}
+
+.artist-info p {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}

@@ -1,91 +1,82 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VÉRTICE | Detalle de Obra</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Marcellus&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <link rel="stylesheet" href="../../assets/css/base/variables.css">
+    <title>Horizonte Urbano | VÉRTICE</title>
     <link rel="stylesheet" href="../../assets/css/base/reset.css">
+    <link rel="stylesheet" href="../../assets/css/base/variables.css">
     <link rel="stylesheet" href="../../assets/css/base/typography.css">
-    
     <link rel="stylesheet" href="../../assets/css/components/navbar.css">
     <link rel="stylesheet" href="../../assets/css/components/footer.css">
+    <link rel="stylesheet" href="../../assets/css/components/buttons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <link rel="stylesheet" href="../../assets/css/pages/detalle.css">
+    <style>
+        .product-container {
+            padding: 140px 5% 5rem;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .product-image img { width: 100%; height: auto; box-shadow: var(--shadow-sm); }
+        
+        .product-info { padding-top: 2rem; }
+        .artist-link { text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; color: #666; display: block; margin-bottom: 0.5rem; }
+        .product-title { font-family: 'Marcellus', serif; font-size: 2.5rem; margin-bottom: 1rem; }
+        .product-price { font-size: 1.5rem; font-weight: 600; margin-bottom: 2rem; display: block; }
+        .product-desc { line-height: 1.6; color: #444; margin-bottom: 2rem; }
+        
+        .specs-list { margin-bottom: 3rem; border-top: 1px solid #eee; padding-top: 1rem; }
+        .specs-list li { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        
+        .action-buttons { display: flex; gap: 1rem; }
+        .btn-add { flex: 1; text-align: center; }
+        .btn-fav { width: 50px; display: flex; align-items: center; justify-content: center; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; }
+        
+        @media(max-width: 768px){ .product-container { grid-template-columns: 1fr; } }
+    </style>
 </head>
 <body>
+    <nav class="navbar">
+        <div class="nav-left"><a href="obras.html">← Catalogo</a></div>
+        <div class="nav-center"><a href="../../index.html" class="logo">VÉRTICE</a></div>
+        <div class="nav-right"><a href="../auth/login.html" class="user-icon"><i class="fa-regular fa-user-circle"></i></a></div>
+    </nav>
 
-    <div id="navbar-placeholder"></div>
-
-    <main class="detalle-page-container">
-        <div id="detalle-content">
-            <div class="loader-v">Cargando Obra...</div>
+    <main class="product-container">
+        <div class="product-image">
+            <img src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?auto=format&fit=crop&w=1000" alt="Obra Grande">
         </div>
 
-        <section class="detalle-social-section">
-            <div class="interaction-tabs">
-                <button class="social-tab active" data-target="comments-list">COMENTARIOS</button>
-                <button class="social-tab" data-target="related-works">OBRAS RELACIONADAS</button>
-            </div>
+        <div class="product-info">
+            <a href="artista-detalle.html" class="artist-link">MARCUS THORNE</a>
+            <h1 class="product-title">HORIZONTE URBANO</h1>
+            <span class="product-price">1.200 €</span>
+            
+            <p class="product-desc">
+                Una vista melancólica del skyline londinense bajo la niebla matutina. Impresión en gelatina de plata de edición limitada. Firmada y numerada por el artista.
+            </p>
 
-            <div id="comments-list" class="interaction-pane active">
-                <div id="dynamic-comments"></div>
-                
-                <div class="comment-input-block">
-                    <input type="text" id="user-comment" placeholder="Añade un comentario sobre esta obra...">
-                    <button id="send-comment"><i class="fa-solid fa-paper-plane"></i></button>
-                </div>
-            </div>
+            <ul class="specs-list">
+                <li><span>Técnica</span> <span>Fotografía Analógica</span></li>
+                <li><span>Dimensiones</span> <span>120 x 80 cm</span></li>
+                <li><span>Año</span> <span>2023</span></li>
+                <li><span>Marco</span> <span>Incluido (Madera Negra)</span></li>
+            </ul>
 
-            <div id="related-works" class="interaction-pane">
-                <div id="dynamic-related-grid" class="mini-grid"></div>
+            <div class="action-buttons">
+                <button class="btn btn-add">AÑADIR A COLECCIÓN</button>
+                <div class="btn-fav"><i class="fa-regular fa-heart"></i></div>
             </div>
-        </section>
+        </div>
     </main>
 
+    <div id="toast-container" class="toast-container"></div>
     <div id="footer-placeholder"></div>
-
-    <script src="../../assets/js/services/dataLoader.js"></script>
-    <script src="../../assets/js/components/layout.js"></script>
-    <script src="../../assets/js/pages/detalle.js"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            const obraId = params.get('id');
-            
-            if (obraId) {
-                // 1. Cargamos la obra principal
-                if (typeof initObraDetalle === 'function') {
-                    initObraDetalle(obraId);
-                }
-
-                // 2. Activamos manualmente el evento del botón de comentar 
-                // ya que ahora existe estáticamente en el HTML
-                const sendBtn = document.getElementById('send-comment');
-                if (sendBtn) {
-                    sendBtn.onclick = () => {
-                        if (typeof saveComment === 'function') saveComment(obraId);
-                    };
-                }
-
-                // 3. Inicializamos los tabs sociales
-                if (typeof initSocialTabs === 'function') {
-                    initSocialTabs();
-                }
-            } else {
-                document.getElementById('detalle-content').innerHTML = `
-                    <div class="error-page">
-                        <h2>Obra no encontrada</h2>
-                        <a href="../../index.html" class="btn-action-black">Volver a la Galería</a>
-                    </div>
-                `;
-            }
-        });
-    </script>
+    <script>fetch('../partials/footer.html').then(r => r.text()).then(h => document.getElementById('footer-placeholder').innerHTML = h);</script>
 </body>
+
 </html>
